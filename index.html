@@ -279,15 +279,28 @@ function roleStandingMultiplier(p){
   const peers=(byRole[p.role]||[]).filter(x=>(Number(x.fvm)||0)>3)
     .slice().sort((a,b)=>adjustedValue(a)-adjustedValue(b));
   if(peers.length<2)return 1;
+
   const pos=peers.findIndex(x=>String(x.id)===String(p.id));
   const pct=(pos<0?.5:pos/(peers.length-1));
 
-  // Correttivo più deciso per gli 1x1 cross-role:
-  // premia davvero chi è nella fascia alta del proprio ruolo.
-  let mult=.62 + (.76*pct); // 0,62 → 1,38
+  // Fascia relativa nel proprio ruolo
+  let mult=.58 + (.84*pct); // 0,58 → 1,42
 
-  // La tutela specifica dei portieri è già inclusa nel valore base
-  // tramite modifierPremium(), qui lasciamo solo il confronto di fascia.
+  // Negli 1x1 tra ruoli diversi, i portieri top sono molto più rari:
+  // il top 20% dei portieri riceve una tutela extra importante.
+  if(p.role==="P"){
+    if(pct>=.92) mult*=1.24;
+    else if(pct>=.80) mult*=1.17;
+    else if(pct>=.65) mult*=1.08;
+  }
+
+  // Anche i difensori top/da bonus sono protetti, ma meno dei portieri top.
+  if(p.role==="D"){
+    if(pct>=.92) mult*=1.13;
+    else if(pct>=.80) mult*=1.08;
+    else if(pct>=.65) mult*=1.04;
+  }
+
   return mult;
 }
 
@@ -397,8 +410,10 @@ function calculate(){
   }
   const fair=Math.min(a,b)/Math.max(a,b)*100,diff=Math.abs(a-b)/Math.max(a,b)*100,stronger=a>b?"A":"B";
   s.textContent=fair.toFixed(0)+"%";va.textContent=a.toFixed(0);vb.textContent=b.toFixed(0);
-  const acceptableThreshold=crossRole?72:(isOneToOne?70:65);
-  if(fair>=80){const eqKey=`good-${A.map(x=>x.id).join(",")}-${B.map(x=>x.id).join(",")}`;if(eqKey!==lastVerdictSound){lastVerdictSound=eqKey;playMiracleSound();showHereWeGo();}v.textContent="✅ SCAMBIO EQUO";v.classList.add("good");d.textContent=`I due pacchetti rientrano nella fascia di equilibrio.${crossRole?" Applicato anche il valore relativo nel proprio ruolo.":""}`}
+  const acceptableThreshold=crossRole?75:(isOneToOne?70:65);
+  const roleGap=crossRole?Math.abs(roleStandingMultiplier(A[0])-roleStandingMultiplier(B[0])):0;
+  const equoThreshold=(crossRole&&roleGap>=.18)?88:80;
+  if(fair>=equoThreshold){const eqKey=`good-${A.map(x=>x.id).join(",")}-${B.map(x=>x.id).join(",")}`;if(eqKey!==lastVerdictSound){lastVerdictSound=eqKey;playMiracleSound();showHereWeGo();}v.textContent="✅ SCAMBIO EQUO";v.classList.add("good");d.textContent=`I due pacchetti rientrano nella fascia di equilibrio.${crossRole?" Applicato anche il valore relativo nel proprio ruolo.":""}`}
   else if(fair>=acceptableThreshold){soundVerdict("warn",`warn-${A.map(x=>x.id).join(",")}-${B.map(x=>x.id).join(",")}`);v.textContent="🟡 SCAMBIO ACCETTABILE";v.classList.add("warn");d.textContent=`Vantaggio Squadra ${stronger} (circa ${diff.toFixed(0)}%), ma entro una fascia accettabile.${crossRole?" Considerata anche la gerarchia nel proprio ruolo.":""}${isOneToOne?" Negli scambi 1×1 la soglia minima è 70%.":""}`}
   else{soundVerdict("bad",`bad-${A.map(x=>x.id).join(",")}-${B.map(x=>x.id).join(",")}`);v.textContent="🚨 SCAM!! 🚨";v.classList.add("bad");d.textContent=`Vantaggio netto Squadra ${stronger} (circa ${diff.toFixed(0)}%).${crossRole?" Considerata anche la gerarchia nel proprio ruolo.":""}${isOneToOne?" Negli scambi 1×1 serve almeno il 70% per essere accettabile.":""}`}
 }
