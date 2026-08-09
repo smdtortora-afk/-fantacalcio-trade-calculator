@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#07121e">
+<title>Fantacalcio Trade Calculator 2026/27</title>
+<style>
+:root{
+  --bg:#050a12;--bg2:#071624;--glass:rgba(14,29,43,.78);--glass2:rgba(7,19,31,.86);
+  --line:rgba(108,174,225,.22);--txt:#f7fbff;--muted:#8fa9bd;
+  --cyan:#56c8ff;--blue:#338cff;--green:#52e596;--yellow:#ffd166;--red:#ff7180;
+  --shadow:0 18px 55px rgba(0,0,0,.35)
+}
+*{box-sizing:border-box}
+html{min-height:100%;background:var(--bg)}
+body{
+  margin:0;min-height:100vh;color:var(--txt);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  background:
+    radial-gradient(circle at 12% -5%,rgba(51,140,255,.25),transparent 32%),
+    radial-gradient(circle at 95% 10%,rgba(86,200,255,.12),transparent 28%),
+    linear-gradient(180deg,#06101b 0%,#071522 48%,#040a11 100%);
+  background-attachment:fixed
+}
+body:before{
+  content:"";position:fixed;inset:0;pointer-events:none;opacity:.18;
+  background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+  background-size:32px 32px
+}
+.wrap{position:relative;max-width:1040px;margin:auto;padding:24px 16px 42px}
+.hero{padding:8px 2px 14px}
+.brandline{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.badge,.chip,.status{
+  display:inline-flex;align-items:center;border-radius:999px;padding:6px 9px;font-size:12px;font-weight:800;white-space:nowrap
+}
+.badge{
+  color:#dff4ff;border:1px solid rgba(86,200,255,.34);
+  background:linear-gradient(135deg,rgba(51,140,255,.22),rgba(86,200,255,.08));
+  box-shadow:inset 0 1px rgba(255,255,255,.06)
+}
+h1{
+  font-size:clamp(30px,6vw,48px);line-height:1.02;letter-spacing:-1.7px;
+  margin:13px 0 8px;font-weight:950
+}
+h1 span{
+  background:linear-gradient(90deg,#fff,#b9e8ff 65%,#69cfff);
+  -webkit-background-clip:text;background-clip:text;color:transparent
+}
+.subtitle{max-width:720px;color:#a9bdcc;margin:0 0 14px;line-height:1.5;font-size:14px}
+.statusline{display:flex;flex-wrap:wrap;gap:7px;margin:14px 0 4px}
+.status{background:rgba(8,30,47,.76);color:#bfeaff;border:1px solid rgba(80,171,225,.23);backdrop-filter:blur(10px)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:10px}
+.card,.result{
+  position:relative;overflow:hidden;background:linear-gradient(155deg,rgba(17,37,54,.91),rgba(7,20,32,.92));
+  border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);backdrop-filter:blur(18px)
+}
+.card:before,.result:before{
+  content:"";position:absolute;left:0;right:0;top:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(142,218,255,.65),transparent)
+}
+.card{padding:15px}.cardhead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:11px}
+.card h2{font-size:18px;margin:0;letter-spacing:-.3px}
+.side-dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px;box-shadow:0 0 14px currentColor}
+.add{
+  border:1px solid rgba(87,189,255,.26);border-radius:12px;
+  background:linear-gradient(135deg,rgba(44,132,204,.34),rgba(17,68,105,.6));
+  color:#e8f7ff;font-weight:850;padding:10px 12px;font-size:13px;
+  box-shadow:inset 0 1px rgba(255,255,255,.08);transition:.16s transform,.16s border-color
+}
+.add:active{transform:scale(.97)}
+.player{
+  background:linear-gradient(145deg,rgba(5,17,28,.82),rgba(10,27,41,.9));
+  border:1px solid rgba(87,143,185,.24);border-radius:16px;padding:11px;margin:9px 0;
+  box-shadow:inset 0 1px rgba(255,255,255,.025)
+}
+.rowtop{display:grid;grid-template-columns:100px minmax(0,1fr) 40px;gap:8px}
+select,button{font-family:inherit}
+select{
+  width:100%;min-width:0;border:1px solid rgba(84,139,181,.38);border-radius:12px;
+  background:#081827;color:#fff;padding:11px 10px;font-size:15px;font-weight:650;outline:none;
+  box-shadow:0 6px 18px rgba(0,0,0,.12)
+}
+select:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(86,200,255,.1)}
+.remove{
+  border:1px solid rgba(255,113,128,.18);border-radius:11px;background:rgba(83,25,36,.55);
+  color:#ffc1c8;font-size:20px;font-weight:700
+}
+.meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px;min-height:25px}
+.chip{background:rgba(16,42,64,.9);border:1px solid rgba(70,128,171,.32);color:#d4efff}
+.top30{
+  background:linear-gradient(135deg,#5c410f,#2d210b);border-color:rgba(255,209,102,.45);color:#ffe39b;
+  box-shadow:0 0 16px rgba(255,193,55,.08)
+}
+.empty{color:#6f8ba1;font-size:12px;padding:4px 0}
+.result{margin-top:17px;padding:22px 16px;text-align:center}
+.result-kicker{color:#82a7bf;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:1.5px}
+.score{font-size:clamp(54px,12vw,76px);line-height:1;font-weight:950;letter-spacing:-4px;margin:5px 0 0}
+.verdict{font-size:21px;font-weight:950;margin-top:6px;letter-spacing:-.3px}
+.good{color:var(--green);text-shadow:0 0 24px rgba(82,229,150,.16)}
+.warn{color:var(--yellow);text-shadow:0 0 24px rgba(255,209,102,.13)}
+.bad{color:var(--red);text-shadow:0 0 24px rgba(255,113,128,.14)}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:16px auto 0;max-width:620px}
+.metric{
+  background:rgba(5,18,30,.75);border:1px solid rgba(80,133,174,.22);border-radius:14px;padding:11px
+}
+.metric span{display:block;color:#829bae;font-size:10px;text-transform:uppercase;letter-spacing:.7px;font-weight:800}
+.metric strong{display:block;font-size:22px;margin-top:2px}
+.detail{color:#94adbf;font-size:12px;line-height:1.5;margin:13px auto 0;max-width:650px}
+.legend{
+  margin:14px auto 0;padding:11px 14px;max-width:780px;color:#7893a8;font-size:11px;text-align:center;line-height:1.45
+}
+@media(max-width:720px){
+  .wrap{padding:16px 10px 30px}.grid{grid-template-columns:1fr;gap:12px}.card{padding:12px;border-radius:19px}
+  .rowtop{grid-template-columns:91px minmax(0,1fr) 38px}.add{padding:9px 10px}.result{border-radius:19px;padding:20px 12px}
+}
+@media(max-width:390px){
+  .rowtop{grid-template-columns:84px minmax(0,1fr) 36px;gap:6px}select{font-size:14px;padding:10px 7px}.card h2{font-size:17px}
+}
+
+/* PREMIUM V3 */
+body{overflow-x:hidden}
+.wrap:before,.wrap:after{
+  content:"";position:fixed;z-index:-1;border-radius:50%;filter:blur(70px);pointer-events:none
+}
+.wrap:before{width:260px;height:260px;top:90px;left:-110px;background:rgba(34,126,255,.16)}
+.wrap:after{width:300px;height:300px;right:-150px;bottom:70px;background:rgba(64,219,178,.10)}
+.hero{
+  position:relative;margin-bottom:18px;padding:20px 18px 18px;border-radius:25px;
+  border:1px solid rgba(112,190,244,.18);
+  background:linear-gradient(145deg,rgba(15,39,59,.68),rgba(5,16,27,.42));
+  box-shadow:0 22px 65px rgba(0,0,0,.24),inset 0 1px rgba(255,255,255,.055);
+  backdrop-filter:blur(18px)
+}
+.hero:after{
+  content:"";position:absolute;inset:0;border-radius:25px;pointer-events:none;
+  background:linear-gradient(115deg,rgba(255,255,255,.055),transparent 30%,transparent 70%,rgba(79,187,255,.035))
+}
+.brandline{position:relative;z-index:1}
+.badge:first-child:before{content:"●";font-size:8px;color:#5af0a2;margin-right:7px;text-shadow:0 0 9px #5af0a2}
+h1{position:relative;z-index:1}
+.subtitle,.statusline{position:relative;z-index:1}
+.grid{perspective:1000px}
+.card{transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
+@media(hover:hover){
+  .card:hover{transform:translateY(-3px);border-color:rgba(91,188,255,.34);box-shadow:0 25px 70px rgba(0,0,0,.38)}
+  .add:hover{border-color:rgba(91,199,255,.5);filter:brightness(1.12)}
+}
+.cardhead{padding:2px 2px 5px}
+.player{position:relative;transition:border-color .18s ease,transform .18s ease}
+.player:focus-within{border-color:rgba(86,200,255,.42);box-shadow:0 0 0 3px rgba(86,200,255,.055)}
+.footballer{font-weight:800}
+.role{color:#b9d9ec}
+.result{
+  background:
+    radial-gradient(circle at 50% 0%,rgba(50,139,255,.14),transparent 48%),
+    linear-gradient(155deg,rgba(17,37,54,.94),rgba(5,17,28,.96));
+  padding-top:25px
+}
+.result-kicker:before,.result-kicker:after{content:"";display:inline-block;width:24px;height:1px;background:rgba(119,180,220,.35);vertical-align:middle;margin:0 8px}
+.score{background:linear-gradient(180deg,#fff 25%,#b9eaff 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 9px 22px rgba(54,157,255,.15))}
+.metric{position:relative;overflow:hidden}
+.metric:after{content:"";position:absolute;left:18%;right:18%;bottom:0;height:1px;background:linear-gradient(90deg,transparent,rgba(82,190,255,.42),transparent)}
+.legend{border-top:1px solid rgba(112,164,200,.10);padding-top:16px}
+.footer-brand{display:flex;justify-content:center;align-items:center;gap:7px;margin-top:15px;color:#577389;font-size:10px;font-weight:900;letter-spacing:1.2px;text-transform:uppercase}
+.footer-brand i{width:5px;height:5px;border-radius:50%;background:#4bc6ff;box-shadow:0 0 9px #4bc6ff}
+@media(max-width:720px){
+  .hero{padding:17px 14px 15px;border-radius:21px;margin-bottom:14px}
+  .statusline{gap:5px}.status{font-size:10px;padding:5px 7px}
+  .player{padding:10px}.meta{gap:5px}.chip{font-size:11px;padding:5px 7px}
+  .score{font-size:66px}.verdict{font-size:20px}
+}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+  <div class="brandline"><div class="badge">⚡ FANTACALCIO 2026/27</div><div class="badge">TRADE LAB</div></div>
+  <h1><span>⚽ Trade Calculator</span></h1>
+  <p class="subtitle">Scegli ruolo e giocatore. FVM, quotazione e — quando disponibili — fantamedia e presenze entrano nel calcolo automaticamente.</p>
+  <div class="statusline">
+    <span class="status" id="dataStatus">Caricamento dati…</span>
+    <span class="status" id="matchdayStatus">Fantamedia: in attesa</span>
+  </div>
+  </div>
+
+  <div class="grid">
+    <section class="card">
+      <div class="cardhead"><h2><span class="side-dot" style="color:#52a8ff;background:#52a8ff"></span>Squadra A cede</h2><button class="add" type="button" data-side="A">+ Giocatore</button></div>
+      <div id="sideA"></div>
+    </section>
+    <section class="card">
+      <div class="cardhead"><h2><span class="side-dot" style="color:#ff7180;background:#ff7180"></span>Squadra B cede</h2><button class="add" type="button" data-side="B">+ Giocatore</button></div>
+      <div id="sideB"></div>
+    </section>
+  </div>
+
+  <section class="result">
+    <div class="result-kicker">Indice di equilibrio</div>
+    <div id="score" class="score">—</div>
+    <div id="verdict" class="verdict">Seleziona almeno un giocatore per parte</div>
+    <div class="split">
+      <div class="metric"><span>Valore pacchetto A</span><strong id="valueA">—</strong></div>
+      <div class="metric"><span>Valore pacchetto B</span><strong id="valueB">—</strong></div>
+    </div>
+    <p id="detail" class="detail">≥80% equo • 1×1: 70–79% accettabile • pacchetti: 65–79% accettabile.</p>
+  </section>
+  <div class="legend">I primi 3 turni la fantamedia non pesa. Poi entra gradualmente, con affidabilità ridotta quando le presenze sono poche.</div><div class="footer-brand"><i></i> Trade Lab • Smart Exchange Engine</div>
+</div>
+
+<template id="rowTpl">
+<div class="player">
+  <div class="rowtop">
+    <select class="role" aria-label="Ruolo"><option value="P">Portiere</option><option value="D">Difensore</option><option value="C">Centrocampista</option><option value="A">Attaccante</option></select>
+    <select class="footballer" aria-label="Giocatore"></select>
+    <button class="remove" type="button" aria-label="Rimuovi">×</button>
+  </div>
+  <div class="meta"><span class="empty">Seleziona un giocatore</span></div>
+</div>
+</template>
+
+<script src="players.js"></script>
+<script>
+let ACTIVE_PLAYERS=[...PLAYERS], META={matchday:0,live:false,quoteMode:"fallback",statsMode:"none"};
+const TEAM_ABBR={"Atalanta":"ATA","Bologna":"BOL","Cagliari":"CAG","Como":"COM","Fiorentina":"FIO","Frosinone":"FRO","Genoa":"GEN","Inter":"INT","Juventus":"JUV","Lazio":"LAZ","Lecce":"LEC","Milan":"MIL","Monza":"MON","Napoli":"NAP","Parma":"PAR","Roma":"ROM","Sassuolo":"SAS","Torino":"TOR","Udinese":"UDI","Venezia":"VEN"};
+const teamAbbr=t=>TEAM_ABBR[t]||String(t||"").slice(0,3).toUpperCase();
+let byRole={}, TOP30_IDS=new Set();
+
+function rebuildIndexes(){
+  byRole={};
+  for(const r of ["P","D","C","A"]) byRole[r]=ACTIVE_PLAYERS.filter(p=>p.role===r).sort((a,b)=>a.name.localeCompare(b.name,"it",{sensitivity:"base"}));
+  TOP30_IDS=new Set([...ACTIVE_PLAYERS].sort((a,b)=>(Number(b.fvm)||0)-(Number(a.fvm)||0)||a.name.localeCompare(b.name,"it")).slice(0,30).map(p=>String(p.id)));
+}
+function getPlayer(id){return ACTIVE_PLAYERS.find(p=>String(p.id)===String(id))}
+function selectedIds(){return[...document.querySelectorAll(".footballer")].map(s=>s.value).filter(Boolean)}
+function fillPlayers(row,keepId=""){
+  const role=row.querySelector(".role").value,sel=row.querySelector(".footballer");
+  sel.innerHTML='<option value="">Scegli giocatore…</option>';
+  for(const p of byRole[role]){
+    const o=document.createElement("option");o.value=p.id;o.textContent=`${p.name} — ${teamAbbr(p.team)} — Q${p.quote}`;if(String(p.id)===String(keepId))o.selected=true;sel.appendChild(o)
+  }
+  updateMeta(row)
+}
+function updateMeta(row){
+  const p=getPlayer(row.querySelector(".footballer").value),box=row.querySelector(".meta");
+  if(!p){box.innerHTML='<span class="empty">Seleziona un giocatore</span>';return}
+  const fm=(p.fm!==null&&p.fm!==undefined)?`<span class="chip">FM ${Number(p.fm).toFixed(2)}</span>`:"";
+  const pv=(p.pv!==null&&p.pv!==undefined)?`<span class="chip">PV ${p.pv}</span>`:"";
+  box.innerHTML=`${TOP30_IDS.has(String(p.id))?'<span class="chip top30">🏆 TOP 30</span>':''}<span class="chip" title="${p.team}">${teamAbbr(p.team)}</span><span class="chip">Q ${p.quote}</span><span class="chip">FVM ${p.fvm}</span>${fm}${pv}`
+}
+function addRow(side,role="P"){
+  const node=document.getElementById("rowTpl").content.firstElementChild.cloneNode(true);document.getElementById("side"+side).appendChild(node);node.querySelector(".role").value=role;fillPlayers(node);
+  node.querySelector(".role").addEventListener("change",()=>{fillPlayers(node);calculate()});
+  node.querySelector(".footballer").addEventListener("change",e=>{const id=e.target.value;if(id&&selectedIds().filter(x=>x===id).length>1){e.target.value="";alert("Questo giocatore è già presente nello scambio.")}updateMeta(node);calculate()});
+  node.querySelector(".remove").addEventListener("click",()=>{node.remove();calculate()});calculate()
+}
+function sidePlayers(side){return[...document.querySelectorAll("#side"+side+" .footballer")].map(s=>getPlayer(s.value)).filter(Boolean)}
+
+function fmStageCap(md){
+  if(md<=3)return 0;
+  if(md<=6)return .05;
+  if(md<=10)return .10;
+  if(md<=15)return .15;
+  return .20;
+}
+function adjustedValue(p){
+  const fvm=Number(p.fvm)||0;if(fvm<=3)return 0;
+  let value=Math.pow(fvm,1.35);
+  const md=Number(META.matchday)||0, cap=fmStageCap(md), fm=Number(p.fm), pv=Number(p.pv);
+  if(cap>0&&Number.isFinite(fm)&&Number.isFinite(pv)&&pv>0){
+    const required=Math.max(3,md*.60);
+    const reliability=Math.min(1,pv/required);
+    const signal=Math.max(-1,Math.min(1,(fm-6)/2.5));
+    value*=1+(cap*reliability*signal);
+  }
+  return value
+}
+function packageValue(list){
+  const weights=[1,.90,.80,.72,.65];
+  return list.map(adjustedValue).sort((a,b)=>b-a).reduce((s,v,i)=>s+v*(weights[i]??.60),0)
+}
+function calculate(){
+  const A=sidePlayers("A"),B=sidePlayers("B"),s=document.getElementById("score"),v=document.getElementById("verdict"),va=document.getElementById("valueA"),vb=document.getElementById("valueB"),d=document.getElementById("detail");v.className="verdict";
+  if(!A.length||!B.length){s.textContent="—";v.textContent="Seleziona almeno un giocatore per parte";va.textContent=A.length?packageValue(A).toFixed(0):"—";vb.textContent=B.length?packageValue(B).toFixed(0):"—";return}
+  const a=packageValue(A),b=packageValue(B),fair=Math.min(a,b)/Math.max(a,b)*100,diff=Math.abs(a-b)/Math.max(a,b)*100,stronger=a>b?"A":"B";s.textContent=fair.toFixed(0)+"%";va.textContent=a.toFixed(0);vb.textContent=b.toFixed(0);
+  const isOneToOne=A.length===1&&B.length===1;
+  const acceptableThreshold=isOneToOne?70:65;
+  if(fair>=80){v.textContent="✅ SCAMBIO EQUO";v.classList.add("good");d.textContent="I due pacchetti rientrano nella fascia di equilibrio."}
+  else if(fair>=acceptableThreshold){v.textContent="🟡 SCAMBIO ACCETTABILE";v.classList.add("warn");d.textContent=`Vantaggio Squadra ${stronger} (circa ${diff.toFixed(0)}%), ma entro una fascia accettabile.${isOneToOne?" Negli scambi 1×1 la soglia minima è 70%.":""}`}
+  else{v.textContent="❌ SCAMBIO SBILANCIATO";v.classList.add("bad");d.textContent=`Vantaggio netto Squadra ${stronger} (circa ${diff.toFixed(0)}%).${isOneToOne?" Negli scambi 1×1 serve almeno il 70% per essere accettabile.":""}`}
+}
+function updateStatus(){
+  const ds=document.getElementById("dataStatus"),ms=document.getElementById("matchdayStatus");
+  ds.textContent=META.live?`Dati live • aggiornati ${new Date(META.updatedAt).toLocaleDateString("it-IT")}`:"Listone locale • aggiornamento automatico in attesa di feed autorizzato";
+  const md=Number(META.matchday)||0,cap=fmStageCap(md);
+  ms.textContent=md?`Giornata stimata ${md} • peso FM max ${Math.round(cap*100)}%`:"Fantamedia non attiva";
+}
+async function refreshData(){
+  rebuildIndexes();updateStatus();
+  try{
+    const day=new Date().toISOString().slice(0,10),r=await fetch(`/api/data?day=${day}`,{headers:{"accept":"application/json"}});
+    if(!r.ok)throw new Error("API dati non disponibile");
+    const j=await r.json();
+    if(Array.isArray(j.players)&&j.players.length){ACTIVE_PLAYERS=j.players;META={...META,...j.meta};rebuildIndexes();document.querySelectorAll(".player").forEach(row=>fillPlayers(row,row.querySelector(".footballer").value));updateStatus();calculate()}
+  }catch(e){updateStatus()}
+}
+document.querySelectorAll(".add").forEach(b=>b.addEventListener("click",()=>addRow(b.dataset.side)));
+rebuildIndexes();addRow("A","P");addRow("B","P");refreshData();
+</script>
+</body>
+</html>
