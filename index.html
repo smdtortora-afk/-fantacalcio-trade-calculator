@@ -180,6 +180,121 @@ select option{white-space:nowrap}
   select{font-size:13px;padding:10px 7px}
 }
 
+
+/* MERCATO EDITION */
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+:root{
+  --market-green:#22f07a;
+  --market-green-2:#00bf5f;
+  --ink:#050806;
+  --panel:rgba(8,15,11,.84);
+  --panel2:rgba(12,23,16,.92);
+  --market-line:rgba(50,240,122,.22);
+}
+body{
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background:
+    linear-gradient(180deg,rgba(2,7,4,.76),rgba(3,9,6,.92)),
+    url('https://www.skrill.com/fileadmin/_processed_/d/e/csm_FR_Here_we_go_985b59a624.png') center 12%/620px auto no-repeat fixed,
+    radial-gradient(circle at 50% 0%,rgba(34,240,122,.14),transparent 38%),
+    #030704;
+}
+body:after{
+  content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:
+    linear-gradient(90deg,rgba(0,0,0,.55),transparent 25%,transparent 75%,rgba(0,0,0,.55)),
+    linear-gradient(180deg,rgba(0,0,0,.08),rgba(0,0,0,.58));
+}
+.wrap{max-width:980px}
+.hero{
+  border-color:var(--market-line)!important;
+  background:linear-gradient(145deg,rgba(8,20,12,.88),rgba(3,10,6,.78))!important;
+  box-shadow:0 24px 70px rgba(0,0,0,.48),0 0 0 1px rgba(34,240,122,.035) inset!important;
+}
+.hero:before{
+  content:"TRANSFER ROOM";position:absolute;right:16px;top:14px;
+  font-family:'Anton',Impact,sans-serif;font-size:11px;letter-spacing:2px;color:rgba(34,240,122,.58)
+}
+.badge{
+  background:rgba(4,20,10,.86)!important;
+  border-color:rgba(34,240,122,.34)!important;color:#caffdc!important
+}
+.badge:first-child:before{color:var(--market-green)!important;text-shadow:0 0 10px var(--market-green)!important}
+h1{
+  font-family:'Anton',Impact,sans-serif!important;
+  text-transform:uppercase;letter-spacing:.3px!important
+}
+h1 span{
+  background:linear-gradient(90deg,#ffffff 0%,#d8ffe6 52%,#22f07a 100%)!important;
+  -webkit-background-clip:text!important;background-clip:text!important;color:transparent!important
+}
+.subtitle{color:#b5c9bb!important}
+.status{
+  background:rgba(5,24,12,.8)!important;border-color:rgba(34,240,122,.18)!important;color:#bdfbd2!important
+}
+.card,.result{
+  border-color:rgba(34,240,122,.18)!important;
+  background:linear-gradient(150deg,rgba(9,18,12,.93),rgba(4,10,7,.94))!important;
+  box-shadow:0 20px 55px rgba(0,0,0,.44)!important
+}
+.card:before,.result:before{
+  background:linear-gradient(90deg,transparent,rgba(34,240,122,.7),transparent)!important
+}
+.card h2{
+  font-family:'Anton',Impact,sans-serif!important;
+  text-transform:uppercase;letter-spacing:.5px!important;font-size:20px!important
+}
+.side-dot{box-shadow:0 0 16px currentColor!important}
+.add{
+  background:linear-gradient(135deg,#0e7e43,#07552e)!important;
+  border-color:rgba(34,240,122,.42)!important;color:white!important
+}
+.player{
+  background:linear-gradient(145deg,rgba(5,14,9,.96),rgba(9,21,13,.96))!important;
+  border-color:rgba(34,240,122,.16)!important
+}
+select{
+  background:#06110a!important;border-color:rgba(70,190,117,.28)!important;
+  color:#f4fff7!important;font-weight:750!important
+}
+select:focus{border-color:var(--market-green)!important;box-shadow:0 0 0 3px rgba(34,240,122,.10)!important}
+.remove{background:rgba(84,17,26,.62)!important}
+.chip{
+  background:rgba(7,35,17,.92)!important;border-color:rgba(34,240,122,.22)!important;color:#d5ffe3!important
+}
+.top30{
+  background:linear-gradient(135deg,#5d4506,#2d2104)!important;color:#ffe28a!important;border-color:#aa831e!important
+}
+.result-kicker{color:#7fc79a!important}
+.score{
+  font-family:'Anton',Impact,sans-serif!important;
+  background:linear-gradient(180deg,#fff 15%,#d8ffe6 62%,#22f07a 100%)!important;
+  -webkit-background-clip:text!important;background-clip:text!important;color:transparent!important;
+  letter-spacing:-1px!important
+}
+.verdict{font-family:'Anton',Impact,sans-serif!important;text-transform:uppercase;letter-spacing:.7px!important}
+.metric{
+  background:rgba(4,13,8,.86)!important;border-color:rgba(34,240,122,.16)!important
+}
+.metric span{color:#789987!important}.metric strong{font-family:'Anton',Impact,sans-serif!important}
+.footer-brand{color:#587262!important}.footer-brand i{background:var(--market-green)!important;box-shadow:0 0 10px var(--market-green)!important}
+
+.market-stamp{
+  display:flex;align-items:center;justify-content:center;gap:9px;
+  margin:13px auto 0;width:max-content;max-width:100%;
+  padding:8px 12px;border:1px solid rgba(34,240,122,.24);border-radius:999px;
+  background:rgba(3,18,9,.72);color:#bfffd4;
+  font-family:'Anton',Impact,sans-serif;letter-spacing:1px;font-size:12px
+}
+.market-stamp b{color:var(--market-green)}
+@media(max-width:720px){
+  body{background-size:460px auto;background-position:center 90px}
+  .hero:before{font-size:9px;right:12px;top:10px}
+  h1{font-size:38px!important}
+  .card h2{font-size:18px!important}
+}
+
 </style>
 </head>
 <body>
@@ -193,14 +308,15 @@ select option{white-space:nowrap}
     <span class="status" id="matchdayStatus">Fantamedia: in attesa</span>
   </div>
   </div>
+  <div class="market-stamp">🟢 <b>HERE WE GO</b> • TRADE CHECK</div>
 
   <div class="grid">
     <section class="card">
-      <div class="cardhead"><h2><span class="side-dot" style="color:#52a8ff;background:#52a8ff"></span>Squadra A cede</h2><button class="add" type="button" data-side="A">+ Giocatore</button></div>
+      <div class="cardhead"><h2><span class="side-dot" style="color:#52a8ff;background:#52a8ff"></span>😈 Scammatore cede</h2><button class="add" type="button" data-side="A">+ Giocatore</button></div>
       <div id="sideA"></div>
     </section>
     <section class="card">
-      <div class="cardhead"><h2><span class="side-dot" style="color:#ff7180;background:#ff7180"></span>Squadra B cede</h2><button class="add" type="button" data-side="B">+ Giocatore</button></div>
+      <div class="cardhead"><h2><span class="side-dot" style="color:#ff7180;background:#ff7180"></span>😇 Scammato cede</h2><button class="add" type="button" data-side="B">+ Giocatore</button></div>
       <div id="sideB"></div>
     </section>
   </div>
@@ -275,7 +391,7 @@ function fmStageCap(md){
 }
 function adjustedValue(p){
   const fvm=Number(p.fvm)||0;if(fvm<=3)return 0;
-  let value=Math.pow(fvm,1.35);
+  let value=Math.pow(fvm,1.10);
   const md=Number(META.matchday)||0, cap=fmStageCap(md), fm=Number(p.fm), pv=Number(p.pv);
   if(cap>0&&Number.isFinite(fm)&&Number.isFinite(pv)&&pv>0){
     const required=Math.max(3,md*.60);
@@ -289,15 +405,61 @@ function packageValue(list){
   const weights=[1,.90,.80,.72,.65];
   return list.map(adjustedValue).sort((a,b)=>b-a).reduce((s,v,i)=>s+v*(weights[i]??.60),0)
 }
+
+let lastVerdictSound="";
+function playTradeSound(type){
+  try{
+    const AudioCtx=window.AudioContext||window.webkitAudioContext;
+    const ctx=new AudioCtx();
+    const now=ctx.currentTime;
+    if(type==="bad"){
+      // Two compact police-siren sweeps.
+      [0,.48].forEach((offset)=>{
+        const osc=ctx.createOscillator(),gain=ctx.createGain();
+        osc.type="sawtooth";
+        osc.frequency.setValueAtTime(520,now+offset);
+        osc.frequency.linearRampToValueAtTime(880,now+offset+.20);
+        osc.frequency.linearRampToValueAtTime(520,now+offset+.40);
+        gain.gain.setValueAtTime(.0001,now+offset);
+        gain.gain.exponentialRampToValueAtTime(.065,now+offset+.025);
+        gain.gain.setValueAtTime(.065,now+offset+.34);
+        gain.gain.exponentialRampToValueAtTime(.0001,now+offset+.42);
+        osc.connect(gain);gain.connect(ctx.destination);
+        osc.start(now+offset);osc.stop(now+offset+.43);
+      });
+      setTimeout(()=>ctx.close(),1200);
+      return;
+    }
+    const notes=type==="good"?[523.25,659.25,783.99]:[440,523.25];
+    notes.forEach((freq,i)=>{
+      const osc=ctx.createOscillator(),gain=ctx.createGain();
+      osc.type="sine";
+      osc.frequency.setValueAtTime(freq,now+i*.11);
+      gain.gain.setValueAtTime(0.0001,now+i*.11);
+      gain.gain.exponentialRampToValueAtTime(.075,now+i*.11+.018);
+      gain.gain.exponentialRampToValueAtTime(0.0001,now+i*.11+.18);
+      osc.connect(gain);gain.connect(ctx.destination);
+      osc.start(now+i*.11);osc.stop(now+i*.11+.20);
+    });
+    setTimeout(()=>ctx.close(),700);
+  }catch(e){}
+}
+function soundVerdict(type,key){
+  if(key!==lastVerdictSound){
+    lastVerdictSound=key;
+    playTradeSound(type);
+  }
+}
+
 function calculate(){
   const A=sidePlayers("A"),B=sidePlayers("B"),s=document.getElementById("score"),v=document.getElementById("verdict"),va=document.getElementById("valueA"),vb=document.getElementById("valueB"),d=document.getElementById("detail");v.className="verdict";
-  if(!A.length||!B.length){s.textContent="—";v.textContent="Seleziona almeno un giocatore per parte";va.textContent=A.length?packageValue(A).toFixed(0):"—";vb.textContent=B.length?packageValue(B).toFixed(0):"—";return}
+  if(!A.length||!B.length){lastVerdictSound="";s.textContent="—";v.textContent="Seleziona almeno un giocatore per parte";va.textContent=A.length?packageValue(A).toFixed(0):"—";vb.textContent=B.length?packageValue(B).toFixed(0):"—";return}
   const a=packageValue(A),b=packageValue(B),fair=Math.min(a,b)/Math.max(a,b)*100,diff=Math.abs(a-b)/Math.max(a,b)*100,stronger=a>b?"A":"B";s.textContent=fair.toFixed(0)+"%";va.textContent=a.toFixed(0);vb.textContent=b.toFixed(0);
   const isOneToOne=A.length===1&&B.length===1;
   const acceptableThreshold=isOneToOne?70:65;
-  if(fair>=80){v.textContent="✅ SCAMBIO EQUO";v.classList.add("good");d.textContent="I due pacchetti rientrano nella fascia di equilibrio."}
-  else if(fair>=acceptableThreshold){v.textContent="🟡 SCAMBIO ACCETTABILE";v.classList.add("warn");d.textContent=`Vantaggio Squadra ${stronger} (circa ${diff.toFixed(0)}%), ma entro una fascia accettabile.${isOneToOne?" Negli scambi 1×1 la soglia minima è 70%.":""}`}
-  else{v.textContent="❌ SCAMBIO SBILANCIATO";v.classList.add("bad");d.textContent=`Vantaggio netto Squadra ${stronger} (circa ${diff.toFixed(0)}%).${isOneToOne?" Negli scambi 1×1 serve almeno il 70% per essere accettabile.":""}`}
+  if(fair>=80){soundVerdict("good",`good-${A.map(x=>x.id).join(",")}-${B.map(x=>x.id).join(",")}`);v.textContent="✅ SCAMBIO EQUO";v.classList.add("good");d.textContent="I due pacchetti rientrano nella fascia di equilibrio."}
+  else if(fair>=acceptableThreshold){soundVerdict("warn",`warn-${A.map(x=>x.id).join(",")}-${B.map(x=>x.id).join(",")}`);v.textContent="🟡 SCAMBIO ACCETTABILE";v.classList.add("warn");d.textContent=`Vantaggio Squadra ${stronger} (circa ${diff.toFixed(0)}%), ma entro una fascia accettabile.${isOneToOne?" Negli scambi 1×1 la soglia minima è 70%.":""}`}
+  else{soundVerdict("bad",`bad-${A.map(x=>x.id).join(",")}-${B.map(x=>x.id).join(",")}`);v.textContent="🚨 SCAM!! 🚨";v.classList.add("bad");d.textContent=`Vantaggio netto Squadra ${stronger} (circa ${diff.toFixed(0)}%).${isOneToOne?" Negli scambi 1×1 serve almeno il 70% per essere accettabile.":""}`}
 }
 function updateStatus(){
   const ds=document.getElementById("dataStatus"),ms=document.getElementById("matchdayStatus");
