@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Fantacalcio Trade Calculator</title>
+<style>
+:root{--card:#0e1d2b;--line:#29445a;--txt:#f5f7fa;--muted:#a8b7c7;--blue:#59a8ff}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(180deg,#06101a,#0a1725);color:var(--txt);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+.wrap{max-width:1080px;margin:auto;padding:18px}
+.hero h1{font-size:30px;margin:8px 0}.hero p{color:var(--muted);line-height:1.45}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px}
+.head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}
+.head h2{margin:0;font-size:21px}
+.btn{border:0;border-radius:12px;padding:12px 14px;font-weight:800;background:#173a59;color:#d7ecff;cursor:pointer;font-size:16px}
+.player{border:1px solid #233e54;background:#0a1724;border-radius:14px;padding:12px;margin:10px 0}
+.player-top{display:grid;grid-template-columns:1fr 44px;gap:8px}
+.name{font-size:17px;font-weight:700}
+.remove{background:#3b1d26;color:#ffc1cb;border:0;border-radius:10px;font-size:20px}
+.fields{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:8px}
+label{font-size:11px;color:var(--muted)}
+input,select{display:block;width:100%;margin-top:5px;padding:12px 10px;background:#07131f;color:white;border:1px solid #35536c;border-radius:10px;font-size:16px}
+input:focus,select:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(89,168,255,.12)}
+.credits{display:grid;grid-template-columns:1fr 130px;align-items:center;gap:10px;margin-top:14px}
+.result{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px}
+.metric{border:1px solid var(--line);background:#102335;border-radius:14px;padding:13px}
+.metric span{display:block;color:var(--muted);font-size:12px}.metric strong{font-size:23px}
+.verdict{grid-column:1/-1;text-align:center;border:1px solid var(--line);border-radius:15px;padding:18px;font-size:22px;font-weight:900;background:#102335}
+.good{background:#0c2c1e;border-color:#246c49;color:#9cf2bb}.warn{background:#30270f;border-color:#77611d;color:#ffe08b}.bad{background:#32151a;border-color:#7b3038;color:#ffb1b8}
+.hint{background:#0a2134;border:1px solid #244e6d;padding:10px;border-radius:12px;color:#cfe8ff;margin-bottom:12px;font-size:13px}
+@media(max-width:780px){.grid{grid-template-columns:1fr}.fields{grid-template-columns:1fr 1fr}.result{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.wrap{padding:12px}.result{grid-template-columns:1fr}.verdict{grid-column:auto}.fields{grid-template-columns:1fr 1fr}.credits{grid-template-columns:1fr 100px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="hero"><h1>⚽ Trade Calculator Fantacalcio</h1><p>Ora trovi già due righe per parte: puoi scrivere subito il nome del calciatore senza premere nulla.</p></div>
+<div class="hint">Il tasto “+ Aggiungi” serve solo per creare ulteriori righe. Il campo nome è la prima casella grande di ogni riga.</div>
+
+<div class="grid">
+<section class="card">
+<div class="head"><h2>🔵 Squadra A cede</h2><button class="btn addBtn" type="button" data-team="A">+ Aggiungi</button></div>
+<div id="playersA"></div>
+<div class="credits"><span>Crediti ceduti</span><input id="creditsA" type="number" min="0" value="0"></div>
+</section>
+
+<section class="card">
+<div class="head"><h2>🔴 Squadra B cede</h2><button class="btn addBtn" type="button" data-team="B">+ Aggiungi</button></div>
+<div id="playersB"></div>
+<div class="credits"><span>Crediti ceduti</span><input id="creditsB" type="number" min="0" value="0"></div>
+</section>
+</div>
+
+<section class="result">
+<div class="metric"><span>Valore A</span><strong id="valueA">0.00</strong></div>
+<div class="metric"><span>Valore B</span><strong id="valueB">0.00</strong></div>
+<div class="metric"><span>Equità</span><strong id="fairness">—</strong></div>
+<div class="metric"><span>Differenza</span><strong id="difference">—</strong></div>
+<div id="verdict" class="verdict">Inserisci almeno un calciatore per parte</div>
+</section>
+</div>
+
+<template id="playerTemplate">
+<div class="player">
+<div class="player-top">
+<input class="name" type="text" placeholder="Scrivi nome calciatore" autocomplete="off">
+<button type="button" class="remove">×</button>
+</div>
+<div class="fields">
+<label>Ruolo<select class="role"><option>P</option><option>D</option><option>C</option><option selected>A</option></select></label>
+<label>Quotazione<input class="quote" type="number" min="0" step="0.1" placeholder="30"></label>
+<label>Fantamedia<input class="fm" type="number" min="0" step="0.01" placeholder="7.20"></label>
+<label>Titolarità %<input class="starter" type="number" min="0" max="100" value="100"></label>
+<label>Fascia<select class="tier"><option>Altro</option><option>Top 30</option><option>Top 20</option></select></label>
+</div>
+</div>
+</template>
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  const q=(s,r=document)=>r.querySelector(s);
+  const qa=(s,r=document)=>Array.from(r.querySelectorAll(s));
+
+  function addPlayer(team, focusIt){
+    const node=q('#playerTemplate').content.firstElementChild.cloneNode(true);
+    q('#players'+team).appendChild(node);
+    q('.remove',node).addEventListener('click',()=>{node.remove();calculate();});
+    qa('input,select',node).forEach(el=>{
+      el.addEventListener('input',calculate);
+      el.addEventListener('change',calculate);
+    });
+    if(focusIt){setTimeout(()=>q('.name',node).focus(),100);}
+    calculate();
+  }
+
+  function get(team){
+    return qa('#players'+team+' .player').map(r=>({
+      name:q('.name',r).value.trim(),
+      quote:parseFloat(q('.quote',r).value)||0,
+      fm:parseFloat(q('.fm',r).value)||6,
+      starter:(parseFloat(q('.starter',r).value)||100)/100,
+      tier:q('.tier',r).value
+    })).filter(x=>x.name||x.quote);
+  }
+
+  function playerValue(p){
+    return p.quote*(1+(p.fm-6)*0.12)*(0.85+0.15*p.starter);
+  }
+
+  function calculate(){
+    const A=get('A'),B=get('B');
+    const ca=(parseFloat(q('#creditsA').value)||0)/10;
+    const cb=(parseFloat(q('#creditsB').value)||0)/10;
+    const a=A.reduce((s,p)=>s+playerValue(p),0)+ca;
+    const b=B.reduce((s,p)=>s+playerValue(p),0)+cb;
+    q('#valueA').textContent=a.toFixed(2);
+    q('#valueB').textContent=b.toFixed(2);
+    const v=q('#verdict'); v.className='verdict';
+
+    if(!A.length||!B.length||Math.max(a,b)===0){
+      q('#fairness').textContent='—'; q('#difference').textContent='—';
+      v.textContent='Inserisci almeno un calciatore per parte'; return;
+    }
+
+    const f=Math.min(a,b)/Math.max(a,b)*100;
+    q('#fairness').textContent=f.toFixed(1)+'%';
+    q('#difference').textContent=(100-f).toFixed(1)+'%';
+
+    const aReceivesTop=B.some(x=>x.tier==='Top 20');
+    const bReceivesTop=A.some(x=>x.tier==='Top 20');
+    const aCedesTop=A.some(x=>x.tier==='Top 20'||x.tier==='Top 30');
+    const bCedesTop=B.some(x=>x.tier==='Top 20'||x.tier==='Top 30');
+
+    if((aReceivesTop&&!aCedesTop)||(bReceivesTop&&!bCedesTop)){
+      v.textContent='❌ Bocciato – protezione Top Player'; v.classList.add('bad');
+    } else if(f>=90){
+      v.textContent='✅ Scambio equo'; v.classList.add('good');
+    } else if(f>=80){
+      v.textContent='🟡 Scambio da revisionare'; v.classList.add('warn');
+    } else {
+      v.textContent='❌ Scambio sbilanciato'; v.classList.add('bad');
+    }
+  }
+
+  qa('.addBtn').forEach(btn=>btn.addEventListener('click',()=>addPlayer(btn.dataset.team,true)));
+  q('#creditsA').addEventListener('input',calculate);
+  q('#creditsB').addEventListener('input',calculate);
+
+  addPlayer('A',false); addPlayer('A',false);
+  addPlayer('B',false); addPlayer('B',false);
+});
+</script>
+</body>
+</html>
