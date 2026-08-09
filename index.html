@@ -171,7 +171,7 @@ function fillPlayers(row,keepId=""){
   const role=row.querySelector(".role").value,sel=row.querySelector(".footballer");
   sel.innerHTML='<option value="">Scegli giocatore…</option>';
   for(const p of byRole[role]){
-    const o=document.createElement("option");o.value=p.id;o.textContent=`${p.name} — Q${p.quote}`;if(String(p.id)===String(keepId))o.selected=true;sel.appendChild(o)
+    const o=document.createElement("option");o.value=p.id;o.textContent=`${p.name} · ${teamAbbr(p.team)} — Q${p.quote}`;if(String(p.id)===String(keepId))o.selected=true;sel.appendChild(o)
   }
   updateMeta(row)
 }
