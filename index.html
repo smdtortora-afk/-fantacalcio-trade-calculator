@@ -171,6 +171,15 @@ h1{position:relative;z-index:1}
   .score{font-size:66px}.verdict{font-size:20px}
 }
 
+
+/* NO-WRAP DROPDOWN */
+select,.footballer,.role{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+select option{white-space:nowrap}
+@media(max-width:720px){
+  .rowtop{grid-template-columns:88px minmax(0,1fr) 36px}
+  select{font-size:13px;padding:10px 7px}
+}
+
 </style>
 </head>
 <body>
