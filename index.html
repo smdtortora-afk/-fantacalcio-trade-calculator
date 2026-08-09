@@ -111,7 +111,7 @@ select,.badge,.status,.chip,.add,.navPills{font-family:'Outfit',sans-serif!impor
   </div>
 
   <div class="hero">
-  <div class="brandline"><div class="badge">⚡ FANTACALCIO 2026/27</div><div class="badge">TRADE LAB</div></div>
+  <div class="brandline"><div class="badge">🛡️ MODIFICATORE ON</div><div class="badge">⚡ FANTACALCIO 2026/27</div><div class="badge">TRADE LAB</div></div>
   <h1><span>⚽ Trade Calculator</span></h1>
   <p class="subtitle">Scegli ruolo e giocatore. FVM, quotazione e — quando disponibili — fantamedia e presenze entrano nel calcolo automaticamente.</p>
   <div class="statusline">
@@ -147,7 +147,7 @@ select,.badge,.status,.chip,.add,.navPills{font-family:'Outfit',sans-serif!impor
     <div class="whyTitle">Perché c’è questa differenza?</div>
     <div class="whyGrid">
       <div class="whyItem"><b>👑 Gerarchia giocatori</b><span>I top e i titolari più appetibili mantengono un vantaggio senza essere sovrastimati.</span></div>
-      <div class="whyItem"><b>🛡️ Appetibilità fantacalcistica</b><span>Per i portieri conta anche il livello della squadra, la titolarità e l’affidabilità.</span></div>
+      <div class="whyItem"><b>🛡️ Appetibilità fantacalcistica</b><span>Con modificatore, portieri forti e difensori di fascia alta ricevono una tutela specifica; durante la stagione conteranno anche MV, FM e presenze.</span></div>
       <div class="whyItem"><b>📊 Valore reale</b><span>FVM, quotazione e poi fantamedia/presenze entrano nel calcolo con pesi progressivi.</span></div>
     </div>
   </section>
@@ -210,9 +210,54 @@ function fmStageCap(md){
   if(md<=15)return .15;
   return .20;
 }
+
+function rolePercentile(p){
+  const peers=(byRole[p.role]||[])
+    .filter(x=>(Number(x.fvm)||0)>3)
+    .slice()
+    .sort((a,b)=>(Number(a.fvm)||0)-(Number(b.fvm)||0));
+  if(peers.length<2)return .5;
+  const pos=peers.findIndex(x=>String(x.id)===String(p.id));
+  return pos<0?.5:pos/(peers.length-1);
+}
+
+// LEGA CON MODIFICATORE:
+// tutela strutturale di portieri forti e difensori di fascia alta/da bonus.
+function modifierPremium(p){
+  const pct=rolePercentile(p);
+  let mult=1;
+
+  if(p.role==="P"){
+    if(pct>=.92) mult=1.24;
+    else if(pct>=.80) mult=1.17;
+    else if(pct>=.65) mult=1.10;
+    else if(pct>=.50) mult=1.04;
+  }
+
+  if(p.role==="D"){
+    if(pct>=.92) mult=1.18;
+    else if(pct>=.80) mult=1.12;
+    else if(pct>=.65) mult=1.07;
+    else if(pct>=.50) mult=1.03;
+
+    // Quando MV/FM sono disponibili, premiamo chi produce bonus
+    // e/o mantiene rendimento da modificatore.
+    const fm=Number(p.fm), mv=Number(p.mv), pv=Number(p.pv);
+    if(Number.isFinite(fm)&&Number.isFinite(mv)&&Number.isFinite(pv)&&pv>=4){
+      const bonusGap=fm-mv;
+      if(mv>=6.25) mult*=1.04;
+      if(mv>=6.45) mult*=1.03;
+      if(bonusGap>=.25) mult*=1.04;
+      if(bonusGap>=.50) mult*=1.04;
+    }
+  }
+
+  return mult;
+}
+
 function adjustedValue(p){
   const fvm=Number(p.fvm)||0;if(fvm<=3)return 0;
-  let value=Math.pow(fvm,1.10);
+  let value=Math.pow(fvm,1.10)*modifierPremium(p);
   const md=Number(META.matchday)||0, cap=fmStageCap(md), fm=Number(p.fm), pv=Number(p.pv);
   if(cap>0&&Number.isFinite(fm)&&Number.isFinite(pv)&&pv>0){
     const required=Math.max(3,md*.60);
@@ -236,7 +281,14 @@ function roleStandingMultiplier(p){
   if(peers.length<2)return 1;
   const pos=peers.findIndex(x=>String(x.id)===String(p.id));
   const pct=(pos<0?.5:pos/(peers.length-1));
-  return .75 + (.50*pct); // da 0,75 a 1,25
+
+  // Correttivo più deciso per gli 1x1 cross-role:
+  // premia davvero chi è nella fascia alta del proprio ruolo.
+  let mult=.62 + (.76*pct); // 0,62 → 1,38
+
+  // La tutela specifica dei portieri è già inclusa nel valore base
+  // tramite modifierPremium(), qui lasciamo solo il confronto di fascia.
+  return mult;
 }
 
 let lastVerdictSound="";
@@ -345,7 +397,7 @@ function calculate(){
   }
   const fair=Math.min(a,b)/Math.max(a,b)*100,diff=Math.abs(a-b)/Math.max(a,b)*100,stronger=a>b?"A":"B";
   s.textContent=fair.toFixed(0)+"%";va.textContent=a.toFixed(0);vb.textContent=b.toFixed(0);
-  const acceptableThreshold=isOneToOne?70:65;
+  const acceptableThreshold=crossRole?72:(isOneToOne?70:65);
   if(fair>=80){const eqKey=`good-${A.map(x=>x.id).join(",")}-${B.map(x=>x.id).join(",")}`;if(eqKey!==lastVerdictSound){lastVerdictSound=eqKey;playMiracleSound();showHereWeGo();}v.textContent="✅ SCAMBIO EQUO";v.classList.add("good");d.textContent=`I due pacchetti rientrano nella fascia di equilibrio.${crossRole?" Applicato anche il valore relativo nel proprio ruolo.":""}`}
   else if(fair>=acceptableThreshold){soundVerdict("warn",`warn-${A.map(x=>x.id).join(",")}-${B.map(x=>x.id).join(",")}`);v.textContent="🟡 SCAMBIO ACCETTABILE";v.classList.add("warn");d.textContent=`Vantaggio Squadra ${stronger} (circa ${diff.toFixed(0)}%), ma entro una fascia accettabile.${crossRole?" Considerata anche la gerarchia nel proprio ruolo.":""}${isOneToOne?" Negli scambi 1×1 la soglia minima è 70%.":""}`}
   else{soundVerdict("bad",`bad-${A.map(x=>x.id).join(",")}-${B.map(x=>x.id).join(",")}`);v.textContent="🚨 SCAM!! 🚨";v.classList.add("bad");d.textContent=`Vantaggio netto Squadra ${stronger} (circa ${diff.toFixed(0)}%).${crossRole?" Considerata anche la gerarchia nel proprio ruolo.":""}${isOneToOne?" Negli scambi 1×1 serve almeno il 70% per essere accettabile.":""}`}
