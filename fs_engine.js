@@ -1,193 +1,219 @@
-/* FANTASCAM — FS ENGINE V3.0
-   Fasce strutturali P/D/C/A + valore di reparto + modificatore + pacchetti.
+/* FANTASCAM — FS ENGINE V4.0
+   Algoritmo proprietario: il listone e' solo un segnale secondario.
+   La fantamedia entra progressivamente dalla 10a giornata ed e' corretta per presenze.
 */
 (() => {
-  const BAND_ORDER=["ELITE","TOP","ALTA","MEDIA","BASSA","RISERVA"];
-  const BAND_BASE={ELITE:96,TOP:86,ALTA:74,MEDIA:61,BASSA:47,RISERVA:29};
+  const BANDS=["ELITE","TOP","ALTA","MEDIA","BASSA","RISERVA"];
 
-  // Ambiente difensivo iniziale per i portieri.
-  // In seguito sarà aggiornato automaticamente dal layer dati.
-  const GK_ENV={
-    "Inter":1.14,"Milan":1.12,"Napoli":1.11,"Juventus":1.10,"Roma":1.09,"Atalanta":1.08,
-    "Bologna":1.04,"Lazio":1.03,"Fiorentina":1.00,"Como":1.00,"Torino":.99,"Udinese":.97,
-    "Genoa":.96,"Sassuolo":.95,"Parma":.94,"Cagliari":.93,"Lecce":.92,
-    "Frosinone":.91,"Monza":.90,"Venezia":.89
+  // Forza squadra: prior proprietario, separato dal listone.
+  const TEAM={
+    Inter:{def:96,att:94}, Milan:{def:91,att:92}, Napoli:{def:92,att:91},
+    Juventus:{def:90,att:89}, Roma:{def:89,att:90}, Atalanta:{def:88,att:92},
+    Bologna:{def:84,att:83}, Lazio:{def:83,att:85}, Fiorentina:{def:80,att:84},
+    Como:{def:79,att:83}, Torino:{def:78,att:76}, Udinese:{def:74,att:73},
+    Genoa:{def:73,att:70}, Sassuolo:{def:70,att:75}, Parma:{def:69,att:70},
+    Cagliari:{def:67,att:68}, Lecce:{def:64,att:64}, Frosinone:{def:62,att:64},
+    Monza:{def:61,att:62}, Venezia:{def:59,att:60}
   };
 
-  const rankedPeers=role=>(byRole[role]||[])
-    .filter(x=>(Number(x.fvm)||0)>3)
-    .slice()
-    .sort((a,b)=>(Number(b.fvm)||0)-(Number(a.fvm)||0)||(Number(b.quote)||0)-(Number(a.quote)||0));
+  const clamp=(x,a=0,b=100)=>Math.max(a,Math.min(b,x));
+  const team=p=>TEAM[p.team]||{def:68,att:68};
+  const num=(x,d=0)=>Number.isFinite(Number(x))?Number(x):d;
 
-  const roleRank=p=>{
-    const peers=rankedPeers(p.role);
-    const i=peers.findIndex(x=>String(x.id)===String(p.id));
-    return i<0?999:i+1;
+  // Il mercato/listone pesa poco e solo come prior.
+  const marketSignal=p=>{
+    const f=num(p.fvm),q=num(p.quote);
+    return clamp(18*Math.log1p(f)+10*Math.log1p(q),10,100);
   };
+
+  // Presenze/titolarita': usa pv se disponibile; prima dei dati reali usa un prior prudente.
+  const availability=p=>{
+    const md=Math.max(1,num(META&&META.matchday,1));
+    const pv=num(p.pv,-1);
+    if(pv>=0){
+      const rate=clamp(pv/md,0,1);
+      return 35+65*rate;
+    }
+    // Il listone non assegna il valore: qui aiuta solo a distinguere probabile titolare/riserva.
+    const q=num(p.quote);
+    return q>=8?82:q>=5?70:q>=3?55:32;
+  };
+
+  const fmWeight=()=>{
+    const md=num(META&&META.matchday,0);
+    if(md<6)return 0;
+    if(md<10)return .03;
+    if(md<15)return .10;
+    if(md<21)return .15;
+    return .20;
+  };
+
+  const formSignal=p=>{
+    const md=Math.max(1,num(META&&META.matchday,1));
+    const pv=num(p.pv,0),fm=num(p.fm,NaN),mv=num(p.mv,NaN);
+    if(!Number.isFinite(fm)||pv<=0)return 50;
+
+    // Affidabilita' della FM: una media su poche presenze pesa poco.
+    const expected=Math.max(4,md*.75);
+    const reliability=clamp(pv/expected,0,1);
+    const fmScore=clamp(50+(fm-6)*24,15,100);
+    let score=50+(fmScore-50)*reliability;
+
+    // P/D: media voto pura utile per modificatore.
+    if((p.role==="P"||p.role==="D")&&Number.isFinite(mv)){
+      const mvScore=clamp(50+(mv-6)*30,15,100);
+      score=.60*score+.40*(50+(mvScore-50)*reliability);
+    }
+    return clamp(score);
+  };
+
+  const roleProfile=p=>{
+    const mr=String(p.mantraRole||"");
+    if(p.role==="P")return 70;
+    if(p.role==="D"){
+      if(mr.includes("W")||mr.includes("E"))return 92;
+      if(mr.includes("Dd")||mr.includes("Ds"))return 78;
+      if(mr==="Dc")return 62;
+      return 70;
+    }
+    if(p.role==="C"){
+      if(mr.includes("A")||mr.includes("W"))return 94;
+      if(mr.includes("T"))return 88;
+      if(mr.includes("C"))return 74;
+      if(mr==="M")return 60;
+      return 70;
+    }
+    if(p.role==="A"){
+      // A/Pc e profili offensivi sono naturalmente piu' centrali.
+      if(mr.includes("Pc"))return 94;
+      if(mr.includes("A"))return 90;
+      return 84;
+    }
+    return 60;
+  };
+
+  const roleScore=p=>{
+    const t=team(p),avail=availability(p),prof=roleProfile(p),mkt=marketSignal(p);
+    const form=formSignal(p),fw=fmWeight();
+
+    let base;
+    if(p.role==="P"){
+      // P: titolarita + difesa + modificatore/form + piccolo prior mercato.
+      base=.34*avail+.31*t.def+.22*prof+.08*mkt+.05*50;
+    }else if(p.role==="D"){
+      // D: titolarita + profilo offensivo/modificatore + difesa squadra.
+      base=.29*avail+.25*prof+.21*t.def+.17*t.att+.08*mkt;
+    }else if(p.role==="C"){
+      // C: centralita offensiva + titolarita + forza attacco.
+      base=.28*avail+.31*prof+.25*t.att+.08*t.def+.08*mkt;
+    }else{
+      // A: centralita offensiva e attacco squadra dominano.
+      base=.27*avail+.36*prof+.27*t.att+.10*mkt;
+    }
+
+    // Dalla 10a giornata la forma sostituisce progressivamente una parte del prior.
+    return clamp(base*(1-fw)+form*fw,5,100);
+  };
+
+  // Scala comune: rende confrontabili P/D/C/A senza fingere che "MEDIA" significhi la stessa cosa.
+  const commonValue=p=>{
+    const s=roleScore(p);
+    const roleFactor={P:1.08,D:.96,C:1.00,A:1.03}[p.role]||1;
+    return clamp(s*roleFactor,5,100);
+  };
+
+  const peers=role=>(byRole[role]||[]).filter(p=>num(p.quote)>0||num(p.fvm)>0)
+    .slice().sort((a,b)=>roleScore(b)-roleScore(a));
 
   window.fsBand=p=>{
-    const rk=roleRank(p),r=p.role,mr=String(p.mantraRole||"");
-
-    if(r==="P"){
-      if(rk<=2)return "ELITE";
-      if(rk<=5)return "TOP";
-      if(rk<=8)return "ALTA";
-      if(rk<=12)return "MEDIA";
-      if(rk<=16)return "BASSA";
-      return "RISERVA";
-    }
-
-    if(r==="D"){
-      let b=rk<=3?"ELITE":rk<=10?"TOP":rk<=24?"ALTA":rk<=45?"MEDIA":rk<=70?"BASSA":"RISERVA";
-      if((mr.includes("E")||mr.includes("W"))&&b==="ALTA"&&rk<=16)b="TOP";
-      else if((mr.includes("E")||mr.includes("W"))&&b==="MEDIA")b="ALTA";
-      return b;
-    }
-
-    if(r==="C"){
-      return rk<=4?"ELITE":rk<=14?"TOP":rk<=32?"ALTA":rk<=60?"MEDIA":rk<=90?"BASSA":"RISERVA";
-    }
-
-    if(r==="A"){
-      return rk<=3?"ELITE":rk<=10?"TOP":rk<=20?"ALTA":rk<=34?"MEDIA":rk<=50?"BASSA":"RISERVA";
-    }
-
-    return "MEDIA";
+    const arr=peers(p.role);
+    const i=arr.findIndex(x=>String(x.id)===String(p.id));
+    const pct=i<0?1:i/Math.max(1,arr.length-1);
+    return pct<=.05?"ELITE":pct<=.15?"TOP":pct<=.32?"ALTA":pct<=.58?"MEDIA":pct<=.80?"BASSA":"RISERVA";
   };
 
-  const slotScore=p=>{
-    const b=window.fsBand(p),r=p.role,mr=String(p.mantraRole||"");
-    let s=BAND_BASE[b];
-
-    const peers=rankedPeers(r).filter(x=>window.fsBand(x)===b);
-    const pos=peers.findIndex(x=>String(x.id)===String(p.id));
-    if(peers.length>1 && pos>=0)s+=3.5-(7*(pos/(peers.length-1)));
-
-    if(r==="P"){
-      s*=GK_ENV[p.team]||.95;
-    }else if(r==="D"){
-      if(mr.includes("E")||mr.includes("W"))s+=5;
-      else if(mr.includes("Dd")||mr.includes("Ds"))s+=2;
-      else if(mr==="Dc")s-=3;
-    }else if(r==="C"){
-      if(mr.includes("A")||mr.includes("W"))s+=3;
-      else if(mr.includes("T"))s+=2;
-    }
-
-    return Math.max(8,Math.min(100,s));
-  };
-
-  const performance=p=>{
-    const md=Number(META.matchday)||0;
-    const cap=typeof fmStageCap==="function"?fmStageCap(md):0;
-    const fm=Number(p.fm),mv=Number(p.mv),pv=Number(p.pv);
-    if(cap<=0||!Number.isFinite(fm)||!Number.isFinite(pv)||pv<=0)return 1;
-
-    const reliability=Math.min(1,pv/Math.max(3,md*.60));
-    const signal=Math.max(-1,Math.min(1,(fm-6)/2.5));
-    let mult=1+(cap*reliability*signal);
-
-    if(p.role==="D"&&Number.isFinite(mv)&&pv>=4){
-      const gap=fm-mv;
-      if(mv>=6.25)mult*=1.025;
-      if(mv>=6.45)mult*=1.025;
-      if(gap>=.25)mult*=1.025;
-    }
-    return mult;
-  };
-
-  window.adjustedValue=p=>{
-    const f=Number(p.fvm)||0;
-    if(f<=3)return 0;
-
-    // Dentro lo stesso reparto l'FVM continua a distinguere i giocatori,
-    // ma la fascia impedisce che pochi punti FVM rendano quasi equivalenti due slot diversi.
-    const structural=slotScore(p);
-    const fvmSignal=Math.pow(f,0.34);
-    return structural*fvmSignal*performance(p);
-  };
+  window.fsTier=window.fsBand;
+  window.adjustedValue=p=>commonValue(p);
 
   window.packageValue=list=>{
-    // Il secondo/terzo giocatore non vale mai quanto il primo in uno scambio.
-    const weights=[1,.68,.50,.38,.30];
-    return list.map(window.adjustedValue).sort((a,b)=>b-a)
-      .reduce((s,v,i)=>s+v*(weights[i]??.26),0);
+    // Quantity tax: il secondo/terzo nome non vale come il primo.
+    const weights=[1,.62,.43,.31,.24];
+    return list.map(commonValue).sort((a,b)=>b-a)
+      .reduce((s,v,i)=>s+v*(weights[i]??.20),0);
   };
 
-  const oneToOneFair=(a,b)=>{
-    let fair=Math.min(slotScore(a),slotScore(b))/Math.max(slotScore(a),slotScore(b))*100;
-    const ba=BAND_ORDER.indexOf(window.fsBand(a));
-    const bb=BAND_ORDER.indexOf(window.fsBand(b));
+  const oneFair=(a,b)=>{
+    let fair=Math.min(commonValue(a),commonValue(b))/Math.max(commonValue(a),commonValue(b))*100;
+    const ba=BANDS.indexOf(window.fsBand(a)),bb=BANDS.indexOf(window.fsBand(b));
     const gap=Math.abs(ba-bb);
 
-    if(a.role===b.role){
-      if(gap>=2)fair*=.82;
-      else if(gap===1)fair*=.88;
+    if(gap>=3)fair*=.78;
+    else if(gap===2)fair*=.86;
+    else if(gap===1)fair*=.94;
 
-      if(a.role==="P"){
-        const rg=Math.abs(roleRank(a)-roleRank(b));
-        if(rg>=6)fair*=.90;
-        else if(rg>=3)fair*=.95;
-      }
-    }else{
-      if(gap>=3)fair*=.88;
-      else if(gap===2)fair*=.93;
-      else if(gap===1)fair*=.97;
-    }
-
-    // Regola strutturale P vs D:
-    // un P titolare top-12 non può essere quasi equivalente a un Dc normale.
+    // Portiere top-12 vs Dc: protezione strutturale del modificatore/scarsita'.
     if((a.role==="P"&&b.role==="D")||(b.role==="P"&&a.role==="D")){
-      const k=a.role==="P"?a:b;
-      const d=a.role==="D"?a:b;
-      const kr=roleRank(k);
-      const db=window.fsBand(d);
+      const k=a.role==="P"?a:b,d=a.role==="D"?a:b;
+      const kr=peers("P").findIndex(x=>String(x.id)===String(k.id))+1;
       const mr=String(d.mantraRole||"");
-
-      if(kr<=12&&mr==="Dc"){
-        let cap=86;
-        if(kr<=5)cap=(db==="ELITE"||db==="TOP")?82:76;
-        else if(kr<=8)cap=(db==="ELITE"||db==="TOP")?86:80;
-        else cap=(db==="ELITE"||db==="TOP")?89:84;
+      if(kr>0&&kr<=12&&mr==="Dc"){
+        const db=window.fsBand(d);
+        const cap=kr<=5?(db==="ELITE"||db==="TOP"?82:74):
+                  kr<=8?(db==="ELITE"||db==="TOP"?86:79):
+                  (db==="ELITE"||db==="TOP"?89:83);
         fair=Math.min(fair,cap);
       }
     }
 
-    return Math.max(0,Math.min(100,fair));
+    // P medio vs A medio non sono automaticamente equivalenti:
+    // la fascia e' relativa al reparto; decide il commonValue proprietario.
+    return clamp(fair);
   };
 
-  window.fsTier=window.fsBand;
+  const packageFair=(A,B)=>{
+    const av=window.packageValue(A),bv=window.packageValue(B);
+    let fair=Math.min(av,bv)/Math.max(av,bv)*100;
+
+    if(A.length!==B.length){
+      const single=A.length===1?A[0]:(B.length===1?B[0]:null);
+      const pack=A.length===1?B:(B.length===1?A:null);
+      if(single&&pack){
+        const star=commonValue(single),anchor=Math.max(...pack.map(commonValue));
+        const band=window.fsBand(single);
+        if(band==="ELITE"){
+          if(anchor<star-10)fair*=.70;
+          else if(anchor<star-5)fair*=.82;
+        }else if(band==="TOP"){
+          if(anchor<star-10)fair*=.78;
+          else if(anchor<star-5)fair*=.88;
+        }
+        if(pack.length===2)fair*=.96;
+        if(pack.length>=3)fair*=.87;
+      }
+    }
+    return clamp(fair);
+  };
 
   window.updateMeta=row=>{
     const p=getPlayer(row.querySelector(".footballer").value),box=row.querySelector(".meta");
     if(!p){box.innerHTML='<span class="empty">Seleziona un giocatore</span>';return}
-
-    const fm=(p.fm!==null&&p.fm!==undefined)?`<span class="chip">FM ${Number(p.fm).toFixed(2)}</span>`:"";
+    const fm=(p.fm!==null&&p.fm!==undefined)?`<span class="chip">FM ${num(p.fm).toFixed(2)}</span>`:"";
     const pv=(p.pv!==null&&p.pv!==undefined)?`<span class="chip">PV ${p.pv}</span>`:"";
-
     box.innerHTML=
       `${TOP30_IDS.has(String(p.id))?'<span class="chip top30">🏆 TOP 30</span>':''}`+
       `<span class="chip" title="${p.team}">${teamAbbr(p.team)}</span>`+
       `<span class="chip">Q ${p.quote}</span>`+
-      `<span class="chip top30">FS ${Math.round(slotScore(p))}</span>`+
+      `<span class="chip top30">FS ${Math.round(commonValue(p))}</span>`+
       `<span class="chip">FASCIA ${window.fsBand(p)}</span>${fm}${pv}`;
   };
 
-  const reasons=(A,B)=>{
-    const out=[];
-    if(A.length===1&&B.length===1){
-      const a=A[0],b=B[0];
-      out.push(`${window.fsBand(a)} vs ${window.fsBand(b)}`);
-      if(a.role==="P"||b.role==="P")out.push("gerarchia portieri");
-      const d=a.role==="D"?a:b.role==="D"?b:null;
-      if(d){
-        const mr=String(d.mantraRole||"");
-        if(mr==="Dc")out.push("Dc puro");
-        else if(mr.includes("E")||mr.includes("W"))out.push("difensore offensivo");
-      }
-    }else{
-      out.push("valore marginale decrescente del pacchetto");
-    }
+  const reason=(A,B)=>{
+    if(A.length!==1||B.length!==1)return "Valore del pacchetto corretto per qualita' e costo degli slot rosa.";
+    const a=A[0],b=B[0],out=[];
+    out.push(`${window.fsBand(a)} ${a.role} vs ${window.fsBand(b)} ${b.role}`);
+    if(a.role!==b.role)out.push("modelli di reparto differenti");
+    if(num(META&&META.matchday,0)>=10)out.push("fantamedia pesata per presenze");
+    else out.push("fantamedia ancora marginale");
     return out.join(" • ");
   };
 
@@ -198,38 +224,25 @@
       d=document.getElementById("detail");
 
     v.className="verdict";
-
     if(!A.length||!B.length){
-      lastVerdictSound="";
-      s.textContent="—";
-      v.textContent="Seleziona almeno un giocatore per parte";
+      lastVerdictSound="";s.textContent="—";v.textContent="Seleziona almeno un giocatore per parte";
       va.textContent=A.length?window.packageValue(A).toFixed(0):"—";
-      vb.textContent=B.length?window.packageValue(B).toFixed(0):"—";
-      return;
+      vb.textContent=B.length?window.packageValue(B).toFixed(0):"—";return;
     }
 
     const one=A.length===1&&B.length===1;
-    const a=window.packageValue(A),b=window.packageValue(B);
+    const av=window.packageValue(A),bv=window.packageValue(B);
+    const fair=one?oneFair(A[0],B[0]):packageFair(A,B);
+    const stronger=av>bv?"A":"B",diff=100-fair;
 
-    let fair=one?oneToOneFair(A[0],B[0]):Math.min(a,b)/Math.max(a,b)*100;
-    fair=Math.max(0,Math.min(100,fair));
+    s.textContent=fair.toFixed(0)+"%";va.textContent=av.toFixed(0);vb.textContent=bv.toFixed(0);
 
-    const stronger=a>b?"A":"B";
-    const diff=100-fair;
-
-    s.textContent=fair.toFixed(0)+"%";
-    va.textContent=a.toFixed(0);
-    vb.textContent=b.toFixed(0);
-
-    const sameRole=one&&A[0].role===B[0].role;
-    const keeperCross=one&&!sameRole&&(A[0].role==="P"||B[0].role==="P");
-
-    let acc=65,eq=82;
-    if(one&&sameRole){acc=78;eq=90;}
-    else if(keeperCross){acc=83;eq=92;}
-    else if(one){acc=75;eq=88;}
-
-    const expl=reasons(A,B);
+    const same=one&&A[0].role===B[0].role;
+    const crossKeeper=one&&!same&&(A[0].role==="P"||B[0].role==="P");
+    let acc=67,eq=84;
+    if(one&&same){acc=76;eq=90;}
+    else if(crossKeeper){acc=80;eq=91;}
+    else if(one){acc=73;eq=88;}
 
     if(fair>=eq){
       const key=`good-${A.map(x=>x.id).join(",")}-${B.map(x=>x.id).join(",")}`;
@@ -238,25 +251,20 @@
         if(typeof playMiracleSound==="function")playMiracleSound();
         if(typeof showHereWeGo==="function")showHereWeGo();
       }
-      v.textContent="✅ SCAMBIO EQUO";
-      v.classList.add("good");
-      d.textContent=`FANTASCAM: valori realmente compatibili. ${expl}`;
+      v.textContent="✅ SCAMBIO EQUO";v.classList.add("good");
+      d.textContent=`FANTASCAM V4: valori compatibili. ${reason(A,B)}`;
     }else if(fair>=acc){
-      if(typeof soundVerdict==="function")
-        soundVerdict("warn",`warn-${A.map(x=>x.id).join(",")}-${B.map(x=>x.id).join(",")}`);
-      v.textContent="🟡 SCAMBIO ACCETTABILE";
-      v.classList.add("warn");
-      d.textContent=`Vantaggio Squadra ${stronger}. ${expl}`;
+      if(typeof soundVerdict==="function")soundVerdict("warn",`warn-${A.map(x=>x.id).join(",")}-${B.map(x=>x.id).join(",")}`);
+      v.textContent="🟡 SCAMBIO ACCETTABILE";v.classList.add("warn");
+      d.textContent=`Vantaggio Squadra ${stronger}. ${reason(A,B)}`;
     }else{
-      if(typeof soundVerdict==="function")
-        soundVerdict("bad",`bad-${A.map(x=>x.id).join(",")}-${B.map(x=>x.id).join(",")}`);
-      v.textContent="🚨 FANTASCAM!! 🚨";
-      v.classList.add("bad");
-      d.textContent=`Squilibrio netto (circa ${diff.toFixed(0)}%). Vantaggio Squadra ${stronger}. ${expl}`;
+      if(typeof soundVerdict==="function")soundVerdict("bad",`bad-${A.map(x=>x.id).join(",")}-${B.map(x=>x.id).join(",")}`);
+      v.textContent="🚨 FANTASCAM!! 🚨";v.classList.add("bad");
+      d.textContent=`Squilibrio netto (circa ${diff.toFixed(0)}%). Vantaggio Squadra ${stronger}. ${reason(A,B)}`;
     }
   };
 
   document.querySelectorAll(".player").forEach(row=>window.updateMeta(row));
   window.calculate();
-  console.info("FANTASCAM FS Engine V3.0 active");
+  console.info("FANTASCAM FS Engine V4.0 proprietary active");
 })();
