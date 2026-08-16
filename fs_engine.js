@@ -112,8 +112,31 @@
       b*=window.roleStandingMultiplier(B[0]);
     }
 
-    const fair=Math.min(a,b)/Math.max(a,b)*100;
-    const diff=Math.abs(a-b)/Math.max(a,b)*100;
+    let fair=Math.min(a,b)/Math.max(a,b)*100;
+
+    const pVsOutfield = cross && (
+      (A[0].role==="P" && B[0].role!=="P") ||
+      (B[0].role==="P" && A[0].role!=="P")
+    );
+
+    if(pVsOutfield){
+      const keeper=A[0].role==="P"?A[0]:B[0];
+      const outfield=A[0].role==="P"?B[0]:A[0];
+      const keeperPct=rolePct(keeper);
+      const outfieldPct=rolePct(outfield);
+      const mr=String(outfield.mantraRole||"");
+
+      if(outfield.role==="D" && mr==="Dc"){
+        if(keeperPct>=.85 && outfieldPct<.97) fair*=.81;
+        else if(keeperPct>=.70 && outfieldPct<.95) fair*=.86;
+      }
+
+      if(outfield.role==="D" && (mr.includes("E")||mr.includes("W"))){
+        fair*=.97;
+      }
+    }
+
+    const diff=100-fair;
     const stronger=a>b?"A":"B";
 
     s.textContent=fair.toFixed(0)+"%";
@@ -121,11 +144,6 @@
     vb.textContent=b.toFixed(0);
 
     let acc,eq;
-    const pVsOutfield = cross && (
-      (A[0].role==="P" && B[0].role!=="P") ||
-      (B[0].role==="P" && A[0].role!=="P")
-    );
-
     if(pVsOutfield){
       acc=82;
       eq=90;
@@ -162,5 +180,5 @@
 
   document.querySelectorAll(".player").forEach(row=>window.updateMeta(row));
   window.calculate();
-  console.info("FANTASCAM FS Engine V2.1 active");
+  console.info("FANTASCAM FS Engine V2.2 active");
 })();
