@@ -15,7 +15,9 @@ PLAYERS_FILE = ROOT / "players.js"
 API_KEY = os.environ.get("API_FOOTBALL_KEY", "").strip()
 
 LEAGUE_ID = 135
-SEASON = int(os.environ.get("SERIE_A_SEASON", "2026"))
+
+CURRENT_SEASON = 2026
+PREVIOUS_SEASON = 2025
 
 if not API_KEY:
     raise SystemExit("Missing API_FOOTBALL_KEY")
@@ -81,7 +83,7 @@ def save_players(players):
     )
 
 
-def fetch_all_players():
+def fetch_all_players(season):
     out = []
     page = 1
 
@@ -90,10 +92,18 @@ def fetch_all_players():
             "players",
             {
                 "league": LEAGUE_ID,
-                "season": SEASON,
+                "season": season,
                 "page": page
             }
         )
+
+        errors = data.get("errors")
+
+        if errors:
+            print(
+                f"API warning season {season}: "
+                f"{errors}"
+            )
 
         out.extend(data.get("response", []))
 
@@ -103,6 +113,11 @@ def fetch_all_players():
             break
 
         page += 1
+
+    print(
+        f"API season {season}: "
+        f"{len(out)} player records"
+    )
 
     return out
 
@@ -119,27 +134,96 @@ def best_stat_block(item):
     return stats[0] if stats else {}
 
 
-def similarity(local, api_name, local_team, api_team):
+def similarity(
+    local,
+    api_name,
+    local_team="",
+    api_team=""
+):
     a = norm(local)
     b = norm(api_name)
 
-    score = SequenceMatcher(None, a, b).ratio()
+    score = SequenceMatcher(
+        None,
+        a,
+        b
+    ).ratio()
 
     if surname(a) and surname(a) == surname(b):
         score += 0.25
 
-    if norm(local_team) == norm(api_team):
+    if (
+        local_team
+        and api_team
+        and norm(local_team) == norm(api_team)
+    ):
         score += 0.20
 
     return score
 
 
-def derive_values(st):
+def make_index(remote):
+    indexed = []
+
+    for item in remote:
+        st = best_stat_block(item)
+
+        p = item.get("player") or {}
+
+        team = (
+            st.get("team") or {}
+        ).get("name", "")
+
+        indexed.append(
+            {
+                "name": p.get("name", ""),
+                "team": team,
+                "stats": st,
+                "api_id": p.get("id")
+            }
+        )
+
+    return indexed
+
+
+def find_best(lp, indexed):
+    best = None
+    best_score = 0
+
+    for item in indexed:
+        score = similarity(
+            lp.get("name", ""),
+            item["name"],
+            lp.get("team", ""),
+            item["team"]
+        )
+
+        if score > best_score:
+            best_score = score
+            best = item
+
+    if best_score >= 0.82:
+        return best, best_score
+
+    return None, best_score
+
+
+def extract_raw_stats(st):
     games = st.get("games") or {}
     goals = st.get("goals") or {}
     cards = st.get("cards") or {}
 
-    apps = int(games.get("appearences") or 0)
+    apps = int(
+        games.get("appearences") or 0
+    )
+
+    minutes = int(
+        games.get("minutes") or 0
+    )
+
+    starts = int(
+        games.get("lineups") or 0
+    )
 
     rating_raw = games.get("rating")
 
@@ -152,58 +236,221 @@ def derive_values(st):
     except:
         rating = None
 
-    if not apps:
+    return {
+        "apps": apps,
+        "minutes": minutes,
+        "starts": starts,
+        "rating": rating,
+        "goals": int(
+            goals.get("total") or 0
+        ),
+        "assists": int(
+            goals.get("assists") or 0
+        ),
+        "yellow": int(
+            cards.get("yellow") or 0
+        ),
+        "red": int(
+            cards.get("red") or 0
+        ),
+        "conceded": int(
+            goals.get("conceded") or 0
+        ),
+        "position": norm(
+            games.get("position") or ""
+        )
+    }
+
+
+def internal_mv(raw):
+    rating = raw["rating"]
+
+    if rating is None:
         return None
 
-    # Valori interni Trade Lab.
-    # Non sono voti ufficiali Fantacalcio.it.
-
-    mv = None
-
-    if rating is not None:
-        mv = max(
-            4.5,
-            min(
-                7.5,
-                6.0 + (rating - 6.8) * 0.70
-            )
+    return max(
+        4.5,
+        min(
+            7.5,
+            6.0 + (rating - 6.8) * 0.70
         )
+    )
 
-    g = int(goals.get("total") or 0)
-    a = int(goals.get("assists") or 0)
-    y = int(cards.get("yellow") or 0)
-    r = int(cards.get("red") or 0)
 
-    conceded = int(goals.get("conceded") or 0)
+def internal_fm(raw, mv):
+    if mv is None:
+        return None
+
+    apps = max(1, raw["apps"])
 
     fm = mv
 
-    if fm is not None:
+    fm += (
+        3.0 * raw["goals"]
+        + 1.0 * raw["assists"]
+        - 0.5 * raw["yellow"]
+        - 1.0 * raw["red"]
+    ) / apps
 
-        fm += (
-            3.0 * g
-            + 1.0 * a
-            - 0.5 * y
-            - 1.0 * r
-        ) / max(1, apps)
-
-        position = norm(
-            games.get("position") or ""
+    if "goalkeeper" in raw["position"]:
+        fm -= min(
+            0.45,
+            raw["conceded"]
+            / apps
+            * 0.08
         )
 
-        if "goalkeeper" in position:
-            fm -= min(
-                0.45,
-                conceded / max(1, apps) * 0.08
-            )
+    return max(
+        4.0,
+        min(9.5, fm)
+    )
 
-        fm = max(
-            4.0,
-            min(9.5, fm)
+
+def season_weight(current_apps):
+    # Prime giornate: affidabilità ridotta.
+    if current_apps <= 0:
+        return 0.0
+
+    if current_apps == 1:
+        return 0.10
+
+    if current_apps == 2:
+        return 0.18
+
+    if current_apps == 3:
+        return 0.28
+
+    if current_apps == 4:
+        return 0.40
+
+    if current_apps == 5:
+        return 0.52
+
+    if current_apps == 6:
+        return 0.63
+
+    if current_apps == 7:
+        return 0.73
+
+    if current_apps == 8:
+        return 0.82
+
+    if current_apps == 9:
+        return 0.90
+
+    return 1.0
+
+
+def blend_number(
+    previous,
+    current,
+    weight
+):
+    if current is None:
+        return previous
+
+    if previous is None:
+        return current
+
+    return (
+        previous * (1 - weight)
+        + current * weight
+    )
+
+
+def build_values(
+    current_stats,
+    previous_stats
+):
+    current_raw = (
+        extract_raw_stats(current_stats)
+        if current_stats
+        else None
+    )
+
+    previous_raw = (
+        extract_raw_stats(previous_stats)
+        if previous_stats
+        else None
+    )
+
+    current_apps = (
+        current_raw["apps"]
+        if current_raw
+        else 0
+    )
+
+    weight = season_weight(
+        current_apps
+    )
+
+    current_mv = (
+        internal_mv(current_raw)
+        if current_raw
+        else None
+    )
+
+    previous_mv = (
+        internal_mv(previous_raw)
+        if previous_raw
+        else None
+    )
+
+    current_fm = (
+        internal_fm(
+            current_raw,
+            current_mv
         )
+        if current_raw
+        else None
+    )
+
+    previous_fm = (
+        internal_fm(
+            previous_raw,
+            previous_mv
+        )
+        if previous_raw
+        else None
+    )
+
+    mv = blend_number(
+        previous_mv,
+        current_mv,
+        weight
+    )
+
+    fm = blend_number(
+        previous_fm,
+        current_fm,
+        weight
+    )
+
+    minutes = (
+        current_raw["minutes"]
+        if current_raw
+        else 0
+    )
+
+    starts = (
+        current_raw["starts"]
+        if current_raw
+        else 0
+    )
+
+    if current_apps > 0:
+        stats_season = CURRENT_SEASON
+
+    elif previous_raw:
+        stats_season = PREVIOUS_SEASON
+
+    else:
+        stats_season = None
 
     return {
-        "pv": apps,
+        "pv": current_apps,
+        "minutes": minutes,
+        "starts": starts,
         "mv": (
             round(mv, 2)
             if mv is not None
@@ -213,85 +460,120 @@ def derive_values(st):
             round(fm, 2)
             if fm is not None
             else None
-        )
+        ),
+        "current_weight": round(
+            weight,
+            2
+        ),
+        "stats_season": stats_season
     }
 
 
 def main():
-
     local = load_players()
-    remote = fetch_all_players()
 
-    indexed = []
+    print(
+        "Loading API-Football "
+        "Serie A seasons..."
+    )
 
-    for item in remote:
+    current_remote = fetch_all_players(
+        CURRENT_SEASON
+    )
 
-        st = best_stat_block(item)
+    previous_remote = fetch_all_players(
+        PREVIOUS_SEASON
+    )
 
-        p = item.get("player") or {}
+    current_index = make_index(
+        current_remote
+    )
 
-        team = (
-            st.get("team") or {}
-        ).get("name", "")
+    previous_index = make_index(
+        previous_remote
+    )
 
-        indexed.append(
-            (
-                p.get("name", ""),
-                team,
-                st,
-                p.get("id")
+    updated = 0
+    current_matches = 0
+    previous_matches = 0
+
+    for lp in local:
+        current_best, current_score = (
+            find_best(
+                lp,
+                current_index
             )
         )
 
-    matched = 0
+        previous_best, previous_score = (
+            find_best(
+                lp,
+                previous_index
+            )
+        )
 
-    for lp in local:
+        if current_best:
+            current_matches += 1
 
-        best = None
-        best_score = 0
+        if previous_best:
+            previous_matches += 1
 
-        for (
-            api_name,
-            api_team,
-            st,
-            api_id
-        ) in indexed:
+        current_stats = (
+            current_best["stats"]
+            if current_best
+            else None
+        )
 
-            s = similarity(
-                lp.get("name", ""),
-                api_name,
-                lp.get("team", ""),
-                api_team
+        previous_stats = (
+            previous_best["stats"]
+            if previous_best
+            else None
+        )
+
+        if (
+            current_stats is None
+            and previous_stats is None
+        ):
+            continue
+
+        vals = build_values(
+            current_stats,
+            previous_stats
+        )
+
+        lp.update(vals)
+
+        lp["stats_source"] = (
+            "api-football"
+        )
+
+        if current_best:
+            lp["api_id"] = (
+                current_best["api_id"]
             )
 
-            if s > best_score:
-                best_score = s
+        elif previous_best:
+            lp["api_id"] = (
+                previous_best["api_id"]
+            )
 
-                best = (
-                    api_name,
-                    api_team,
-                    st,
-                    api_id
-                )
-
-        if best and best_score >= 0.82:
-
-            vals = derive_values(best[2])
-
-            if vals:
-
-                lp.update(vals)
-
-                lp["stats_source"] = "api-football"
-                lp["api_id"] = best[3]
-
-                matched += 1
+        updated += 1
 
     save_players(local)
 
     print(
-        f"Updated {matched}/{len(local)} "
-        "players from API-Football"
+        f"Matched current season: "
+        f"{current_matches}/{len(local)}"
+    )
+
+    print(
+        f"Matched previous season: "
+        f"{previous_matches}/{len(local)}"
+    )
+
+    print(
+        f"Updated total: "
+        f"{updated}/{len(local)}"
     )
 
 
