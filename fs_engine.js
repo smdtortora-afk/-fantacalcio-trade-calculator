@@ -1,4 +1,4 @@
-/* FANTASCAM — FS ENGINE V7.5
+/* FANTASCAM — FS ENGINE V7.6
    Rebuild strutturale:
    - valore individuale prima dello scambio
    - star power assoluto per i TOP
@@ -326,9 +326,35 @@
     else{v.textContent="🚨 FANTASCAM!! 🚨";v.classList.add("bad");d.textContent=`Vantaggio netto Squadra ${stronger}.`;}
   };
 
+  const refreshInjuryUI=()=>{
+    document.querySelectorAll(".player").forEach(row=>window.updateMeta(row));
+    window.calculate();
+  };
+
+  const loadInjuryClient=()=>{
+    if(window.FS_INJURIES_READY){
+      window.FS_INJURIES_READY.then(refreshInjuryUI).catch(()=>{});
+      return;
+    }
+    if(document.querySelector('script[data-fs-injuries]'))return;
+    const sc=document.createElement("script");
+    sc.src="injuries.js?v=1";
+    sc.async=true;
+    sc.dataset.fsInjuries="1";
+    sc.onload=()=>{
+      if(window.FS_INJURIES_READY&&typeof window.FS_INJURIES_READY.then==="function"){
+        window.FS_INJURIES_READY.then(refreshInjuryUI).catch(()=>{});
+      }
+    };
+    document.head.appendChild(sc);
+  };
+
+  window.addEventListener("fantascam:injuries-updated",refreshInjuryUI);
+  loadInjuryClient();
+
   ensureCompactMobileUI();
   ensureTradeControls();
   document.querySelectorAll(".player").forEach(row=>window.updateMeta(row));
   window.calculate();
-  console.info("FANTASCAM FS Engine V7.5 active");
+  console.info("FANTASCAM FS Engine V7.6 active");
 })();
