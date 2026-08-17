@@ -1,4 +1,4 @@
-/* FANTASCAM — FS ENGINE V7.0
+/* FANTASCAM — FS ENGINE V7.1
    Rebuild strutturale:
    - valore individuale prima dello scambio
    - star power assoluto per i TOP
@@ -158,11 +158,19 @@
       if(single&&pack){
         const sv=fsValue(single[0]),anchor=Math.max(...pack.map(fsValue));
         if(sv>=92){
-          if(anchor<sv-10)fair*=.62;else if(anchor<sv-6)fair*=.76;else if(anchor<sv-3)fair*=.88;
+          // ELITE: crediti e quantita' aiutano, ma non sostituiscono un near-peer.
+          if(anchor<sv-12)fair=Math.min(fair,58);
+          else if(anchor<sv-8)fair=Math.min(fair,66);
+          else if(anchor<sv-5)fair=Math.min(fair,74);
+          else if(anchor<sv-3)fair*=.86;
         }else if(sv>=84){
-          if(anchor<sv-10)fair*=.70;else if(anchor<sv-6)fair*=.82;else if(anchor<sv-3)fair*=.91;
+          // TOP: due/tre medi non possono arrivare in zona equa per semplice somma.
+          if(anchor<sv-12)fair=Math.min(fair,62);
+          else if(anchor<sv-8)fair=Math.min(fair,69);
+          else if(anchor<sv-5)fair=Math.min(fair,76);
+          else if(anchor<sv-3)fair*=.89;
         }
-        if(pack.length>=3)fair*=.90;
+        if(pack.length>=3)fair*=.88;
       }
     }
     return clamp(fair);
@@ -209,5 +217,5 @@
   ensureTradeControls();
   document.querySelectorAll(".player").forEach(row=>window.updateMeta(row));
   window.calculate();
-  console.info("FANTASCAM FS Engine V7.0 active");
+  console.info("FANTASCAM FS Engine V7.1 active");
 })();
