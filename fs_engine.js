@@ -1,4 +1,4 @@
-/* FANTASCAM — FS ENGINE V7.1
+/* FANTASCAM — FS ENGINE V7.5
    Rebuild strutturale:
    - valore individuale prima dello scambio
    - star power assoluto per i TOP
@@ -75,11 +75,70 @@
   };
   const starFloor=p=>{
     const rk=starterRank(p);
-    if(p.role==="P")return rk<=3?92:rk<=6?86:rk<=10?78:0;
-    if(p.role==="D")return rk<=3?94:rk<=8?88:rk<=15?81:rk<=24?74:0;
-    if(p.role==="C")return rk<=3?96:rk<=8?90:rk<=15?84:rk<=24?77:0;
-    if(p.role==="A")return rk<=3?99:rk<=7?95:rk<=12?91:rk<=18?86:rk<=26?80:0;
+    if(p.role==="P")return rk<=3?90:rk<=6?84:rk<=10?76:0;
+    if(p.role==="D")return rk<=3?92:rk<=8?86:rk<=15?79:rk<=24?72:0;
+    if(p.role==="C")return rk<=3?94:rk<=8?88:rk<=15?82:rk<=24?75:0;
+    if(p.role==="A")return rk<=3?97:rk<=7?93:rk<=12?89:rk<=18?84:rk<=26?78:0;
     return 0;
+  };
+
+  // La fascia protegge il TOP, ma non assegna più a tutti lo stesso numero.
+  // Dentro ogni fascia aggiungiamo una quota continua basata sui parametri reali del profilo.
+  const starBandValue=(p,base)=>{
+    const rk=starterRank(p),st=availability(p),pr=profile(p),mp=marketPct(p)*100;
+    const t=TEAM[p.team]||{def:68,att:68};
+    let lo=starFloor(p);
+    if(!lo)return base;
+
+    let hi=lo+5;
+    if(p.role==="P")hi=Math.min(96,hi);
+    else if(p.role==="D")hi=Math.min(97,hi);
+    else if(p.role==="C")hi=Math.min(98,hi);
+    else hi=Math.min(99,hi);
+
+    // Differenziazione interna: mercato è solo una componente, non il valore.
+    const team=p.role==="P"||p.role==="D"?t.def:t.att;
+    const score=.34*st+.26*pr+.22*team+.18*mp;
+    const within=clamp((score-55)/45,0,1);
+    return Math.max(base,lo+(hi-lo)*within);
+  };
+
+  // ---------- INJURY / AVAILABILITY LAYER ----------
+  // injuryData can be populated by the app/backend from API-Football.
+  // Expected fields: injured, type, reason, returnDate, status.
+  const injuryInfo=p=>{
+    const db=window.FS_INJURIES||{};
+    return db[String(p.id)]||db[p.name]||null;
+  };
+  const daysUntil=date=>{
+    if(!date)return null;
+    const d=new Date(date),now=new Date();
+    if(Number.isNaN(d.getTime()))return null;
+    return Math.ceil((d-now)/86400000);
+  };
+  const injuryFactor=p=>{
+    const i=injuryInfo(p);
+    if(!i||(!i.injured&&String(i.status||"").toLowerCase()!=="injured"))return 1;
+
+    const reason=String(i.reason||i.type||"").toLowerCase();
+    const left=daysUntil(i.returnDate);
+
+    // Severity by explicit return horizon when available.
+    if(left!==null){
+      if(left<=7)return .94;
+      if(left<=21)return .84;
+      if(left<=45)return .70;
+      if(left<=90)return .55;
+      if(left<=180)return .42;
+      return .32;
+    }
+
+    // Fallback by injury description.
+    if(/cruciate|acl|crociat|achilles|tendine d.?achille/.test(reason))return .32;
+    if(/fracture|frattur|surgery|operat/.test(reason))return .45;
+    if(/knee|ginocch|hamstring|muscle|muscolar/.test(reason))return .68;
+    if(/knock|bruise|contusion|fatigue|affatic/.test(reason))return .90;
+    return .72;
   };
 
   const fsValue=p=>{
@@ -92,24 +151,24 @@
       const rk=starterRank(p);
       if(rk<=3)base+=9; else if(rk<=6)base+=5; else if(rk<=10)base+=2;
       base=base*(1-fw)+form*fw;
-      return clamp(Math.max(base,starFloor(p)),8,96);
+      return clamp(starBandValue(p,base)*injuryFactor(p),8,96);
     }
     if(p.role==="D"){
       base=32+.24*(st-50)+.24*(pr-50)+.18*(t.def-50)+.10*(t.att-50)+.07*(mp-50);
       base=base*(1-fw)+form*fw;
-      return clamp(Math.max(base,starFloor(p)),8,97);
+      return clamp(starBandValue(p,base)*injuryFactor(p),8,97);
     }
     if(p.role==="C"){
       base=22+.24*(st-50)+.27*(pr-50)+.19*(t.att-50)+.06*(t.def-50)+.07*(mp-50);
       base=base*(1-fw)+form*fw;
-      return clamp(Math.max(base,starFloor(p)),8,98);
+      return clamp(starBandValue(p,base)*injuryFactor(p),8,98);
     }
 
     base=36+.24*(st-50)+.27*(pr-50)+.23*(t.att-50)+.08*(mp-50);
     const rk=starterRank(p);
     if(rk<=3)base+=8; else if(rk<=7)base+=5; else if(rk<=12)base+=3;
     base=base*(1-fw)+form*fw;
-    return clamp(Math.max(base,starFloor(p)),8,99);
+    return clamp(starBandValue(p,base)*injuryFactor(p),8,99);
   };
 
   window.adjustedValue=fsValue;
@@ -176,6 +235,24 @@
     return clamp(fair);
   };
 
+  const ensureCompactMobileUI=()=>{
+    if(document.getElementById("fs-v75-mobile-style"))return;
+    const style=document.createElement("style");
+    style.id="fs-v75-mobile-style";
+    style.textContent=`
+      .fs-status-icon{display:inline-flex;align-items:center;white-space:nowrap;margin-right:3px;line-height:1}
+      .meta{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+      .footballer,.player select{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+      @media(max-width:600px){
+        .meta{display:flex!important;align-items:center;gap:3px;flex-wrap:nowrap!important;overflow:hidden}
+        .meta .chip{flex:0 0 auto;padding:3px 5px;font-size:10px}
+        .fs-status-icon{flex:0 0 auto;font-size:13px}
+        .player{min-width:0}
+        .footballer,.player select{font-size:13px;min-width:0}
+      }`;
+    document.head.appendChild(style);
+  };
+
   const ensureTradeControls=()=>{
     if(document.getElementById("fantascam-credit-controls"))return;
     const style=document.createElement("style");
@@ -191,12 +268,47 @@
   };
   const creditsSide=s=>Math.max(0,Number(document.getElementById(s==="A"?"fsCreditsA":"fsCreditsB")?.value)||0);
 
+  const healthBadge=p=>{
+    const i=injuryInfo(p);
+    if(!i||!i.injured)return "";
+    const reason=String(i.reason||i.type||"").toLowerCase();
+    const left=daysUntil(i.returnDate);
+
+    let icon="🟨🚑";
+    if(left!==null){
+      if(left<=7)icon="⬜🚑";
+      else if(left<=30)icon="🟨🚑";
+      else icon="🟥🚑";
+    }else if(/cruciate|acl|crociat|achilles|tendine d.?achille|fracture|frattur|surgery|operat/.test(reason)){
+      icon="🟥🚑";
+    }else if(/knock|bruise|contusion|fatigue|affatic/.test(reason)){
+      icon="⬜🚑";
+    }else{
+      icon="🟨🚑";
+    }
+    return `<span class="fs-status-icon" title="${String(i.reason||i.type||"Infortunio")}">${icon}</span>`;
+  };
+
+  const isOnFire=p=>{
+    const md=n(META&&META.matchday,0);
+    if(md<6||p.fm===null||p.fm===undefined||p.pv===null||p.pv===undefined)return false;
+    const pv=n(p.pv),fm=n(p.fm);
+    const reliability=clamp(pv/Math.max(4,md*.75),0,1);
+    // Richiede rendimento davvero alto e campione abbastanza affidabile.
+    const threshold=p.role==="P"?6.65:p.role==="D"?6.75:p.role==="C"?7.00:7.10;
+    return reliability>=.65&&fm>=threshold;
+  };
+
+  const fireBadge=p=>isOnFire(p)?`<span class="fs-status-icon" title="ON FIRE">🔥</span>`:"";
+
   window.updateMeta=row=>{
     const p=getPlayer(row.querySelector(".footballer").value),box=row.querySelector(".meta");
     if(!p){box.innerHTML='<span class="empty">Seleziona un giocatore</span>';return}
     const fm=(p.fm!==null&&p.fm!==undefined)?`<span class="chip">FM ${n(p.fm).toFixed(2)}</span>`:"";
     const pv=(p.pv!==null&&p.pv!==undefined)?`<span class="chip">PV ${p.pv}</span>`:"";
-    box.innerHTML=`<span class="chip" title="${p.team}">${teamAbbr(p.team)}</span><span class="chip">Q ${p.quote}</span><span class="chip top30">FS ${Math.round(fsValue(p))}</span><span class="chip">FASCIA ${window.fsBand(p)}</span>${fm}${pv}`;
+    const health=healthBadge(p);
+    const fire=fireBadge(p);
+    box.innerHTML=`<span class="chip" title="${p.team}">${teamAbbr(p.team)}</span><span class="chip">Q ${p.quote}</span><span class="chip top30">FS ${Math.round(fsValue(p))}</span><span class="chip">FASCIA ${window.fsBand(p)}</span>${health}${fire}${fm}${pv}`;
   };
 
   window.calculate=()=>{
@@ -214,8 +326,9 @@
     else{v.textContent="🚨 FANTASCAM!! 🚨";v.classList.add("bad");d.textContent=`Vantaggio netto Squadra ${stronger}.`;}
   };
 
+  ensureCompactMobileUI();
   ensureTradeControls();
   document.querySelectorAll(".player").forEach(row=>window.updateMeta(row));
   window.calculate();
-  console.info("FANTASCAM FS Engine V7.1 active");
+  console.info("FANTASCAM FS Engine V7.5 active");
 })();
