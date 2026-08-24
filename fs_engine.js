@@ -1,4 +1,4 @@
-/* FANTASCAM — FS ENGINE V7.7
+/* FANTASCAM — FS ENGINE V7.8
    Rebuild strutturale:
    - valore individuale prima dello scambio
    - star power assoluto per i TOP
@@ -269,24 +269,19 @@
   };
   const creditsSide=s=>Math.max(0,Number(document.getElementById(s==="A"?"fsCreditsA":"fsCreditsB")?.value)||0);
 
-  const healthBadge=p=>{
+  const healthIcon=p=>{
     const i=injuryInfo(p);
     if(!i||!i.injured)return "";
     const reason=String(i.reason||i.type||"").toLowerCase();
     const left=daysUntil(i.returnDate);
-
-    let icon="🟨🚑";
-    if(left!==null){
-      if(left<=7)icon="⬜🚑";
-      else if(left<=30)icon="🟨🚑";
-      else icon="🟥🚑";
-    }else if(/cruciate|acl|crociat|achilles|tendine d.?achille|fracture|frattur|surgery|operat/.test(reason)){
-      icon="🟥🚑";
-    }else if(/knock|bruise|contusion|fatigue|affatic/.test(reason)){
-      icon="⬜🚑";
-    }else{
-      icon="🟨🚑";
-    }
+    if(left!==null){if(left<=7)return "⬜🚑";if(left<=30)return "🟨🚑";return "🟥🚑";}
+    if(/cruciate|acl|crociat|achilles|tendine d.?achille|fracture|frattur|surgery|operat/.test(reason))return "🟥🚑";
+    if(/knock|bruise|contusion|fatigue|affatic/.test(reason))return "⬜🚑";
+    return "🟨🚑";
+  };
+  const healthBadge=p=>{
+    const i=injuryInfo(p),icon=healthIcon(p);
+    if(!icon)return "";
     return `<span class="fs-status-icon" title="${String(i.reason||i.type||"Infortunio")}">${icon}</span>`;
   };
 
@@ -301,6 +296,57 @@
   };
 
   const fireBadge=p=>isOnFire(p)?`<span class="fs-status-icon" title="ON FIRE">🔥</span>`:"";
+  const pickerStatus=p=>`${healthIcon(p)}${isOnFire(p)?"🔥":""}`;
+
+  const ensurePickerStyle=()=>{
+    if(document.getElementById("fs-v78-picker-style"))return;
+    const st=document.createElement("style");st.id="fs-v78-picker-style";
+    st.textContent=`
+      .fs-player-picker{position:relative;min-width:0;width:100%}
+      .fs-player-picker>.footballer{position:absolute!important;opacity:0!important;pointer-events:none!important;width:1px!important;height:1px!important}
+      .fs-picker-btn{width:100%;min-height:42px;display:flex;align-items:center;gap:5px;min-width:0;border:1px solid rgba(77,255,60,.22);border-radius:10px;background:#020a05;color:#fff;padding:9px 8px;font:700 13px 'Outfit',sans-serif;text-align:left}
+      .fs-picker-btn .n,.fs-picker-option .n{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}
+      .fs-picker-btn .t,.fs-picker-option .t{flex:0 0 auto;white-space:nowrap;color:#9db6a1;font-size:10px}
+      .fs-picker-btn .s,.fs-picker-option .s{flex:0 0 auto;white-space:nowrap}
+      .fs-picker-menu{position:fixed;z-index:20000;display:none;overflow:auto;-webkit-overflow-scrolling:touch;max-height:62vh;border:1px solid rgba(77,255,60,.35);border-radius:14px;background:#020905;box-shadow:0 18px 60px rgba(0,0,0,.75);padding:5px}
+      .fs-picker-menu.show{display:block}
+      .fs-picker-option{width:100%;height:40px;display:flex;align-items:center;gap:5px;border:0;border-bottom:1px solid rgba(77,255,60,.08);background:transparent;color:#fff;padding:0 7px;text-align:left;font:700 12px 'Outfit',sans-serif;min-width:0}
+      .fs-picker-option.selected{background:rgba(77,255,60,.10)}
+      @media(max-width:600px){.fs-picker-btn{font-size:12px;padding:8px 6px;gap:4px}.fs-picker-option{font-size:12px;gap:4px}}
+    `;document.head.appendChild(st);
+  };
+  let openPicker=null;
+  const closePicker=()=>{if(openPicker){openPicker.classList.remove("show");openPicker=null;}};
+  const syncPicker=sel=>{
+    const w=sel.closest(".fs-player-picker"),b=w?.querySelector(".fs-picker-btn");if(!b)return;
+    const p=sel.value?getPlayer(sel.value):null;
+    b.innerHTML=p?`${pickerStatus(p)?`<span class="s">${pickerStatus(p)}</span>`:""}<span class="n">${p.name}</span><span class="t">${teamAbbr(p.team)} · FS ${Math.round(fsValue(p))}</span>`:`<span class="n">Scegli giocatore…</span>`;
+  };
+  const rebuildPicker=sel=>{
+    const w=sel.closest(".fs-player-picker"),m=w?.querySelector(".fs-picker-menu");if(!m)return;m.innerHTML="";
+    [...sel.options].forEach(o=>{if(!o.value)return;const p=getPlayer(o.value);if(!p)return;
+      const b=document.createElement("button");b.type="button";b.className="fs-picker-option"+(String(sel.value)===String(o.value)?" selected":"");
+      b.innerHTML=`${pickerStatus(p)?`<span class="s">${pickerStatus(p)}</span>`:""}<span class="n">${p.name}</span><span class="t">${teamAbbr(p.team)} · FS ${Math.round(fsValue(p))}</span>`;
+      b.onclick=()=>{sel.value=o.value;sel.dispatchEvent(new Event("change",{bubbles:true}));syncPicker(sel);closePicker();};m.appendChild(b);
+    });
+  };
+  const positionPicker=(btn,m)=>{
+    const r=btn.getBoundingClientRect(),gap=8,w=Math.min(Math.max(r.width,250),window.innerWidth-gap*2);
+    m.style.left=`${Math.max(gap,Math.min(r.left,window.innerWidth-w-gap))}px`;m.style.width=`${w}px`;
+    m.style.top=`${Math.min(r.bottom+5,window.innerHeight-260)}px`;
+  };
+  const enhancePlayerSelect=sel=>{
+    if(sel.dataset.fsPicker==="1")return;sel.dataset.fsPicker="1";
+    const w=document.createElement("div");w.className="fs-player-picker";sel.parentNode.insertBefore(w,sel);w.appendChild(sel);
+    const b=document.createElement("button");b.type="button";b.className="fs-picker-btn";
+    const m=document.createElement("div");m.className="fs-picker-menu";w.append(b,m);
+    b.onclick=e=>{e.preventDefault();const was=m.classList.contains("show");closePicker();if(was)return;rebuildPicker(sel);positionPicker(b,m);m.classList.add("show");openPicker=m;};
+    sel.addEventListener("change",()=>syncPicker(sel));
+    new MutationObserver(()=>syncPicker(sel)).observe(sel,{childList:true,subtree:true});syncPicker(sel);
+  };
+  const enhanceAllPickers=()=>{ensurePickerStyle();document.querySelectorAll("select.footballer").forEach(enhancePlayerSelect);};
+  document.addEventListener("click",e=>{if(openPicker&&!e.target.closest(".fs-player-picker")&&!openPicker.contains(e.target))closePicker();});
+  window.addEventListener("resize",closePicker);window.addEventListener("scroll",closePicker,{passive:true});
 
   window.updateMeta=row=>{
     const p=getPlayer(row.querySelector(".footballer").value),box=row.querySelector(".meta");
@@ -329,6 +375,7 @@
 
   const refreshInjuryUI=()=>{
     document.querySelectorAll(".player").forEach(row=>window.updateMeta(row));
+    enhanceAllPickers();document.querySelectorAll("select.footballer").forEach(syncPicker);
     window.calculate();
   };
 
@@ -355,7 +402,9 @@
 
   ensureCompactMobileUI();
   ensureTradeControls();
+  enhanceAllPickers();
+  new MutationObserver(()=>enhanceAllPickers()).observe(document.body,{childList:true,subtree:true});
   document.querySelectorAll(".player").forEach(row=>window.updateMeta(row));
   window.calculate();
-  console.info("FANTASCAM FS Engine V7.7 active");
+  console.info("FANTASCAM FS Engine V7.8 active");
 })();
