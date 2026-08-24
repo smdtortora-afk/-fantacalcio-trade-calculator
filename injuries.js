@@ -1,32 +1,129 @@
-/* FANTASCAM — injury cache client V2 */
+/* FANTASCAM — injury cache client V3
+   Matching robusto tra fonti esterne e nomi del listone Fantacalcio.
+*/
 window.FS_INJURIES = window.FS_INJURIES || {};
+
 (() => {
-  const normalize=s=>String(s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]/g,"");
-  const words=s=>String(s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9 ]/g," ").trim().split(/\s+/).filter(Boolean);
-  const localPlayers=()=>{try{return(typeof PLAYERS!=="undefined"&&Array.isArray(PLAYERS))?PLAYERS:[]}catch(e){return[]}};
-  const exactIndex=players=>{const m=new Map();for(const p of players){m.set(normalize(p.name),p);const a=words(p.name);if(a.length>1)m.set(normalize(a.slice().reverse().join(" ")),p)}return m};
-  const matchPlayer=(row,players,exact)=>{
-    const apiName=String(row.playerName||row.name||"").trim();
-    let p=exact.get(normalize(apiName));if(p)return p;
-    const a=words(apiName);if(a.length<2)return null;
-    const initial=a[0][0],surname=a[a.length-1];
-    let candidates=players.filter(x=>{const w=words(x.name);return w.length>1&&w[0][0]===initial&&w[w.length-1]===surname});
-    if(row.team){const team=normalize(row.team),sameTeam=candidates.filter(x=>normalize(x.team)===team);if(sameTeam.length)candidates=sameTeam}
-    return candidates.length===1?candidates[0]:null;
+  const norm = s => String(s || "")
+    .normalize("NFD").replace(/[\u0300-\u036f]/g,"")
+    .toLowerCase()
+    .replace(/['’`]/g," ")
+    .replace(/[^a-z0-9 ]/g," ")
+    .replace(/\s+/g," ")
+    .trim();
+
+  const tokens = s => norm(s).split(" ").filter(Boolean);
+  const localPlayers = () => {
+    try { return (typeof PLAYERS !== "undefined" && Array.isArray(PLAYERS)) ? PLAYERS : []; }
+    catch(e) { return []; }
   };
-  const apply=payload=>{
-    const players=localPlayers(),exact=exactIndex(players),db={};
-    for(const row of(payload?.injuries||[])){
-      const apiName=String(row.playerName||row.name||""),p=matchPlayer(row,players,exact);
-      const item={injured:true,type:row.type||"Injury",reason:row.reason||row.type||"Injury",returnDate:row.returnDate||null,status:"injured",apiPlayerId:row.playerId||null,team:row.team||null,source:row.source||payload?.source||null,updatedAt:payload.updatedAt||new Date().toISOString()};
-      if(p){db[String(p.id)]=item;db[p.name]=item}else if(apiName)db[apiName]=item;
+
+  const sameTeam = (a,b) => !a || !b || norm(a) === norm(b);
+
+  const scoreCandidate = (apiName, rowTeam, p) => {
+    if (!sameTeam(rowTeam,p.team)) return -999;
+
+    const a=tokens(apiName), b=tokens(p.name);
+    if(!a.length || !b.length) return -999;
+
+    const an=norm(apiName), bn=norm(p.name);
+    if(an===bn) return 100;
+
+    // Le fonti usano spesso "N. Casale", il listone semplicemente "Casale"
+    // oppure "Valle A.". Nel listone Fantacalcio il cognome è quasi sempre il primo token.
+    const apiSurname=a[a.length-1];
+    const localSurname=b[0];
+
+    let score=0;
+    if(apiSurname===localSurname) score+=55;
+
+    const longA=a.filter(x=>x.length>2);
+    const longB=b.filter(x=>x.length>2);
+    const overlap=longA.filter(x=>longB.includes(x)).length;
+    score+=overlap*18;
+
+    // Compatibilità iniziale nome: "J. Martinez" <-> "Martinez Jo."
+    const apiInitial=a[0]?.[0] || "";
+    const localExtra=b.slice(1).find(x=>x.length) || "";
+    if(apiSurname===localSurname && localExtra && apiInitial && localExtra[0]===apiInitial) score+=8;
+
+    // Se il cognome coincide ed è l'unico token del listone, è un match forte.
+    if(apiSurname===localSurname && b.length===1) score+=12;
+
+    return score;
+  };
+
+  const matchPlayer = (row, players) => {
+    const apiName=String(row.playerName || row.name || "").trim();
+    if(!apiName) return null;
+
+    const candidates=players
+      .map(p=>({p,score:scoreCandidate(apiName,row.team,p)}))
+      .filter(x=>x.score>=55)
+      .sort((x,y)=>y.score-x.score);
+
+    if(!candidates.length) return null;
+    if(candidates.length===1) return candidates[0].p;
+
+    // Non forziamo un'associazione ambigua.
+    if(candidates[0].score===candidates[1].score) return null;
+    return candidates[0].p;
+  };
+
+  const apply = payload => {
+    const players=localPlayers(), db={};
+    const unmatched=[], matched=[];
+
+    for(const row of (payload?.injuries || [])){
+      const apiName=String(row.playerName || row.name || "");
+      const p=matchPlayer(row,players);
+
+      const item={
+        injured:true,
+        type:row.type || "Injury",
+        reason:row.reason || row.type || "Injury",
+        returnDate:row.returnDate || null,
+        status:"injured",
+        apiPlayerId:row.playerId || null,
+        team:row.team || null,
+        source:row.source || payload?.source || null,
+        sources:row.sources || null,
+        updatedAt:payload?.updatedAt || new Date().toISOString()
+      };
+
+      if(p){
+        db[String(p.id)]=item;
+        db[p.name]=item;
+        matched.push({sourceName:apiName,listName:p.name,team:p.team});
+      } else if(apiName){
+        // Conserviamo comunque il nome sorgente, utile per diagnostica.
+        db[apiName]=item;
+        unmatched.push({name:apiName,team:row.team || null});
+      }
     }
+
     window.FS_INJURIES=db;
-    window.FS_INJURIES_META={updatedAt:payload?.updatedAt||null,league:payload?.league||null,season:payload?.season||null,source:payload?.source||null,count:Object.keys(db).length};
+    window.FS_INJURIES_META={
+      updatedAt:payload?.updatedAt || null,
+      source:payload?.source || null,
+      sourceCount:Number(payload?.count || 0),
+      matchedCount:matched.length,
+      unmatchedCount:unmatched.length,
+      matched,
+      unmatched,
+      diagnostics:payload?.diagnostics || null
+    };
+
+    console.info("FANTASCAM injuries:",window.FS_INJURIES_META);
     window.dispatchEvent(new CustomEvent("fantascam:injuries-updated",{detail:window.FS_INJURIES_META}));
     return db;
   };
-  window.FS_INJURIES_READY=fetch("/api/injuries",{headers:{accept:"application/json"}})
-    .then(r=>{if(!r.ok)throw new Error(`injuries api ${r.status}`);return r.json()})
-    .then(apply).catch(err=>{console.warn("FANTASCAM injuries offline:",err?.message||err);return window.FS_INJURIES});
+
+  window.FS_INJURIES_READY=fetch("/api/injuries",{headers:{accept:"application/json"},cache:"no-store"})
+    .then(r=>{if(!r.ok)throw new Error(`injuries api ${r.status}`);return r.json();})
+    .then(apply)
+    .catch(err=>{
+      console.warn("FANTASCAM injuries offline:",err?.message || err);
+      return window.FS_INJURIES;
+    });
 })();
