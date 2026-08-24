@@ -115,6 +115,25 @@ window.FS_INJURIES = window.FS_INJURIES || {};
     };
 
     console.info("FANTASCAM injuries:",window.FS_INJURIES_META);
+
+    // Diagnostica visibile: tocca la barra per vedere i nomi non riconosciuti.
+    let bar=document.getElementById("fs-injury-diagnostic");
+    if(!bar){
+      bar=document.createElement("button");
+      bar.id="fs-injury-diagnostic";
+      bar.type="button";
+      bar.style.cssText="position:fixed;left:8px;right:8px;bottom:8px;z-index:30000;border:1px solid rgba(77,255,60,.45);border-radius:12px;background:rgba(2,10,5,.96);color:#fff;padding:9px 10px;font:800 12px Outfit,-apple-system,sans-serif;box-shadow:0 8px 28px rgba(0,0,0,.45);white-space:nowrap;overflow:hidden;text-overflow:ellipsis";
+      document.body.appendChild(bar);
+    }
+    const total=window.FS_INJURIES_META.sourceCount || (payload?.injuries||[]).length;
+    const ok=window.FS_INJURIES_META.matchedCount;
+    const ko=window.FS_INJURIES_META.unmatchedCount;
+    bar.textContent=`🚑 ${total} trovati · ✅ ${ok} abbinati · ⚠️ ${ko} non riconosciuti`;
+    bar.onclick=()=>{
+      const list=window.FS_INJURIES_META.unmatched||[];
+      alert(list.length ? "NON RICONOSCIUTI:\n\n"+list.map(x=>`• ${x.name}${x.team?` (${x.team})`:""}`).join("\n") : "Tutti gli infortunati sono stati abbinati al listone.");
+    };
+
     window.dispatchEvent(new CustomEvent("fantascam:injuries-updated",{detail:window.FS_INJURIES_META}));
     return db;
   };
