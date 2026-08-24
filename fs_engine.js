@@ -1,4 +1,4 @@
-/* FANTASCAM — FS ENGINE V7.6
+/* FANTASCAM — FS ENGINE V7.7
    Rebuild strutturale:
    - valore individuale prima dello scambio
    - star power assoluto per i TOP
@@ -114,7 +114,8 @@
     if(!date)return null;
     const d=new Date(date),now=new Date();
     if(Number.isNaN(d.getTime()))return null;
-    return Math.ceil((d-now)/86400000);
+    const days=Math.ceil((d-now)/86400000);
+    return days < 0 ? null : days;
   };
   const injuryFactor=p=>{
     const i=injuryInfo(p);
@@ -338,7 +339,7 @@
     }
     if(document.querySelector('script[data-fs-injuries]'))return;
     const sc=document.createElement("script");
-    sc.src="injuries.js?v=1";
+    sc.src="injuries.js?v=2";
     sc.async=true;
     sc.dataset.fsInjuries="1";
     sc.onload=()=>{
@@ -356,5 +357,5 @@
   ensureTradeControls();
   document.querySelectorAll(".player").forEach(row=>window.updateMeta(row));
   window.calculate();
-  console.info("FANTASCAM FS Engine V7.6 active");
+  console.info("FANTASCAM FS Engine V7.7 active");
 })();
