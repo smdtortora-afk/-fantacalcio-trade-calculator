@@ -1,11 +1,16 @@
 const SOURCES={virgilio:"https://sport.virgilio.it/calcio/serie-a/tabella-infortunati-squalificati-e-diffidati/",goal:"https://www.goal.com/it/notizie/tabella-infortunati-squalificati-e-diffidati-in-serie-a/1kw0ilrv37v1c10fvugourrggg"};
 const TEAMS=["Atalanta","Bologna","Cagliari","Como","Cremonese","Fiorentina","Frosinone","Genoa","Inter","Juventus","Lazio","Lecce","Milan","Monza","Napoli","Parma","Pisa","Roma","Sassuolo","Torino","Udinese","Venezia","Verona"];
-function decode(s){return String(s||"").replace(/&nbsp;/gi," ").replace(/&amp;/gi,"&").replace(/&quot;/gi,'"').replace(/&#39;|&apos;/gi,"'").replace(/&agrave;/gi,"à").replace(/&egrave;/gi,"è").replace(/&igrave;/gi,"ì").replace(/&ograve;/gi,"ò").replace(/&ugrave;/gi,"ù").replace(/&#(\d+);/g,(_,n)=>String.fromCharCode(Number(n)));}
+function decode(s){return String(s||"").replace(/&nbsp;/gi," ").replace(/&amp;/gi,"&").replace(/&quot;/gi,'"').replace(/&#39;|&apos;/gi,"'").replace(/&agrave;/gi,"à").replace(/&egrave;/gi,"è").replace(/&igrave;/gi,"ì").replace(/&ograve;/gi,"ò").replace(/&ugrave;/gi,"ù").replace(/&#x([0-9a-f]+);/gi,(_,n)=>String.fromCharCode(parseInt(n,16))).replace(/&#(\d+);/g,(_,n)=>String.fromCharCode(Number(n)));}
 function toText(h){return decode(String(h||"").replace(/<script[\s\S]*?<\/script>/gi," ").replace(/<style[\s\S]*?<\/style>/gi," ").replace(/<br\s*\/?>/gi,"\n").replace(/<\/(?:p|li|h1|h2|h3|h4|div|section|article|tr)>/gi,"\n").replace(/<[^>]+>/g," ")).replace(/\r/g,"").replace(/[ \t]+/g," ").replace(/\n[ \t]+/g,"\n").replace(/\n{2,}/g,"\n").trim();}
 function norm(s){return String(s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9 ]/g," ").replace(/\s+/g," ").trim();}
 function teamOf(l){const n=norm(l);return TEAMS.find(t=>norm(t)===n)||null;}
 function dateOf(l){const m=String(l).match(/(?:Rientra\s+il|Rientro\s+il)\s+(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})/i);return m?`${m[3]}-${m[2].padStart(2,"0")}-${m[1].padStart(2,"0")}`:null;}
-function entry(l){const p=String(l).replace(/^[•*\-–—]\s*/,"").split(/\s+-\s+/).map(x=>x.trim()).filter(Boolean);return p.length<2?null:{name:p[0],reason:p.slice(1).join(" - ")};}
+function entry(l){
+  const p=String(l).replace(/^[•*\-–—]\s*/,"").split(/\s+-\s+/).map(x=>x.trim()).filter(Boolean);
+  if(p.length<2)return null;
+  const reason=p.slice(1).filter(x=>!/^rientr(?:a|o)\b/i.test(x)).join(" - ").trim();
+  return {name:p[0],reason:reason||p[1]};
+}
 function parse(html,source){const lines=toText(html).split("\n").map(x=>x.trim()).filter(Boolean),out=[];let team=null,sec=null;for(const raw of lines){const line=raw.replace(/^[•*\-–—]\s*/,"").trim(),hit=teamOf(line.replace(/^#+\s*/,""));if(hit){team=hit;sec=null;continue}if(/^infortunati\b\s*:?\s*$/i.test(line)){sec="inj";continue}if(/^squalificati\b/i.test(line)){sec="sq";continue}if(/^diffidati\b/i.test(line)){sec="df";continue}if(sec!=="inj"||!team||/^(nessuno|nessun infortunato|[-–])$/i.test(line))continue;const e=entry(line);if(!e)continue;out.push({playerName:e.name,name:e.name,team,injured:true,status:"injured",type:"Injury",reason:e.reason,returnDate:dateOf(line),source})}return out}
 function surname(n){const w=norm(n).split(" ").filter(Boolean);return w[w.length-1]||norm(n)}
 function dedupe(rows){const m=new Map();for(const r of rows){const k=`${norm(r.team)}|${surname(r.name)}`,o=m.get(k);if(!o){m.set(k,{...r,sources:[r.source]});continue}const sources=[...new Set([...(o.sources||[o.source]),r.source])],goal=r.source==="Goal.com"?r:(o.source==="Goal.com"?o:null),c=goal||r;m.set(k,{...o,...c,returnDate:c.returnDate||o.returnDate||r.returnDate||null,sources,source:sources.join(" + ")})}return [...m.values()]}
