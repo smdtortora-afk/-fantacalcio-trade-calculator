@@ -696,3 +696,259 @@ window.FS_INJURIES = window.FS_INJURIES || {};
   setTimeout(()=>window.calculate?.(),0);
   console.info('FANTASCAM V10.0 Roster Impact active');
 })();
+
+/* -------------------- FANTASCAM V10.1 MULTI-LEAGUE VAULT --------------------
+   - piu' leghe salvate sul dispositivo (IndexedDB + fallback localStorage)
+   - ultima lega attiva ricordata automaticamente
+   - import diretto XLSX/XLS/CSV esportato da Fantacalcio
+   - aggiornamento intelligente della stessa lega tramite fingerprint delle fantasquadre
+   - nessun file viene inviato al server: il parsing avviene nel browser
+*/
+(() => {
+  if (window.FS_V101_MULTI_LEAGUE_LOADED) return;
+  window.FS_V101_MULTI_LEAGUE_LOADED = true;
+
+  const DB_NAME='fantascam-local';
+  const DB_VERSION=1;
+  const DB_STORE='leagues';
+  const ACTIVE_KEY='fantascamActiveLeagueIdV101';
+  const FALLBACK_KEY='fantascamSavedLeaguesV101';
+  const XLSX_SRC='https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js';
+  const norm=s=>String(s??'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]/g,'');
+  const clean=s=>String(s??'').trim();
+  const num=(x,d=0)=>Number.isFinite(Number(x))?Number(x):d;
+  const now=()=>new Date().toISOString();
+  const allPlayers=()=>{try{return Array.isArray(PLAYERS)?PLAYERS:[]}catch(e){return []}};
+  const playerIndex=()=>{
+    const m=new Map();
+    for(const p of allPlayers()){
+      m.set(norm(p.name),p);
+      const parts=String(p.name||'').trim().split(/\s+/);
+      if(parts.length>1)m.set(norm(parts.slice().reverse().join(' ')),p);
+    }
+    return m;
+  };
+  const lev=(a,b)=>{
+    a=norm(a);b=norm(b);if(a===b)return 0;if(!a)return b.length;if(!b)return a.length;
+    const prev=Array.from({length:b.length+1},(_,i)=>i),cur=new Array(b.length+1);
+    for(let i=1;i<=a.length;i++){
+      cur[0]=i;
+      for(let j=1;j<=b.length;j++)cur[j]=Math.min(cur[j-1]+1,prev[j]+1,prev[j-1]+(a[i-1]===b[j-1]?0:1));
+      for(let j=0;j<=b.length;j++)prev[j]=cur[j];
+    }
+    return prev[b.length];
+  };
+  const resolveName=(name,idx)=>{
+    const key=norm(name);if(!key)return null;
+    if(idx.has(key))return idx.get(key);
+    let best=null,bestD=99;
+    for(const p of allPlayers()){
+      const k=norm(p.name),d=lev(key,k);
+      const limit=Math.max(key.length,k.length)>=9?2:1;
+      if(d<bestD&&d<=limit){best=p;bestD=d}
+    }
+    return best;
+  };
+  const slugId=()=>`lg_${Date.now().toString(36)}_${Math.random().toString(36).slice(2,8)}`;
+  const fingerprint=league=>[...(league?.teams||[])].map(t=>norm(t.name)).filter(Boolean).sort().join('|');
+  const deriveName=fileName=>{
+    let s=String(fileName||'Lega Fantacalcio').replace(/\.[^.]+$/,'');
+    s=s.replace(/[-_ ]rosters?[-_ ]?\d*$/i,'').replace(/[-_ ]rose[-_ ]?\d*$/i,'').replace(/[-_ ]\d{10,}$/,'');
+    return s.replace(/[_-]+/g,' ').replace(/\s+/g,' ').trim()||'Lega Fantacalcio';
+  };
+
+  const fallbackRead=()=>{try{return JSON.parse(localStorage.getItem(FALLBACK_KEY)||'[]')}catch(e){return []}};
+  const fallbackWrite=a=>localStorage.setItem(FALLBACK_KEY,JSON.stringify(a));
+  const openDb=()=>new Promise((resolve,reject)=>{
+    if(!('indexedDB' in window)){resolve(null);return}
+    const req=indexedDB.open(DB_NAME,DB_VERSION);
+    req.onupgradeneeded=()=>{const db=req.result;if(!db.objectStoreNames.contains(DB_STORE))db.createObjectStore(DB_STORE,{keyPath:'storageId'})};
+    req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error);
+  });
+  const dbAll=async()=>{
+    try{
+      const db=await openDb();if(!db)return fallbackRead();
+      return await new Promise((resolve,reject)=>{const r=db.transaction(DB_STORE,'readonly').objectStore(DB_STORE).getAll();r.onsuccess=()=>resolve(r.result||[]);r.onerror=()=>reject(r.error)});
+    }catch(e){return fallbackRead()}
+  };
+  const dbPut=async record=>{
+    try{
+      const db=await openDb();if(!db)throw new Error('fallback');
+      await new Promise((resolve,reject)=>{const r=db.transaction(DB_STORE,'readwrite').objectStore(DB_STORE).put(record);r.onsuccess=()=>resolve();r.onerror=()=>reject(r.error)});
+    }catch(e){const a=fallbackRead(),i=a.findIndex(x=>x.storageId===record.storageId);if(i>=0)a[i]=record;else a.push(record);fallbackWrite(a)}
+    return record;
+  };
+  const dbDelete=async id=>{
+    try{
+      const db=await openDb();if(!db)throw new Error('fallback');
+      await new Promise((resolve,reject)=>{const r=db.transaction(DB_STORE,'readwrite').objectStore(DB_STORE).delete(id);r.onsuccess=()=>resolve();r.onerror=()=>reject(r.error)});
+    }catch(e){fallbackWrite(fallbackRead().filter(x=>x.storageId!==id))}
+  };
+  const dbGet=async id=>(await dbAll()).find(x=>x.storageId===id)||null;
+
+  const canonicalLeague=(league,meta={})=>{
+    if(!window.FS_LEAGUE?.sanitize)throw new Error('Roster Impact non ancora inizializzato');
+    const base=window.FS_LEAGUE.sanitize(league);
+    return {...base,
+      storageId:meta.storageId||league.storageId||slugId(),
+      season:meta.season||league.season||PLAYERS_META?.season||'2026/27',
+      sourceFile:meta.sourceFile||league.sourceFile||null,
+      importedAt:meta.importedAt||league.importedAt||now(),
+      updatedAt:meta.updatedAt||now(),
+      teamFingerprint:fingerprint(base),
+      playerCosts:league.playerCosts||null,
+      importStats:league.importStats||null
+    };
+  };
+
+  const groupedRosterRows=(rows,budget,leagueName)=>{
+    const h=rows[0]||[],starts=[];
+    for(let c=0;c<h.length;c++)if(clean(h[c])&&norm(h[c+1])==='costo')starts.push(c);
+    if(starts.length<2)return null;
+    const idx=playerIndex(),teams=[],unmatched=[],playerCosts={};let matched=0,totalRefs=0;
+    for(let gi=0;gi<starts.length;gi++){
+      const c=starts[gi],teamName=clean(h[c]);if(!teamName)continue;
+      const ids=[],costs={};let totalCost=0,declaredTotal=null;
+      for(let r=1;r<rows.length;r++){
+        const raw=clean(rows[r]?.[c]);if(!raw)continue;
+        if(/^totale?$/i.test(raw)){declaredTotal=num(rows[r]?.[c+1],totalCost);break}
+        totalRefs++;
+        const p=resolveName(raw,idx),cost=Math.max(0,num(rows[r]?.[c+1],0));totalCost+=cost;
+        if(p){if(!ids.some(id=>String(id)===String(p.id)))ids.push(p.id);costs[String(p.id)]=cost;matched++}
+        else unmatched.push(`${teamName}: ${raw}`);
+      }
+      const used=declaredTotal!==null?declaredTotal:totalCost;
+      teams.push({id:String(gi+1),name:teamName,credits:Math.max(0,budget-used),players:ids});playerCosts[String(gi+1)]=costs;
+    }
+    return {name:leagueName,source:'xlsx-import',updatedAt:now(),teams,playerCosts,importStats:{matched,totalRefs,unmatched}};
+  };
+
+  const rowWiseRoster=(rows,budget,leagueName)=>{
+    const headers=(rows[0]||[]).map(norm);
+    const teamCol=headers.findIndex(x=>['squadra','fantasquadra','team'].includes(x));
+    const playerCol=headers.findIndex(x=>['giocatore','calciatore','player','nome'].includes(x));
+    const costCol=headers.findIndex(x=>['costo','prezzo','crediti'].includes(x));
+    if(teamCol<0||playerCol<0)return null;
+    const idx=playerIndex(),map=new Map(),unmatched=[];let matched=0,totalRefs=0;
+    for(let r=1;r<rows.length;r++){
+      const tn=clean(rows[r]?.[teamCol]),pn=clean(rows[r]?.[playerCol]);if(!tn||!pn)continue;totalRefs++;
+      if(!map.has(tn))map.set(tn,{name:tn,players:[],costs:{},spent:0});
+      const t=map.get(tn),p=resolveName(pn,idx),cost=Math.max(0,num(rows[r]?.[costCol],0));t.spent+=cost;
+      if(p){if(!t.players.some(id=>String(id)===String(p.id)))t.players.push(p.id);t.costs[String(p.id)]=cost;matched++}else unmatched.push(`${tn}: ${pn}`);
+    }
+    const teams=[],playerCosts={};let i=1;
+    for(const t of map.values()){teams.push({id:String(i),name:t.name,credits:Math.max(0,budget-t.spent),players:t.players});playerCosts[String(i)]=t.costs;i++}
+    return teams.length>=2?{name:leagueName,source:'xlsx-import',updatedAt:now(),teams,playerCosts,importStats:{matched,totalRefs,unmatched}}:null;
+  };
+
+  const parseRows=(rows,budget,leagueName)=>{
+    const compact=(rows||[]).filter(r=>Array.isArray(r)&&r.some(v=>clean(v)!==''));
+    if(compact.length<2)throw new Error('Il file non contiene rose leggibili');
+    const league=groupedRosterRows(compact,budget,leagueName)||rowWiseRoster(compact,budget,leagueName);
+    if(!league)throw new Error('Formato rose non riconosciuto. Usa il file Rose esportato da Fantacalcio.');
+    const stat=league.importStats||{matched:0,totalRefs:0,unmatched:[]};
+    if(stat.totalRefs&&stat.matched/stat.totalRefs<.85)throw new Error(`Riconosciuti solo ${stat.matched}/${stat.totalRefs} giocatori: listone o formato non compatibile.`);
+    if(league.teams.some(t=>t.players.length<10))throw new Error('Almeno una fantasquadra risulta incompleta: importazione annullata.');
+    return league;
+  };
+
+  let xlsxPromise=null;
+  const loadXlsx=()=>{
+    if(window.XLSX)return Promise.resolve(window.XLSX);
+    if(xlsxPromise)return xlsxPromise;
+    xlsxPromise=new Promise((resolve,reject)=>{
+      const sc=document.createElement('script');sc.src=XLSX_SRC;sc.async=true;
+      sc.onload=()=>window.XLSX?resolve(window.XLSX):reject(new Error('Libreria XLSX non disponibile'));
+      sc.onerror=()=>reject(new Error('Impossibile caricare il lettore XLSX. Controlla la connessione.'));
+      document.head.appendChild(sc);
+    });
+    return xlsxPromise;
+  };
+  const parseFile=async(file,budget,nameOverride)=>{
+    if(!file)throw new Error('Scegli un file XLSX, XLS o CSV');
+    if(!/\.(xlsx|xls|csv)$/i.test(file.name))throw new Error('Formato non supportato: usa XLSX, XLS o CSV');
+    const XLSX=await loadXlsx(),buf=await file.arrayBuffer(),book=XLSX.read(buf,{type:'array',raw:true});
+    const preferred=book.SheetNames.find(n=>/rose|roster/i.test(n))||book.SheetNames[0];
+    if(!preferred)throw new Error('Nessun foglio trovato nel file');
+    const rows=XLSX.utils.sheet_to_json(book.Sheets[preferred],{header:1,defval:null,raw:true});
+    const league=parseRows(rows,budget,clean(nameOverride)||deriveName(file.name));
+    league.sourceFile=file.name;league.sourceSheet=preferred;return league;
+  };
+
+  const activate=async id=>{
+    const rec=await dbGet(id);if(!rec)throw new Error('Lega salvata non trovata');
+    localStorage.setItem(ACTIVE_KEY,id);window.FS_LEAGUE.set(rec);await refreshSelector();return rec;
+  };
+  const upsert=async raw=>{
+    let rec=canonicalLeague(raw,{sourceFile:raw.sourceFile});
+    const all=await dbAll(),same=all.find(x=>x.teamFingerprint===rec.teamFingerprint)||all.find(x=>norm(x.name)===norm(rec.name));
+    if(same)rec={...rec,storageId:same.storageId,importedAt:same.importedAt||rec.importedAt,name:raw.name||same.name};
+    await dbPut(rec);await activate(rec.storageId);return {record:rec,updated:Boolean(same)};
+  };
+  const remove=async id=>{
+    await dbDelete(id);const active=localStorage.getItem(ACTIVE_KEY);const all=(await dbAll()).sort((a,b)=>String(b.updatedAt).localeCompare(String(a.updatedAt)));
+    if(active===id)localStorage.removeItem(ACTIVE_KEY);
+    if(all.length){await activate(all[0].storageId)}else{window.FS_LEAGUE.clear();await refreshSelector()}
+  };
+
+  const ensureStyles=()=>{
+    if(document.getElementById('fs-v101-multi-style'))return;
+    const st=document.createElement('style');st.id='fs-v101-multi-style';st.textContent=`
+      .fsv101-active{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:end;margin-top:10px;padding-top:10px;border-top:1px solid rgba(207,170,255,.12)}.fsv101-active label{font-size:10px;color:#9aa8a0;font-weight:900}.fsv101-active select{margin-top:4px}.fsv101-quick{height:42px;border:1px solid rgba(207,170,255,.28);border-radius:10px;background:rgba(133,92,255,.14);color:#fff;padding:0 12px;font-weight:900}
+      #fs-v101-manager{position:fixed;inset:0;z-index:70000;display:none;align-items:flex-end;justify-content:center;padding:12px;background:rgba(0,0,0,.76);backdrop-filter:blur(6px)}#fs-v101-manager.show{display:flex}.fsv101-sheet{width:min(720px,100%);max-height:90vh;overflow:auto;border:1px solid rgba(207,170,255,.28);border-radius:24px;background:linear-gradient(160deg,#11101b,#06080d);padding:17px;box-shadow:0 30px 100px rgba(0,0,0,.75)}.fsv101-title{display:flex;justify-content:space-between;gap:10px;align-items:start}.fsv101-title h3{margin:0;font:800 21px 'Sora','Outfit',sans-serif}.fsv101-title p{margin:4px 0 0;color:#9ca9a1;font-size:11px}.fsv101-x{border:0;background:transparent;color:#fff;font-size:26px}.fsv101-import{margin-top:14px;padding:12px;border:1px solid rgba(207,170,255,.14);border-radius:15px;background:rgba(255,255,255,.025)}.fsv101-import-grid{display:grid;grid-template-columns:1fr 110px;gap:8px}.fsv101-import input[type=text],.fsv101-import input[type=number],.fsv101-import input[type=file]{width:100%;border:1px solid rgba(255,255,255,.13);border-radius:10px;background:#030506;color:#fff;padding:10px;font:700 12px 'Outfit',sans-serif}.fsv101-file{grid-column:1/-1}.fsv101-import button{grid-column:1/-1;border:1px solid rgba(109,64,216,.55);border-radius:11px;background:linear-gradient(135deg,#6d40d8,#3c1e91);color:#fff;padding:11px;font-weight:900}.fsv101-note{font-size:10px;color:#8f9c94;margin-top:7px;line-height:1.4}.fsv101-msg{margin-top:8px;font-size:11px;color:#c7d1ca}.fsv101-list{display:grid;gap:8px;margin-top:14px}.fsv101-card{padding:11px;border:1px solid rgba(255,255,255,.09);border-radius:14px;background:rgba(255,255,255,.03)}.fsv101-card.active{border-color:rgba(77,255,60,.34);background:rgba(77,255,60,.035)}.fsv101-card-head{display:flex;justify-content:space-between;gap:10px}.fsv101-card b{font-size:13px}.fsv101-card small{display:block;color:#8f9b94;margin-top:3px;font-size:10px}.fsv101-actions{display:flex;gap:6px;margin-top:9px}.fsv101-actions button{flex:1;border:1px solid rgba(255,255,255,.10);border-radius:9px;background:rgba(255,255,255,.05);color:#fff;padding:8px;font-weight:800;font-size:11px}.fsv101-actions .activebtn{background:rgba(77,255,60,.11);border-color:rgba(77,255,60,.28)}.fsv101-actions .danger{color:#ff9aa8;border-color:rgba(255,72,94,.20)}.fsv101-empty{padding:20px;text-align:center;color:#89968e;font-size:11px;border:1px dashed rgba(255,255,255,.11);border-radius:13px}
+      @media(min-width:700px){#fs-v101-manager{align-items:center}}@media(max-width:600px){.fsv101-import-grid{grid-template-columns:1fr}.fsv101-import-grid>*{grid-column:1!important}.fsv101-active{grid-template-columns:1fr}.fsv101-quick{width:100%}}
+    `;document.head.appendChild(st);
+  };
+  const ensureManager=()=>{
+    ensureStyles();let m=document.getElementById('fs-v101-manager');if(m)return m;
+    m=document.createElement('div');m.id='fs-v101-manager';m.innerHTML=`<div class="fsv101-sheet"><div class="fsv101-title"><div><h3>🏆 Le mie leghe</h3><p>Importa una volta, FANTASCAM le conserva su questo dispositivo.</p></div><button class="fsv101-x" data-close>×</button></div><div class="fsv101-import"><div class="fsv101-import-grid"><input type="text" id="fsv101LeagueName" placeholder="Nome lega (opzionale)"><input type="number" id="fsv101Budget" min="1" value="${Math.max(1,num(localStorage.getItem('fantascamLeagueBudget'),500))}" title="Budget iniziale"><input class="fsv101-file" id="fsv101File" type="file" accept=".xlsx,.xls,.csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel,text/csv"><button type="button" data-import>📂 Importa / aggiorna lega</button></div><div class="fsv101-note">Il file viene letto direttamente sul telefono: non viene caricato sui nostri server. Se riconosce le stesse fantasquadre, aggiorna automaticamente la lega già salvata.</div><div class="fsv101-msg"></div></div><div class="fsv101-list"></div></div>`;document.body.appendChild(m);
+    const msg=t=>m.querySelector('.fsv101-msg').textContent=t;
+    m.querySelector('[data-close]').onclick=()=>m.classList.remove('show');m.onclick=e=>{if(e.target===m)m.classList.remove('show')};
+    m.querySelector('[data-import]').onclick=async()=>{
+      const file=m.querySelector('#fsv101File').files?.[0],budget=Math.max(1,num(m.querySelector('#fsv101Budget').value,500)),name=m.querySelector('#fsv101LeagueName').value;
+      msg('Lettura e riconoscimento rose…');
+      try{
+        localStorage.setItem('fantascamLeagueBudget',budget);
+        const league=await parseFile(file,budget,name),res=await upsert(league),st=league.importStats||{};
+        msg(`✅ ${res.updated?'Lega aggiornata':'Lega salvata'}: ${res.record.name} · ${res.record.teams.length} squadre · ${st.matched||0}/${st.totalRefs||0} giocatori riconosciuti${st.unmatched?.length?` · ${st.unmatched.length} non riconosciuti`:''}.`);
+        m.querySelector('#fsv101File').value='';m.querySelector('#fsv101LeagueName').value='';await renderManagerList();
+      }catch(e){msg(`⚠️ ${e.message}`)}
+    };
+    return m;
+  };
+  const renderManagerList=async()=>{
+    const m=ensureManager(),list=m.querySelector('.fsv101-list'),all=(await dbAll()).sort((a,b)=>String(b.updatedAt).localeCompare(String(a.updatedAt))),active=localStorage.getItem(ACTIVE_KEY);
+    if(!all.length){list.innerHTML='<div class="fsv101-empty">Nessuna lega salvata. Importa il file delle rose di Fantacalcio qui sopra.</div>';return}
+    list.innerHTML=all.map(x=>`<div class="fsv101-card ${x.storageId===active?'active':''}" data-id="${x.storageId}"><div class="fsv101-card-head"><div><b>${x.name}</b><small>${x.season||''} · ${x.teams?.length||0} squadre · aggiornato ${new Date(x.updatedAt).toLocaleDateString('it-IT')}</small></div><span>${x.storageId===active?'✅':''}</span></div><div class="fsv101-actions"><button class="${x.storageId===active?'activebtn':''}" data-use>${x.storageId===active?'Lega attiva':'Usa questa lega'}</button><button class="danger" data-delete>Elimina</button></div></div>`).join('');
+    list.querySelectorAll('[data-use]').forEach(b=>b.onclick=async()=>{const id=b.closest('[data-id]').dataset.id;await activate(id);await renderManagerList()});
+    list.querySelectorAll('[data-delete]').forEach(b=>b.onclick=async()=>{const card=b.closest('[data-id]'),id=card.dataset.id,name=card.querySelector('b').textContent;if(confirm(`Eliminare “${name}” da questo dispositivo?`)){await remove(id);await renderManagerList()}});
+  };
+  const openManager=async()=>{const m=ensureManager();await renderManagerList();m.classList.add('show')};
+  const refreshSelector=async()=>{
+    const box=document.getElementById('fs-v10-league');if(!box)return;
+    let row=box.querySelector('.fsv101-active');
+    if(!row){row=document.createElement('div');row.className='fsv101-active';row.innerHTML='<label>LEGA ATTIVA<select id="fsv101ActiveLeague"></select></label><button class="fsv101-quick" type="button">Le mie leghe</button>';const head=box.querySelector('.fsv10-head');head?.insertAdjacentElement('afterend',row);row.querySelector('.fsv101-quick').onclick=openManager;row.querySelector('select').onchange=async e=>{if(e.target.value)await activate(e.target.value)}}
+    const sel=row.querySelector('select'),all=(await dbAll()).sort((a,b)=>String(b.updatedAt).localeCompare(String(a.updatedAt))),active=localStorage.getItem(ACTIVE_KEY);
+    sel.innerHTML=all.length?all.map(x=>`<option value="${x.storageId}" ${x.storageId===active?'selected':''}>${x.name} · ${x.teams?.length||0} squadre</option>`).join(''):'<option value="">Nessuna lega salvata</option>';
+    const manage=box.querySelector('.fsv10-manage');if(manage){manage.textContent='Le mie leghe';manage.onclick=openManager}
+  };
+
+  const migrate=async()=>{
+    const current=window.FS_LEAGUE?.get?.(),all=await dbAll();
+    if(current&&current.teams?.length){
+      const fp=fingerprint(current);
+      if(!all.some(x=>x.teamFingerprint===fp))await dbPut(canonicalLeague(current,{storageId:slugId(),sourceFile:null}));
+    }
+    let id=localStorage.getItem(ACTIVE_KEY),saved=await dbAll();
+    if(id&&!saved.some(x=>x.storageId===id)){localStorage.removeItem(ACTIVE_KEY);id=null}
+    if(!id&&saved.length){saved=saved.sort((a,b)=>String(b.updatedAt).localeCompare(String(a.updatedAt)));id=saved[0].storageId;localStorage.setItem(ACTIVE_KEY,id)}
+    if(id){const rec=await dbGet(id);if(rec)window.FS_LEAGUE.set(rec)}
+    await refreshSelector();
+  };
+
+  window.FS_MULTI_LEAGUE={list:dbAll,get:dbGet,activate,save:upsert,remove,parseFile,open:openManager,activeId:()=>localStorage.getItem(ACTIVE_KEY)};
+  const algo=document.querySelector('.algoBox b');if(algo)algo.textContent='V10.1';
+  const brand=document.querySelector('.brandline');if(brand&&!document.getElementById('fs-v101-badge')){const b=document.createElement('div');b.className='badge';b.id='fs-v101-badge';b.textContent='💾 MULTI-LEAGUE';brand.appendChild(b)}
+  setTimeout(()=>migrate().catch(e=>console.warn('FANTASCAM multi-league init:',e?.message||e)),20);
+  console.info('FANTASCAM V10.1 Multi-League Vault active');
+})();
