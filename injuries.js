@@ -671,7 +671,7 @@ window.FS_INJURIES = window.FS_INJURIES || {};
   const ensureV10Banner=()=>{
     let ov=document.getElementById('fs-v10-verdict-overlay');if(ov)return ov;
     const st=document.createElement('style');st.textContent=`#fs-v10-verdict-overlay{position:fixed;inset:0;z-index:65000;display:none;align-items:flex-end;justify-content:center;padding:12px;background:rgba(0,0,0,.74);backdrop-filter:blur(6px)}#fs-v10-verdict-overlay.show{display:flex}.fsv10-banner{width:min(700px,100%);border-radius:24px;overflow:hidden;border:1px solid rgba(255,255,255,.14);background:linear-gradient(160deg,#11101c,#050708);box-shadow:0 30px 100px rgba(0,0,0,.75)}.fsv10-banner.good{border-color:rgba(77,255,60,.5)}.fsv10-banner.warn{border-color:rgba(255,210,53,.55)}.fsv10-banner.bad{border-color:rgba(255,72,94,.62)}.fsv10-vhead{display:flex;gap:11px;align-items:flex-start;padding:17px;border-bottom:1px solid rgba(255,255,255,.08)}.fsv10-vicon{font-size:34px}.fsv10-vtitle{flex:1}.fsv10-vtitle small{display:block;color:#9b91ad;font-size:10px;font-weight:900;letter-spacing:1.2px}.fsv10-vtitle b{display:block;font:800 22px 'Sora','Outfit',sans-serif;margin-top:3px}.fsv10-vscore{text-align:right}.fsv10-vscore strong{display:block;font:800 34px 'Sora','Outfit',sans-serif}.fsv10-vscore span{font-size:9px;color:#9b91ad}.fsv10-vbody{padding:13px 17px}.fsv10-vsummary{font-size:12px;line-height:1.5;margin-bottom:9px}.fsv10-vreasons{display:grid;gap:6px}.fsv10-vreason{padding:9px 10px;border-radius:11px;background:rgba(255,255,255,.045);font-size:11px;line-height:1.42;color:#d1d5d2}.fsv10-vactions{display:flex;gap:7px;padding:0 17px 16px}.fsv10-vactions button{flex:1;border-radius:11px;padding:10px;border:1px solid rgba(255,255,255,.11);background:rgba(255,255,255,.06);color:#fff;font-weight:900}@media(min-width:700px){#fs-v10-verdict-overlay{align-items:center}}`;document.head.appendChild(st);
-    ov=document.createElement('div');ov.id='fs-v10-verdict-overlay';ov.innerHTML=`<div class="fsv10-banner"><div class="fsv10-vhead"><div class="fsv10-vicon"></div><div class="fsv10-vtitle"><small>VERDETTO FANTASCAM V10.2 · ROSTER IMPACT REAL</small><b></b></div><div class="fsv10-vscore"><strong></strong><span>equità contestuale</span></div></div><div class="fsv10-vbody"><div class="fsv10-vsummary"></div><div class="fsv10-vreasons"></div></div><div class="fsv10-vactions"><button data-close>Chiudi</button></div></div>`;document.body.appendChild(ov);ov.querySelector('[data-close]').onclick=()=>ov.classList.remove('show');ov.onclick=e=>{if(e.target===ov)ov.classList.remove('show')};return ov;
+    ov=document.createElement('div');ov.id='fs-v10-verdict-overlay';ov.innerHTML=`<div class="fsv10-banner"><div class="fsv10-vhead"><div class="fsv10-vicon"></div><div class="fsv10-vtitle"><small>VERDETTO FANTASCAM V10.3 · ROSTER IMPACT REAL</small><b></b></div><div class="fsv10-vscore"><strong></strong><span>equità contestuale</span></div></div><div class="fsv10-vbody"><div class="fsv10-vsummary"></div><div class="fsv10-vreasons"></div></div><div class="fsv10-vactions"><button data-close>Chiudi</button></div></div>`;document.body.appendChild(ov);ov.querySelector('[data-close]').onclick=()=>ov.classList.remove('show');ov.onclick=e=>{if(e.target===ov)ov.classList.remove('show')};return ov;
   };
   let lastSig='';
   const showV10=(trade,status,title,summary,reasons)=>{
@@ -969,8 +969,206 @@ window.FS_INJURIES = window.FS_INJURIES || {};
   };
 
   window.FS_MULTI_LEAGUE={list:dbAll,get:dbGet,activate,save:upsert,remove,parseFile,open:openManager,activeId:()=>localStorage.getItem(ACTIVE_KEY)};
-  const algo=document.querySelector('.algoBox b');if(algo)algo.textContent='V10.1';
+  const algo=document.querySelector('.algoBox b');if(algo)algo.textContent='V10.3';
   const brand=document.querySelector('.brandline');if(brand&&!document.getElementById('fs-v101-badge')){const b=document.createElement('div');b.className='badge';b.id='fs-v101-badge';b.textContent='💾 MULTI-LEAGUE';brand.appendChild(b)}
   setTimeout(()=>migrate().catch(e=>console.warn('FANTASCAM multi-league init:',e?.message||e)),20);
   console.info('FANTASCAM V10.2 Multi-League Vault active');
+})();
+
+/* FANTASCAM V10.3 — ROSTER-ONLY PLAYER PICKER
+   Quando una lega e una fantasquadra sono selezionate, ogni lato dello scambio
+   mostra esclusivamente i giocatori realmente presenti in quella rosa.
+   Senza lega attiva resta disponibile la ricerca globale del listone. */
+(() => {
+  if (window.__FS_V103_ROSTER_PICKER__) return;
+  window.__FS_V103_ROSTER_PICKER__ = true;
+
+  const ROLES = ["P", "D", "C", "A"];
+  const ROLE_LABEL = {P:"Portieri", D:"Difensori", C:"Centrocampisti", A:"Attaccanti"};
+  const allPlayers = () => {
+    try { return Array.isArray(window.ACTIVE_PLAYERS) ? window.ACTIVE_PLAYERS : (Array.isArray(PLAYERS) ? PLAYERS : []); }
+    catch(e) { try { return Array.isArray(PLAYERS) ? PLAYERS : []; } catch(_) { return []; } }
+  };
+  const byId = id => allPlayers().find(p => String(p.id) === String(id)) || null;
+  const sideOf = row => row?.closest?.("#sideA") ? "A" : row?.closest?.("#sideB") ? "B" : null;
+  const league = () => window.FS_LEAGUE?.get?.() || null;
+  const teamSelect = side => document.getElementById(side === "A" ? "fsLeagueTeamA" : "fsLeagueTeamB");
+  const teamForSide = side => {
+    const l = league(), id = teamSelect(side)?.value;
+    return l?.teams?.find(t => String(t.id) === String(id)) || null;
+  };
+  const rosterFor = side => {
+    const t = teamForSide(side);
+    return (t?.players || []).map(byId).filter(Boolean);
+  };
+  const underlying = row => ({role:row.querySelector(".role"), player:row.querySelector(".footballer")});
+  const currentPlayer = row => byId(underlying(row).player?.value);
+  const globalSearch = row => row.querySelector(".fs-global-search");
+
+  const style = () => {
+    if (document.getElementById("fs-v103-roster-picker-style")) return;
+    const s = document.createElement("style");
+    s.id = "fs-v103-roster-picker-style";
+    s.textContent = `
+      .fs-roster-picker{min-width:0;width:100%;display:none}
+      .fs-roster-picker select{width:100%;height:42px;border:1px solid rgba(207,170,255,.32);border-radius:10px;background:#090713;color:#fff;padding:8px 34px 8px 11px;font:800 14px 'Outfit',sans-serif;outline:none}
+      .fs-roster-picker select:focus{border-color:#a77bff;box-shadow:0 0 0 3px rgba(133,92,255,.12)}
+      .fs-roster-picker select:disabled{opacity:.62;color:#9b94a9}
+      .fs-roster-picker .fs-rp-hint{display:block;margin-top:4px;color:#8f9b94;font-size:9px;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+      .player.fs-roster-mode .fs-global-search{display:none!important}
+      .player.fs-roster-mode .fs-roster-picker{display:block!important}
+      .player.fs-roster-mode .rowtop{grid-template-columns:minmax(0,1fr) 40px!important}
+      @media(max-width:780px){.fs-roster-picker select{font-size:16px}}
+    `;
+    document.head.appendChild(s);
+  };
+
+  const selectedElsewhere = (row, side) => {
+    const ids = new Set();
+    document.querySelectorAll(`#side${side} .player`).forEach(r => {
+      if (r === row) return;
+      const id = underlying(r).player?.value;
+      if (id) ids.add(String(id));
+    });
+    return ids;
+  };
+
+  const setUnderlyingPlayer = (row, p) => {
+    const {role, player} = underlying(row);
+    if (!role || !player) return;
+    if (!p) {
+      player.value = "";
+      player.dispatchEvent(new Event("change", {bubbles:true}));
+      const inp = globalSearch(row)?.querySelector("input");
+      if (inp) inp.value = "";
+      return;
+    }
+    role.value = p.role;
+    role.dispatchEvent(new Event("change", {bubbles:true}));
+    setTimeout(() => {
+      player.value = String(p.id);
+      player.dispatchEvent(new Event("change", {bubbles:true}));
+      const inp = globalSearch(row)?.querySelector("input");
+      if (inp) inp.value = p.name;
+      refreshSide(sideOf(row));
+    }, 0);
+  };
+
+  const ensurePicker = row => {
+    if (!row || row.querySelector(".fs-roster-picker")) return row?.querySelector(".fs-roster-picker") || null;
+    const top = row.querySelector(".rowtop");
+    if (!top) return null;
+    const wrap = document.createElement("div");
+    wrap.className = "fs-roster-picker";
+    wrap.innerHTML = `<select aria-label="Giocatore della fantasquadra"></select><span class="fs-rp-hint"></span>`;
+    const before = top.querySelector(".remove");
+    if (before) top.insertBefore(wrap, before); else top.appendChild(wrap);
+    wrap.querySelector("select").addEventListener("change", e => {
+      const p = byId(e.target.value);
+      setUnderlyingPlayer(row, p);
+    });
+    return wrap;
+  };
+
+  const buildOptions = (select, roster, current, side, row, team) => {
+    const used = selectedElsewhere(row, side);
+    select.innerHTML = "";
+    const empty = document.createElement("option");
+    empty.value = "";
+    empty.textContent = `Scegli giocatore di ${team.name}…`;
+    select.appendChild(empty);
+
+    ROLES.forEach(role => {
+      const players = roster.filter(p => p.role === role && (!used.has(String(p.id)) || String(current?.id) === String(p.id)))
+        .sort((a,b) => (Number(b.fvm)||0) - (Number(a.fvm)||0) || a.name.localeCompare(b.name,"it"));
+      if (!players.length) return;
+      const group = document.createElement("optgroup");
+      group.label = ROLE_LABEL[role];
+      players.forEach(p => {
+        const o = document.createElement("option");
+        o.value = String(p.id);
+        o.textContent = `${p.name} · ${p.team} · FVM ${p.fvm}`;
+        group.appendChild(o);
+      });
+      select.appendChild(group);
+    });
+    if (current && roster.some(p => String(p.id) === String(current.id))) select.value = String(current.id);
+  };
+
+  const refreshRow = row => {
+    const side = sideOf(row); if (!side) return;
+    const picker = ensurePicker(row); if (!picker) return;
+    const sel = picker.querySelector("select"), hint = picker.querySelector(".fs-rp-hint");
+    const l = league(), team = teamForSide(side), current = currentPlayer(row);
+
+    if (!l) {
+      row.classList.remove("fs-roster-mode");
+      sel.disabled = true;
+      sel.innerHTML = '<option value="">Nessuna lega attiva</option>';
+      hint.textContent = "";
+      return;
+    }
+
+    row.classList.add("fs-roster-mode");
+    if (!team) {
+      sel.disabled = true;
+      sel.innerHTML = `<option value="">Seleziona prima la Fantasquadra ${side}</option>`;
+      hint.textContent = "La rosa verrà filtrata automaticamente.";
+      if (current) setUnderlyingPlayer(row, null);
+      return;
+    }
+
+    const roster = rosterFor(side);
+    sel.disabled = false;
+    buildOptions(sel, roster, current, side, row, team);
+    hint.textContent = `${team.name} · ${roster.length} giocatori in rosa`;
+
+    // Se si cambia fantasquadra, un giocatore della vecchia rosa non può restare nello scambio.
+    if (current && !roster.some(p => String(p.id) === String(current.id))) {
+      setUnderlyingPlayer(row, null);
+      sel.value = "";
+    }
+  };
+
+  const refreshSide = side => {
+    if (!side) return;
+    document.querySelectorAll(`#side${side} .player`).forEach(refreshRow);
+  };
+  const refreshAll = () => { style(); refreshSide("A"); refreshSide("B"); };
+
+  const hookTeamSelects = () => {
+    ["A","B"].forEach(side => {
+      const s = teamSelect(side);
+      if (!s || s.dataset.fsRosterHook === "1") return;
+      s.dataset.fsRosterHook = "1";
+      s.addEventListener("change", () => {
+        refreshSide(side);
+        setTimeout(() => window.calculate?.(), 0);
+      });
+    });
+  };
+
+  const boot = () => {
+    style(); hookTeamSelects(); refreshAll();
+    let queued = false;
+    const queue = () => {
+      if (queued) return; queued = true;
+      setTimeout(() => { queued = false; hookTeamSelects(); refreshAll(); }, 20);
+    };
+    new MutationObserver(mutations => {
+      const relevant = mutations.some(m => {
+        const t = m.target;
+        if (t?.id === "fsLeagueTeamA" || t?.id === "fsLeagueTeamB") return true;
+        return Array.from(m.addedNodes || []).some(n =>
+          n?.nodeType === 1 && (n.matches?.(".player,#fs-v10-league") || n.querySelector?.(".player,#fs-v10-league"))
+        );
+      });
+      if (relevant) queue();
+    }).observe(document.body, {childList:true, subtree:true});
+    window.addEventListener("fantascam:trade-updated", () => { refreshSide("A"); refreshSide("B"); });
+    // Se una lega salvata viene attivata/cambiata, il pannello ricrea le opzioni: il MutationObserver aggiorna i picker.
+    console.info("FANTASCAM V10.3 Roster-only player picker active");
+  };
+
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot); else boot();
 })();
