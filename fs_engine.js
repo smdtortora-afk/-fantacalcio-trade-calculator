@@ -613,7 +613,7 @@
     }
     if(document.querySelector('script[data-fs-injuries]'))return;
     const sc=document.createElement("script");
-    sc.src="injuries.js?v=101";
+    sc.src="injuries.js?v=102";
     sc.async=true;
     sc.dataset.fsInjuries="1";
     sc.onload=()=>{

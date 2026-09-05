@@ -555,6 +555,26 @@ window.FS_INJURIES = window.FS_INJURIES || {};
   };
 
   const gkOrder=team=>allPlayers().filter(p=>p.role==='P'&&p.team===team).sort((a,b)=>marketRaw(b)-marketRaw(a));
+
+  // V10.2: la coppia primo+secondo e' un'assicurazione, NON un secondo valore di mercato.
+  // Il backup possiede gia' FVM/FS e pesa gia' nella profondita': qui aggiungiamo solo
+  // il vantaggio marginale di coprire lo stesso club. Niente bonus per D/C/A.
+  const gkCoverageBonus=(roster,team,starter,backup,def)=>{
+    const sf=Math.max(1,n(starter.fvm,1)),bf=Math.max(0,n(backup.fvm,0));
+    const club=clamp((def-78)/18,0,1);                 // Como 79 ~= fascia bassa BUONO
+    const hierarchy=clamp(.80+.35*clamp(bf/sf,0,1),.80,1.10);
+
+    // Se la rosa possiede gia' un altro portiere affidabile, la necessita' della coppia cala.
+    const other=roster.filter(p=>p.role==='P'&&p.team!==team);
+    const bestOther=other.reduce((m,p)=>Math.max(m,n(p.fvm,0)),0);
+    const ratio=bestOther/sf;
+    const need=ratio>=.75?.35:ratio>=.50?.55:ratio>=.30?.75:1;
+
+    // Extra massimo volutamente contenuto: il valore proprio del secondo e' gia' nel motore.
+    const bonus=clamp((.90+.90*club)*hierarchy*need,.35,1.90);
+    return {bonus,need,bestOther,backupRatio:bf/sf,club};
+  };
+
   const gkPairState=roster=>{
     const out=[];
     Object.keys(TEAM_DEF).forEach(team=>{
@@ -563,9 +583,8 @@ window.FS_INJURIES = window.FS_INJURIES || {};
       const starter=g[0],backup=g[1];
       if(hasPlayer(roster,starter)&&hasPlayer(roster,backup)){
         const tier=def>=88?'PREMIUM':'BUONO';
-        // Como (79) rientra correttamente nella fascia BUONO.
-        const bonus=tier==='PREMIUM'?6:4;
-        out.push({team,tier,bonus,starter,backup});
+        const cov=gkCoverageBonus(roster,team,starter,backup,def);
+        out.push({team,tier,bonus:cov.bonus,starter,backup,coverage:cov});
       }
     });
     return out;
@@ -574,8 +593,8 @@ window.FS_INJURIES = window.FS_INJURIES || {};
     const a=gkPairState(before),b=gkPairState(after),key=x=>`${x.team}:${x.starter.id}:${x.backup.id}`;
     const am=new Map(a.map(x=>[key(x),x])),bm=new Map(b.map(x=>[key(x),x]));
     let delta=0;const notes=[];
-    for(const [k,x] of bm){if(!am.has(k)){delta+=x.bonus;notes.push(`🧤 Completa ${x.starter.name} + ${x.backup.name} (${x.team}): bonus portieri +${x.bonus}, perché il reparto difensivo del club è ${x.tier.toLowerCase()}.`)}}
-    for(const [k,x] of am){if(!bm.has(k)){delta-=x.bonus;notes.push(`🧤 Perde la copertura ${x.starter.name} + ${x.backup.name} (${x.team}): impatto portieri -${x.bonus}.`)}}
+    for(const [k,x] of bm){if(!am.has(k)){delta+=x.bonus;notes.push(`🧤 Copertura ${x.starter.name} + ${x.backup.name} (${x.team}): extra assicurativo +${x.bonus.toFixed(1)}. Il secondo mantiene già il suo valore FVM/FS; questo bonus premia solo la copertura del titolare.`)}}
+    for(const [k,x] of am){if(!bm.has(k)){delta-=x.bonus;notes.push(`🧤 Perde la copertura ${x.starter.name} + ${x.backup.name} (${x.team}): extra assicurativo -${x.bonus.toFixed(1)}.`)}}
     return {delta,notes};
   };
 
@@ -652,7 +671,7 @@ window.FS_INJURIES = window.FS_INJURIES || {};
   const ensureV10Banner=()=>{
     let ov=document.getElementById('fs-v10-verdict-overlay');if(ov)return ov;
     const st=document.createElement('style');st.textContent=`#fs-v10-verdict-overlay{position:fixed;inset:0;z-index:65000;display:none;align-items:flex-end;justify-content:center;padding:12px;background:rgba(0,0,0,.74);backdrop-filter:blur(6px)}#fs-v10-verdict-overlay.show{display:flex}.fsv10-banner{width:min(700px,100%);border-radius:24px;overflow:hidden;border:1px solid rgba(255,255,255,.14);background:linear-gradient(160deg,#11101c,#050708);box-shadow:0 30px 100px rgba(0,0,0,.75)}.fsv10-banner.good{border-color:rgba(77,255,60,.5)}.fsv10-banner.warn{border-color:rgba(255,210,53,.55)}.fsv10-banner.bad{border-color:rgba(255,72,94,.62)}.fsv10-vhead{display:flex;gap:11px;align-items:flex-start;padding:17px;border-bottom:1px solid rgba(255,255,255,.08)}.fsv10-vicon{font-size:34px}.fsv10-vtitle{flex:1}.fsv10-vtitle small{display:block;color:#9b91ad;font-size:10px;font-weight:900;letter-spacing:1.2px}.fsv10-vtitle b{display:block;font:800 22px 'Sora','Outfit',sans-serif;margin-top:3px}.fsv10-vscore{text-align:right}.fsv10-vscore strong{display:block;font:800 34px 'Sora','Outfit',sans-serif}.fsv10-vscore span{font-size:9px;color:#9b91ad}.fsv10-vbody{padding:13px 17px}.fsv10-vsummary{font-size:12px;line-height:1.5;margin-bottom:9px}.fsv10-vreasons{display:grid;gap:6px}.fsv10-vreason{padding:9px 10px;border-radius:11px;background:rgba(255,255,255,.045);font-size:11px;line-height:1.42;color:#d1d5d2}.fsv10-vactions{display:flex;gap:7px;padding:0 17px 16px}.fsv10-vactions button{flex:1;border-radius:11px;padding:10px;border:1px solid rgba(255,255,255,.11);background:rgba(255,255,255,.06);color:#fff;font-weight:900}@media(min-width:700px){#fs-v10-verdict-overlay{align-items:center}}`;document.head.appendChild(st);
-    ov=document.createElement('div');ov.id='fs-v10-verdict-overlay';ov.innerHTML=`<div class="fsv10-banner"><div class="fsv10-vhead"><div class="fsv10-vicon"></div><div class="fsv10-vtitle"><small>VERDETTO FANTASCAM V10.0 · ROSTER IMPACT</small><b></b></div><div class="fsv10-vscore"><strong></strong><span>equità contestuale</span></div></div><div class="fsv10-vbody"><div class="fsv10-vsummary"></div><div class="fsv10-vreasons"></div></div><div class="fsv10-vactions"><button data-close>Chiudi</button></div></div>`;document.body.appendChild(ov);ov.querySelector('[data-close]').onclick=()=>ov.classList.remove('show');ov.onclick=e=>{if(e.target===ov)ov.classList.remove('show')};return ov;
+    ov=document.createElement('div');ov.id='fs-v10-verdict-overlay';ov.innerHTML=`<div class="fsv10-banner"><div class="fsv10-vhead"><div class="fsv10-vicon"></div><div class="fsv10-vtitle"><small>VERDETTO FANTASCAM V10.2 · ROSTER IMPACT REAL</small><b></b></div><div class="fsv10-vscore"><strong></strong><span>equità contestuale</span></div></div><div class="fsv10-vbody"><div class="fsv10-vsummary"></div><div class="fsv10-vreasons"></div></div><div class="fsv10-vactions"><button data-close>Chiudi</button></div></div>`;document.body.appendChild(ov);ov.querySelector('[data-close]').onclick=()=>ov.classList.remove('show');ov.onclick=e=>{if(e.target===ov)ov.classList.remove('show')};return ov;
   };
   let lastSig='';
   const showV10=(trade,status,title,summary,reasons)=>{
@@ -680,8 +699,11 @@ window.FS_INJURIES = window.FS_INJURIES || {};
     else if(finalFair<88){status='warn';title='SCAMBIO ACCETTABILE';summary=`Equità contestuale ${Math.round(finalFair)}%. Lo scambio è possibile, ma considerando le rose resta un vantaggio per la Squadra ${stronger}.`}
     else{status='good';title='SCAMBIO EQUILIBRATO';summary=`Equità contestuale ${Math.round(finalFair)}%. Valore puro e impatto sulle rose sono compatibili con uno scambio equilibrato.`}
     const reasons=[...(t.reasons||[]).slice(0,3),...(ri.notes||[])];
-    if(ri.active)reasons.unshift(`🏆 Roster Impact: ${teamA.name} ${ri.impactA.delta>=0?'+':''}${ri.impactA.delta.toFixed(1)} · ${teamB.name} ${ri.impactB.delta>=0?'+':''}${ri.impactB.delta.toFixed(1)} · correzione equità max ±8.`);
-    const s=document.getElementById('score'),v=document.getElementById('verdict'),d=document.getElementById('detail');if(s)s.textContent=`${Math.round(finalFair)}%`;if(v){v.className='verdict '+status;v.textContent=status==='good'?'✅ SCAMBIO EQUILIBRATO':status==='warn'?'🟡 SCAMBIO ACCETTABILE':'🚨 FANTASCAM!! 🚨'}if(d)d.textContent=`100% = equilibrio perfetto · base ${Math.round(baseFair)}%${ri.active?` · Roster Impact ${ri.shift>=0?'+':''}${(ri.shift*2).toFixed(1)} pt equità`:''}`;
+    if(ri.active){
+      reasons.unshift(`🏆 Roster Impact: ${teamA.name} ${ri.impactA.delta>=0?'+':''}${ri.impactA.delta.toFixed(1)} · ${teamB.name} ${ri.impactB.delta>=0?'+':''}${ri.impactB.delta.toFixed(1)} · correzione contestuale ${(ri.shift*2)>=0?'+':''}${(ri.shift*2).toFixed(1)} pt (cap assoluto ±8).`);
+      reasons.unshift(`⚖️ Equità pura ${Math.round(baseFair)}% → equità contestuale ${Math.round(finalFair)}%. Il contesto della rosa può rifinire il giudizio, non sostituire il valore reale dei giocatori.`);
+    }
+    const s=document.getElementById('score'),v=document.getElementById('verdict'),d=document.getElementById('detail');if(s)s.textContent=`${Math.round(finalFair)}%`;if(v){v.className='verdict '+status;v.textContent=status==='good'?'✅ SCAMBIO EQUILIBRATO':status==='warn'?'🟡 SCAMBIO ACCETTABILE':'🚨 FANTASCAM!! 🚨'}if(d)d.textContent=`100% = equilibrio perfetto · equità pura ${Math.round(baseFair)}%${ri.active?` · impatto rose ${ri.shift>=0?'+':''}${(ri.shift*2).toFixed(1)} pt`:''}`;
     window.FS_LAST_TRADE={...t,baseFairness:baseFair,baseCenter,center,fairness:finalFair,stronger,rosterImpact:ri,teamA,teamB,status,reasons};
     showV10(window.FS_LAST_TRADE,status,title,summary,reasons);
     window.dispatchEvent(new CustomEvent('fantascam:trade-v10',{detail:window.FS_LAST_TRADE}));
@@ -691,10 +713,10 @@ window.FS_INJURIES = window.FS_INJURIES || {};
   window.getTradeSummary=()=>{const x=window.FS_LAST_TRADE;if(!x)return oldSummary?.()||'Nessuno scambio selezionato';const names=s=>s.map(p=>p.name).join(' + ')||'—';return `Scambio: ${names(x.A)} ⇄ ${names(x.B)} | Equità ${Math.round(x.fairness)}%${x.rosterImpact?.active?` | Roster Impact attivo`:''} | ${document.getElementById('verdict')?.textContent||''}`};
 
   renderLeaguePanel();
-  document.querySelector('.algoBox b')&&(document.querySelector('.algoBox b').textContent='V10.0');
-  const brand=document.querySelector('.brandline');if(brand&&!document.getElementById('fs-v10-badge')){const b=document.createElement('div');b.className='badge';b.id='fs-v10-badge';b.textContent='🏆 ROSTER IMPACT V10';brand.appendChild(b)}
+  document.querySelector('.algoBox b')&&(document.querySelector('.algoBox b').textContent='V10.2');
+  const brand=document.querySelector('.brandline');if(brand&&!document.getElementById('fs-v10-badge')){const b=document.createElement('div');b.className='badge';b.id='fs-v10-badge';b.textContent='🏆 ROSTER IMPACT V10.2';brand.appendChild(b)}
   setTimeout(()=>window.calculate?.(),0);
-  console.info('FANTASCAM V10.0 Roster Impact active');
+  console.info('FANTASCAM V10.2 Roster Impact Real active');
 })();
 
 /* -------------------- FANTASCAM V10.1 MULTI-LEAGUE VAULT --------------------
@@ -950,5 +972,5 @@ window.FS_INJURIES = window.FS_INJURIES || {};
   const algo=document.querySelector('.algoBox b');if(algo)algo.textContent='V10.1';
   const brand=document.querySelector('.brandline');if(brand&&!document.getElementById('fs-v101-badge')){const b=document.createElement('div');b.className='badge';b.id='fs-v101-badge';b.textContent='💾 MULTI-LEAGUE';brand.appendChild(b)}
   setTimeout(()=>migrate().catch(e=>console.warn('FANTASCAM multi-league init:',e?.message||e)),20);
-  console.info('FANTASCAM V10.1 Multi-League Vault active');
+  console.info('FANTASCAM V10.2 Multi-League Vault active');
 })();
