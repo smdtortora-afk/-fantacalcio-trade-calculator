@@ -277,23 +277,23 @@
   const tradeAnalysis=(A,B,ca=0,cb=0)=>{
     const av=window.packageValue(A,ca),bv=window.packageValue(B,cb);
     const maxv=Math.max(1,av,bv);
-    const rel=(av-bv)/maxv;
+    const rel=(bv-av)/maxv; // positivo: A riceve il pacchetto più forte
 
     // Base: differenza di qualità/pacchetto, compressa per non far vincere la quantità.
     const base=clamp(35*Math.tanh(rel*1.8),-28,28);
 
     // Momento: usa solo l'impatto forma già calcolato dal motore (nessun doppio conteggio).
-    const momentum=clamp((sideMomentum(A)-sideMomentum(B))*.70,-6,6);
+    const momentum=clamp((sideMomentum(B)-sideMomentum(A))*.70,-6,6);
 
     // Calendario: predisposto ma neutro finché non colleghiamo un feed delle prossime gare.
     const calendar=0;
 
     // Slot rosa: ogni giocatore extra ha un costo reale di posto/opportunità.
-    const slots=clamp((B.length-A.length)*2,-6,6);
+    const slots=clamp((A.length-B.length)*2,-6,6);
 
     // Equilibrio ruoli/scarsità: isola il premio ruolo dal semplice valore FS.
     const ra=roleAdjustedPackage(A),rb=roleAdjustedPackage(B);
-    const role=clamp(((ra-rb)-(av-bv))/5,-4,4);
+    const role=clamp(((rb-ra)-(bv-av))/5,-4,4);
 
     const center=clamp(50+base+momentum+calendar+slots+role,0,100);
     const fairness=clamp(100-Math.abs(center-50)*2,0,100);
@@ -557,6 +557,7 @@
 
     if(!A.length||!B.length){
       lastVerdictSound="";
+      window.FS_LAST_TRADE=null;
       s.textContent="—";
       v.textContent="Seleziona almeno un giocatore per parte";
       va.textContent=A.length?window.packageValue(A,ca).toFixed(0):"—";
@@ -572,7 +573,7 @@
     d.textContent=`50 = equilibrio perfetto · Equità ${t.fairness.toFixed(0)}%`;
 
     const delta=Math.abs(t.center-50);
-    const stronger=t.center>50?"A":"B";
+    const stronger=t.center>50?"A":t.center<50?"B":null;
 
     if(delta<=5){
       v.textContent="✅ SCAMBIO EQUILIBRATO";
@@ -613,7 +614,7 @@
     }
     if(document.querySelector('script[data-fs-injuries]'))return;
     const sc=document.createElement("script");
-    sc.src="injuries.js?v=103";
+    sc.src="injuries.js?v=104";
     sc.async=true;
     sc.dataset.fsInjuries="1";
     sc.onload=()=>{
@@ -635,3 +636,4 @@
   window.calculate();
   console.info("FANTASCAM FS Engine V8.2 active");
 })();
+
