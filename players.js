@@ -129,3 +129,4 @@ const PLAYERS=[{"id":5841,"role":"P","mantraRole":"Por","name":"Svilar","team":"
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",boot);else boot();
 })();
 
+

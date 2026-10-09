@@ -469,7 +469,7 @@
     const fire=fireBadge(p);
     const bd=fsBreakdown(p);
     const formImpact=Math.abs(bd.formDelta)>=.5?`<span class="chip" title="Impatto forma sul FS">FORMA ${signed(bd.formDelta)}</span>`:"";
-    const injuryImpact=bd.injuryDelta<=-.5?`<span class="chip" title="${bd.injuryReason||"Infortunio"}">🚑 ${signed(bd.injuryDelta)}</span>`:"";
+    const injuryImpact=bd.injuryDelta<=-.5?`<span class="chip" title="${String(bd.injuryReason||"Infortunio").replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;")}">🚑 ${signed(bd.injuryDelta)}</span>`:"";
     box.innerHTML=`<span class="chip" title="${p.team}">${teamAbbr(p.team)}</span><span class="chip">Q ${p.quote}</span><span class="chip top30" title="${breakdownTitle(p)}">FS ${Math.round(bd.final)}</span><span class="chip">FASCIA ${window.fsBand(p)}</span>${health}${fire}${formImpact}${injuryImpact}${fm}${pv}`;
   };
 
@@ -614,7 +614,7 @@
     }
     if(document.querySelector('script[data-fs-injuries]'))return;
     const sc=document.createElement("script");
-    sc.src="injuries.js?v=104";
+    sc.src="injuries.js?v=105";
     sc.async=true;
     sc.dataset.fsInjuries="1";
     sc.onload=()=>{
@@ -636,4 +636,5 @@
   window.calculate();
   console.info("FANTASCAM FS Engine V8.2 active");
 })();
+
 
