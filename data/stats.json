@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "season": 2026,
+  "source": "api-football",
+  "status": "pending",
+  "lastAttemptAt": null,
+  "lastSuccessAt": null,
+  "error": null,
+  "matchday": 0,
+  "matched": 0,
+  "total": 535,
+  "players": [],
+  "unmatched": [],
+  "estimatedAverages": true
+}
