@@ -14,38 +14,11 @@ function entry(l){
 function parse(html,source){const lines=toText(html).split("\n").map(x=>x.trim()).filter(Boolean),out=[];let team=null,sec=null;for(const raw of lines){const line=raw.replace(/^[•*\-–—]\s*/,"").trim(),hit=teamOf(line.replace(/^#+\s*/,""));if(hit){team=hit;sec=null;continue}if(/^infortunati\b\s*:?\s*$/i.test(line)){sec="inj";continue}if(/^squalificati\b/i.test(line)){sec="sq";continue}if(/^diffidati\b/i.test(line)){sec="df";continue}if(sec!=="inj"||!team||/^(nessuno|nessun infortunato|[-–])$/i.test(line))continue;const e=entry(line);if(!e)continue;out.push({playerName:e.name,name:e.name,team,injured:true,status:"injured",type:"Injury",reason:e.reason,returnDate:dateOf(line),source})}return out}
 function surname(n){const w=norm(n).split(" ").filter(Boolean);return w[w.length-1]||norm(n)}
 function dedupe(rows){const m=new Map();for(const r of rows){const k=`${norm(r.team)}|${surname(r.name)}`,o=m.get(k);if(!o){m.set(k,{...r,sources:[r.source]});continue}const sources=[...new Set([...(o.sources||[o.source]),r.source])],goal=r.source==="Goal.com"?r:(o.source==="Goal.com"?o:null),c=goal||r;m.set(k,{...o,...c,returnDate:c.returnDate||o.returnDate||r.returnDate||null,sources,source:sources.join(" + ")})}return [...m.values()]}
-async function get(url){const r=await fetch(url,{headers:{"User-Agent":"Mozilla/5.0 (compatible; Fantascam/1.0)",Accept:"text/html,application/xhtml+xml"}});if(!r.ok)throw new Error(`HTTP ${r.status}`);return r.text()}
+async function get(url){const r=await fetch(url,{signal:AbortSignal.timeout(10000),headers:{"User-Agent":"Mozilla/5.0 (compatible; Fantascam/1.0)",Accept:"text/html,application/xhtml+xml"}});if(!r.ok)throw new Error(`HTTP ${r.status}`);return r.text()}
 
-const fs=require("fs"),path=require("path");
-function loadPlayers(){
-  try{
-    const txt=fs.readFileSync(path.join(process.cwd(),"players.js"),"utf8");
-    const m=txt.match(/const\s+PLAYERS\s*=\s*(\[[\s\S]*?\])\s*;?\s*(?:const|$)/);
-    if(!m)return [];
-    return JSON.parse(m[1]);
-  }catch(e){return []}
-}
-function tokens(s){return norm(s).split(" ").filter(Boolean)}
-function sameTeam(a,b){return !a||!b||norm(a)===norm(b)}
-function matchScore(apiName,rowTeam,p){
-  if(!sameTeam(rowTeam,p.team))return -999;
-  const a=tokens(apiName),b=tokens(p.name);if(!a.length||!b.length)return -999;
-  if(norm(apiName)===norm(p.name))return 100;
-  const apiSurname=a[a.length-1],localSurname=b[0];let score=0;
-  if(apiSurname===localSurname)score+=55;
-  score+=a.filter(x=>x.length>2&&b.includes(x)).length*18;
-  const ai=a[0]?.[0]||"",extra=b.slice(1).find(Boolean)||"";
-  if(apiSurname===localSurname&&extra&&ai&&extra[0]===ai)score+=8;
-  if(apiSurname===localSurname&&b.length===1)score+=12;
-  return score;
-}
-function matchPlayer(row,players){
-  const n=String(row.playerName||row.name||"").trim();
-  const c=players.map(p=>({p,score:matchScore(n,row.team,p)})).filter(x=>x.score>=55).sort((a,b)=>b.score-a.score);
-  if(!c.length)return null;
-  if(c.length>1&&c[0].score===c[1].score)return null;
-  return c[0].p;
-}
+const {loadCatalog}=require('../lib/catalog');
+const {matchPlayer}=require('../player-utils');
+function loadPlayers(){return loadCatalog().players;}
 function listDiagnostics(injuries){
   const players=loadPlayers(),matched=[],unmatched=[];
   for(const r of injuries){
@@ -55,4 +28,27 @@ function listDiagnostics(injuries){
   }
   return {playersLoaded:players.length,matchedCount:matched.length,unmatchedCount:unmatched.length,matched,unmatched};
 }
-module.exports=async function handler(req,res){if(req.method!=="GET"){res.setHeader("Allow","GET");return res.status(405).json({error:"Method not allowed"})}res.setHeader("Access-Control-Allow-Origin","*");res.setHeader("Cache-Control","s-maxage=3600, stale-while-revalidate=14400");const x=await Promise.allSettled([get(SOURCES.virgilio),get(SOURCES.goal)]),d={Virgilio:{ok:false,count:0},Goal:{ok:false,count:0}};let rows=[];if(x[0].status==="fulfilled"){const a=parse(x[0].value,"Virgilio Sport");d.Virgilio={ok:true,count:a.length};rows.push(...a)}else d.Virgilio.error=String(x[0].reason?.message||x[0].reason);if(x[1].status==="fulfilled"){const a=parse(x[1].value,"Goal.com");d.Goal={ok:true,count:a.length};rows.push(...a)}else d.Goal.error=String(x[1].reason?.message||x[1].reason);const injuries=dedupe(rows);if(!injuries.length)return res.status(502).json({ok:false,error:"Nessuna fonte ha prodotto risultati",diagnostics:d,injuries:[],updatedAt:new Date().toISOString()});const matching=listDiagnostics(injuries);return res.status(200).json({ok:true,source:"Virgilio Sport + Goal.com",count:injuries.length,diagnostics:d,matching,injuries,updatedAt:new Date().toISOString()})};
+module.exports=async function handler(req,res){
+  if(req.method!=="GET"){res.setHeader("Allow","GET");return res.status(405).json({error:"Method not allowed"});}
+  const checkedAt=new Date().toISOString();
+  const results=await Promise.allSettled([get(SOURCES.virgilio),get(SOURCES.goal)]);
+  const diagnostics={},rows=[];
+  for(let i=0;i<results.length;i++){
+    const source=i===0?'Virgilio Sport':'Goal.com',r=results[i];
+    if(r.status==='fulfilled'){
+      const parsed=parse(r.value,source);diagnostics[source]={ok:parsed.length>0,count:parsed.length};rows.push(...parsed);
+    }else diagnostics[source]={ok:false,count:0,error:'Fonte non raggiungibile'};
+  }
+  const injuries=dedupe(rows);
+  if(!injuries.length){res.setHeader('Cache-Control','no-store');return res.status(502).json({ok:false,error:'Nessuna fonte ha prodotto risultati',diagnostics,injuries:[],checkedAt});}
+  try{
+    const matching=listDiagnostics(injuries);
+    res.setHeader('Cache-Control','public, s-maxage=3600, stale-while-revalidate=3600');
+    return res.status(200).json({ok:true,source:'Virgilio Sport + Goal.com',count:injuries.length,diagnostics,matching,injuries,checkedAt,updatedAt:checkedAt});
+  }catch{
+    res.setHeader('Cache-Control','no-store');
+    return res.status(500).json({ok:false,error:'Listone non disponibile per gli infortuni',checkedAt});
+  }
+};
+module.exports.parse=parse;
+module.exports.listDiagnostics=listDiagnostics;

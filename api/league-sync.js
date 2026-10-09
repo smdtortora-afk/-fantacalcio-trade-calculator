@@ -130,3 +130,4 @@ module.exports=async function handler(req,res){
     return res.status(422).json({error:'Le rose non risultano leggibili dalla pagina pubblica. Se sono private/invisibili serve un collegamento autenticato ufficiale oppure un export della lega.',league:name,sourceUrl:base});
   }catch(e){return res.status(400).json({error:e?.message||'Impossibile sincronizzare la lega'})}
 };
+
