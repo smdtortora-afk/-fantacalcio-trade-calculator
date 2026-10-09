@@ -370,7 +370,7 @@ window.FS_INJURIES=window.FS_INJURIES||{};
   /* ---------- detailed analysis ---------- */
   const playerCard=p=>{
     const b=fsBreakdownV9(p),fm=p.fm!==null&&p.fm!==undefined?n(p.fm).toFixed(2):'—',mv=p.mv!==null&&p.mv!==undefined?n(p.mv).toFixed(2):'—';
-    return `<div class="fsv9-player"><b>${p.name}</b><span>${p.team} · ${p.role}</span><div>FS <strong>${Math.round(b.final)}</strong> · FVM <strong>${p.fvm??'—'}</strong> · PV <strong>${p.pv??'—'}</strong> · MV* <strong>${mv}</strong> · FM* <strong>${fm}</strong></div><small>Forma ${signed(b.formDelta)} · Presenze ${signed(b.usageDelta)} · Confidenza ${b.confidence}</small></div>`;
+    return `<div class="fsv9-player"><b>${p.name}</b><span>${p.team} · ${p.role}</span><div>FS <strong>${Math.round(b.final)}</strong> · FVM <strong>${p.fvm??'—'}</strong> · PV <strong>${p.pv??'—'}</strong> · MV${p.stats_estimated?'*':''} <strong>${mv}</strong> · FM${p.stats_estimated?'*':''} <strong>${fm}</strong></div><small>Forma ${signed(b.formDelta)} · Presenze ${signed(b.usageDelta)} · Confidenza ${b.confidence}</small></div>`;
   };
   const ensureAnalysis=()=>{
     let box=document.getElementById('fs-v9-analysis');if(box)return box;
@@ -393,7 +393,7 @@ window.FS_INJURIES=window.FS_INJURIES||{};
   window.updateMeta=row=>{
     const p=typeof getPlayer==='function'?getPlayer(row.querySelector('.footballer')?.value):null,box=row.querySelector('.meta');if(!box)return;
     if(!p){box.innerHTML='<span class="empty">Seleziona un giocatore</span>';return}
-    const b=fsBreakdownV9(p),fm=p.fm!==null&&p.fm!==undefined?`<span class="chip" title="Indice stimato da statistiche API-Football">FM* ${n(p.fm).toFixed(2)}</span>`:'',pv=p.pv!==null&&p.pv!==undefined?`<span class="chip">PV ${p.pv}</span>`:'';
+    const b=fsBreakdownV9(p),fm=p.fm!==null&&p.fm!==undefined?`<span class="chip" title="${p.stats_estimated?'Indice stimato da statistiche API-Football':'Fantamedia dalla tabella pubblica Fantacalcio (Italia)'}">FM${p.stats_estimated?'*':''} ${n(p.fm).toFixed(2)}</span>`:'',pv=p.pv!==null&&p.pv!==undefined?`<span class="chip">PV ${p.pv}</span>`:'';
     const dyn=Math.abs(b.formDelta)>=.5?`<span class="chip" title="Forma pesata per affidabilità">🔥 FORMA ${signed(b.formDelta)} · ${b.confidence}</span>`:'';
     box.innerHTML=`<span class="chip">${typeof teamAbbr==='function'?teamAbbr(p.team):p.team}</span><span class="chip">Q ${p.quote}</span><span class="chip">FVM ${p.fvm}</span><span class="chip top30">FS ${Math.round(b.final)}</span><span class="chip">${marketTier(p)}</span>${dyn}${healthBadge(p)}${fm}${pv}`;
   };
