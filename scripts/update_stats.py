@@ -1,581 +1,306 @@
 #!/usr/bin/env python3
+"""Daily API-Football snapshot. Never rewrites the player list or its UI code.
 
+API reference: https://www.api-football.com/documentation-v3
+The existing API_FOOTBALL_KEY GitHub Actions secret is used server-side only.
+"""
+import collections
+import datetime as dt
 import json
 import os
-import re
-import unicodedata
-import urllib.request
-import urllib.parse
 from pathlib import Path
-from difflib import SequenceMatcher
+import re
+import sys
+import time
+import unicodedata
+import urllib.error
+import urllib.parse
+import urllib.request
 
 ROOT = Path(__file__).resolve().parents[1]
-PLAYERS_FILE = ROOT / "players.js"
-
-API_KEY = os.environ.get("API_FOOTBALL_KEY", "").strip()
-
-LEAGUE_ID = 135
-
-CURRENT_SEASON = 2026
-PREVIOUS_SEASON = 2025
-
-if not API_KEY:
-    raise SystemExit("Missing API_FOOTBALL_KEY")
+SNAPSHOT = ROOT / 'data' / 'stats.json'
+LEAGUE = 135
 
 
-def norm(s):
-    s = "".join(
-        c
-        for c in unicodedata.normalize("NFKD", s or "")
-        if not unicodedata.combining(c)
-    )
-    s = re.sub(r"[^a-z0-9 ]+", " ", s.lower())
-    return re.sub(r"\s+", " ", s).strip()
+class SyncError(Exception):
+    pass
 
 
-def surname(s):
-    parts = norm(s).split()
-    return parts[-1] if parts else ""
-
-
-def api_get(path, params):
-    url = (
-        "https://v3.football.api-sports.io/"
-        + path
-        + "?"
-        + urllib.parse.urlencode(params)
-    )
-
-    req = urllib.request.Request(
-        url,
-        headers={"x-apisports-key": API_KEY}
-    )
-
-    with urllib.request.urlopen(req, timeout=30) as r:
-        return json.loads(r.read().decode("utf-8"))
+def declaration(text, name):
+    m = re.search(r'\bconst\s+' + re.escape(name) + r'\s*=\s*', text)
+    if not m:
+        raise SyncError(f'{name}: dichiarazione assente nel listone')
+    try:
+        return json.JSONDecoder().raw_decode(text[m.end():])[0]
+    except (ValueError, TypeError) as exc:
+        raise SyncError(f'{name}: JSON non valido') from exc
 
 
 def load_players():
-    text = PLAYERS_FILE.read_text(encoding="utf-8")
-
-    m = re.search(
-        r"const\s+PLAYERS\s*=\s*(\[.*\])\s*;?\s*$",
-        text,
-        re.S
-    )
-
-    if not m:
-        raise SystemExit("players.js format not recognized")
-
-    return json.loads(m.group(1))
+    text = (ROOT / 'players.js').read_text(encoding='utf-8')
+    players = declaration(text, 'PLAYERS')
+    meta = declaration(text, 'PLAYERS_META')
+    if not isinstance(players, list) or not players:
+        raise SyncError('Listone vuoto')
+    if len({str(p['id']) for p in players}) != len(players):
+        raise SyncError('ID duplicati nel listone')
+    return players, meta
 
 
-def save_players(players):
-    PLAYERS_FILE.write_text(
-        "const PLAYERS="
-        + json.dumps(
-            players,
-            ensure_ascii=False,
-            separators=(",", ":")
-        )
-        + ";\n",
-        encoding="utf-8"
-    )
+def norm(text):
+    text = str(text or '').replace('ı', 'i').replace('ø', 'o').replace('ß', 'ss').replace('ð', 'd').replace('þ', 'th').replace('ł', 'l').replace('æ', 'ae').replace('œ', 'oe')
+    text = ''.join(c for c in unicodedata.normalize('NFKD', text) if not unicodedata.combining(c))
+    return re.sub(r'\s+', ' ', re.sub(r'[^a-z0-9 ]', ' ', text.lower())).strip()
 
 
-def fetch_all_players(season):
-    out = []
-    page = 1
-
-    while True:
-        data = api_get(
-            "players",
-            {
-                "league": LEAGUE_ID,
-                "season": season,
-                "page": page
-            }
-        )
-
-        errors = data.get("errors")
-
-        if errors:
-            print(
-                f"API warning season {season}: "
-                f"{errors}"
-            )
-
-        out.extend(data.get("response", []))
-
-        paging = data.get("paging") or {}
-
-        if page >= int(paging.get("total") or 1):
-            break
-
-        page += 1
-
-    print(
-        f"API season {season}: "
-        f"{len(out)} player records"
-    )
-
-    return out
+TEAM_ALIASES = {'internazionale': 'inter', 'inter milan': 'inter', 'ac milan': 'milan',
+                'as roma': 'roma', 'hellas verona': 'verona', 'ssc napoli': 'napoli'}
 
 
-def best_stat_block(item):
-    stats = item.get("statistics") or []
-
-    for st in stats:
-        league = (st.get("league") or {}).get("id")
-
-        if league == LEAGUE_ID:
-            return st
-
-    return stats[0] if stats else {}
+def team_key(name):
+    n = norm(name)
+    return TEAM_ALIASES.get(n, n)
 
 
-def similarity(
-    local,
-    api_name,
-    local_team="",
-    api_team=""
-):
-    a = norm(local)
-    b = norm(api_name)
-
-    score = SequenceMatcher(
-        None,
-        a,
-        b
-    ).ratio()
-
-    if surname(a) and surname(a) == surname(b):
-        score += 0.25
-
-    if (
-        local_team
-        and api_team
-        and norm(local_team) == norm(api_team)
-    ):
-        score += 0.20
-
+def name_score(local, player):
+    local = norm(local)
+    a = local.split()
+    names = [norm(player.get('name')), norm(player.get('lastname')),
+             norm(f"{player.get('firstname', '')} {player.get('lastname', '')}")]
+    score = 0
+    for name in names:
+        b = name.split()
+        if not b:
+            continue
+        if local == name or sorted(a) == sorted(b):
+            score = max(score, 100)
+        elif len(a) == 1 and a[0] in b and len(a[0]) > 2:
+            score = max(score, 80)
+        elif len(a) > 1:
+            full = [x for x in a if len(x) > 1]
+            initials = [x for x in a if len(x) == 1]
+            if full and all(x in b for x in full):
+                remaining = list(b)
+                for x in full:
+                    remaining.remove(x)
+                if initials and all(any(y.startswith(x) for y in remaining) for x in initials):
+                    score = max(score, 95)
     return score
 
 
-def make_index(remote):
-    indexed = []
+class Api:
+    def __init__(self, key, interval=7.0):
+        self.key, self.interval, self.last = key, interval, 0
 
+    def get(self, endpoint, **params):
+        url = 'https://v3.football.api-sports.io/' + endpoint + '?' + urllib.parse.urlencode(params)
+        for attempt in range(3):
+            time.sleep(max(0, self.interval - (time.monotonic() - self.last)))
+            self.last = time.monotonic()
+            req = urllib.request.Request(url, headers={'x-apisports-key': self.key, 'Accept': 'application/json'})
+            try:
+                with urllib.request.urlopen(req, timeout=30) as response:
+                    data = json.load(response)
+            except urllib.error.HTTPError as exc:
+                if exc.code in (429, 500, 502, 503, 504) and attempt < 2:
+                    time.sleep(10 * (attempt + 1))
+                    continue
+                raise SyncError(f'API-Football HTTP {exc.code}: verificare accesso e quota del servizio') from None
+            except (OSError, ValueError) as exc:
+                if attempt < 2:
+                    continue
+                raise SyncError('API-Football non raggiungibile o risposta non valida') from exc
+            if not isinstance(data, dict):
+                raise SyncError('Formato API-Football non valido')
+            if data.get('errors'):
+                detail = json.dumps(data['errors'], ensure_ascii=False).replace(self.key, '[redacted]')[:400]
+                raise SyncError('API-Football: ' + detail)
+            if not isinstance(data.get('response'), list):
+                raise SyncError('Risposta API-Football priva dei dati attesi')
+            return data
+        raise SyncError('API-Football non disponibile')
+
+
+def fetch_players(api, season):
+    rows = []
+    page, expected = 1, None
+    while True:
+        data = api.get('players', league=LEAGUE, season=season, page=page)
+        paging = data.get('paging') or {}
+        total = int(paging.get('total') or 0)
+        if total < 1 or total > 80 or int(paging.get('current') or 0) != page:
+            raise SyncError('Paginazione del servizio non valida')
+        if expected is not None and expected != total:
+            raise SyncError('Paginazione cambiata durante la lettura: riprovare')
+        expected = total
+        if not data['response']:
+            raise SyncError('Pagina statistiche vuota; dati precedenti conservati')
+        rows.extend(data['response'])
+        print(f'Statistiche: pagina {page}/{total}', flush=True)
+        if page == total:
+            break
+        page += 1
+    return rows
+
+
+def count_games(fixtures, season):
+    counts = collections.Counter()
+    seen = set()
+    for item in fixtures:
+        fixture, league = item.get('fixture') or {}, item.get('league') or {}
+        if league.get('id') != LEAGUE or league.get('season') != season:
+            continue
+        if (fixture.get('status') or {}).get('short') not in ('FT', 'AET', 'PEN'):
+            continue
+        if not fixture.get('id') or fixture['id'] in seen:
+            continue
+        seen.add(fixture['id'])
+        for team in (item.get('teams') or {}).values():
+            if team.get('id'):
+                counts[team['id']] += 1
+    return counts
+
+
+def make_index(remote, season):
+    # A transferred player can appear in more than one row/page.
+    indexed = {}
     for item in remote:
-        st = best_stat_block(item)
-
-        p = item.get("player") or {}
-
-        team = (
-            st.get("team") or {}
-        ).get("name", "")
-
-        indexed.append(
-            {
-                "name": p.get("name", ""),
-                "team": team,
-                "stats": st,
-                "api_id": p.get("id")
-            }
-        )
-
-    return indexed
+        person = item.get('player') or {}
+        api_id = person.get('id')
+        if not api_id:
+            continue
+        for st in item.get('statistics') or []:
+            league, team = st.get('league') or {}, st.get('team') or {}
+            if league.get('id') != LEAGUE or league.get('season') != season or not team.get('id'):
+                continue
+            if 'appearences' not in (st.get('games') or {}):
+                continue
+            record = indexed.setdefault(api_id, {'person': person, 'blocks': {}})
+            record['blocks'][team['id']] = st
+    return list(indexed.values())
 
 
-def find_best(lp, indexed):
-    best = None
-    best_score = 0
-
-    for item in indexed:
-        score = similarity(
-            lp.get("name", ""),
-            item["name"],
-            lp.get("team", ""),
-            item["team"]
-        )
-
-        if score > best_score:
-            best_score = score
-            best = item
-
-    if best_score >= 0.82:
-        return best, best_score
-
-    return None, best_score
+def match_player(local, indexed, mappings):
+    explicit = mappings.get(str(local['id'])) or local.get('api_id')
+    candidates = []
+    for row in indexed:
+        if not any(team_key((st.get('team') or {}).get('name')) == team_key(local['team']) for st in row['blocks'].values()):
+            continue
+        if explicit and str(row['person']['id']) == str(explicit):
+            return row
+        score = name_score(local['name'], row['person'])
+        if score >= 80:
+            candidates.append((score, row))
+    candidates.sort(key=lambda x: x[0], reverse=True)
+    if candidates and (len(candidates) == 1 or candidates[0][0] > candidates[1][0]):
+        return candidates[0][1]
+    return None
 
 
-def extract_raw_stats(st):
-    games = st.get("games") or {}
-    goals = st.get("goals") or {}
-    cards = st.get("cards") or {}
-
-    apps = int(
-        games.get("appearences") or 0
-    )
-
-    minutes = int(
-        games.get("minutes") or 0
-    )
-
-    starts = int(
-        games.get("lineups") or 0
-    )
-
-    rating_raw = games.get("rating")
-
+def number(value):
     try:
-        rating = (
-            float(rating_raw)
-            if rating_raw is not None
-            else None
-        )
-    except:
-        rating = None
-
-    return {
-        "apps": apps,
-        "minutes": minutes,
-        "starts": starts,
-        "rating": rating,
-        "goals": int(
-            goals.get("total") or 0
-        ),
-        "assists": int(
-            goals.get("assists") or 0
-        ),
-        "yellow": int(
-            cards.get("yellow") or 0
-        ),
-        "red": int(
-            cards.get("red") or 0
-        ),
-        "conceded": int(
-            goals.get("conceded") or 0
-        ),
-        "position": norm(
-            games.get("position") or ""
-        )
-    }
-
-
-def internal_mv(raw):
-    rating = raw["rating"]
-
-    if rating is None:
+        n = float(value)
+        return n if n == n and abs(n) != float('inf') else None
+    except (TypeError, ValueError):
         return None
 
-    return max(
-        4.5,
-        min(
-            7.5,
-            6.0 + (rating - 6.8) * 0.70
-        )
-    )
+
+def values(row, local, season, updated):
+    totals = collections.Counter()
+    rating_total = rating_apps = 0
+    for st in row['blocks'].values():
+        games, goals, cards, penalties = (st.get(k) or {} for k in ('games', 'goals', 'cards', 'penalty'))
+        apps = max(0, int(games.get('appearences') or 0))
+        for key, value in {'pv': apps, 'minutes': games.get('minutes'), 'starts': games.get('lineups'),
+                           'goals': goals.get('total'), 'assists': goals.get('assists'),
+                           'yellow': cards.get('yellow'), 'red': cards.get('red'),
+                           'conceded': goals.get('conceded'), 'penaltySaved': penalties.get('saved'),
+                           'penaltyMissed': penalties.get('missed')}.items():
+            totals[key] += max(0, int(value or 0))
+        rating = number(games.get('rating'))
+        if rating is not None and apps and 0 <= rating <= 10:
+            rating_total += rating * apps
+            rating_apps += apps
+    apps = totals['pv']
+    rating = rating_total / rating_apps if rating_apps else None
+    # These are internal indices, explicitly labelled estimates in the UI.
+    mv = max(4.5, min(7.5, 6 + (rating - 6.8) * .70)) if rating is not None else None
+    fm = None
+    if mv is not None and apps:
+        bonus = 3 * totals['goals'] + totals['assists'] - .5 * totals['yellow'] - totals['red'] - 3 * totals['penaltyMissed']
+        if local['role'] == 'P':
+            bonus += 3 * totals['penaltySaved'] - totals['conceded']
+        fm = max(2, min(12, mv + bonus / apps))
+    return dict(totals, id=local['id'], name=local['name'], team=local['team'], api_id=row['person']['id'],
+                rating=round(rating, 2) if rating is not None else None,
+                mv=round(mv, 2) if mv is not None else None, fm=round(fm, 2) if fm is not None else None,
+                stats_season=season, stats_source='api-football', stats_estimated=True, stats_updated_at=updated)
 
 
-def internal_fm(raw, mv):
-    if mv is None:
-        return None
-
-    apps = max(1, raw["apps"])
-
-    fm = mv
-
-    fm += (
-        3.0 * raw["goals"]
-        + 1.0 * raw["assists"]
-        - 0.5 * raw["yellow"]
-        - 1.0 * raw["red"]
-    ) / apps
-
-    if "goalkeeper" in raw["position"]:
-        fm -= min(
-            0.45,
-            raw["conceded"]
-            / apps
-            * 0.08
-        )
-
-    return max(
-        4.0,
-        min(9.5, fm)
-    )
+def build_snapshot(players, meta, remote, fixtures, season, updated, mappings=None):
+    games = count_games(fixtures, season)
+    matchday = max(games.values(), default=0)
+    if not matchday:
+        raise SyncError('Nessuna partita conclusa della stagione richiesta: nessun dato sostituito')
+    index = make_index(remote, season)
+    matched, unmatched, assigned = [], [], set()
+    for player in players:
+        row = match_player(player, index, mappings or {})
+        if row is None or row['person']['id'] in assigned:
+            unmatched.append({'id': player['id'], 'name': player['name'], 'team': player['team']})
+            continue
+        assigned.add(row['person']['id'])
+        matched.append(values(row, player, season, updated))
+    if len(matched) < max(1, len(players) * .35):
+        raise SyncError(f'Copertura insufficiente ({len(matched)}/{len(players)}): snapshot precedente conservato')
+    if not any(p['pv'] > 0 and p['fm'] is not None for p in matched):
+        raise SyncError('Nessuna statistica utile nella stagione corrente')
+    return {'schemaVersion': 1, 'season': season, 'source': 'api-football', 'status': 'ok',
+            'lastAttemptAt': updated, 'lastSuccessAt': updated, 'error': None, 'matchday': matchday,
+            'matched': len(matched), 'total': len(players), 'unmatched': unmatched, 'players': matched,
+            'estimatedAverages': True}
 
 
-def season_weight(current_apps):
-    # Prime giornate: affidabilità ridotta.
-    if current_apps <= 0:
-        return 0.0
-
-    if current_apps == 1:
-        return 0.10
-
-    if current_apps == 2:
-        return 0.18
-
-    if current_apps == 3:
-        return 0.28
-
-    if current_apps == 4:
-        return 0.40
-
-    if current_apps == 5:
-        return 0.52
-
-    if current_apps == 6:
-        return 0.63
-
-    if current_apps == 7:
-        return 0.73
-
-    if current_apps == 8:
-        return 0.82
-
-    if current_apps == 9:
-        return 0.90
-
-    return 1.0
-
-
-def blend_number(
-    previous,
-    current,
-    weight
-):
-    if current is None:
-        return previous
-
-    if previous is None:
-        return current
-
-    return (
-        previous * (1 - weight)
-        + current * weight
-    )
-
-
-def build_values(
-    current_stats,
-    previous_stats
-):
-    current_raw = (
-        extract_raw_stats(current_stats)
-        if current_stats
-        else None
-    )
-
-    previous_raw = (
-        extract_raw_stats(previous_stats)
-        if previous_stats
-        else None
-    )
-
-    current_apps = (
-        current_raw["apps"]
-        if current_raw
-        else 0
-    )
-
-    weight = season_weight(
-        current_apps
-    )
-
-    current_mv = (
-        internal_mv(current_raw)
-        if current_raw
-        else None
-    )
-
-    previous_mv = (
-        internal_mv(previous_raw)
-        if previous_raw
-        else None
-    )
-
-    current_fm = (
-        internal_fm(
-            current_raw,
-            current_mv
-        )
-        if current_raw
-        else None
-    )
-
-    previous_fm = (
-        internal_fm(
-            previous_raw,
-            previous_mv
-        )
-        if previous_raw
-        else None
-    )
-
-    mv = blend_number(
-        previous_mv,
-        current_mv,
-        weight
-    )
-
-    fm = blend_number(
-        previous_fm,
-        current_fm,
-        weight
-    )
-
-    minutes = (
-        current_raw["minutes"]
-        if current_raw
-        else 0
-    )
-
-    starts = (
-        current_raw["starts"]
-        if current_raw
-        else 0
-    )
-
-    if current_apps > 0:
-        stats_season = CURRENT_SEASON
-
-    elif previous_raw:
-        stats_season = PREVIOUS_SEASON
-
-    else:
-        stats_season = None
-
-    return {
-        "pv": current_apps,
-        "minutes": minutes,
-        "starts": starts,
-        "mv": (
-            round(mv, 2)
-            if mv is not None
-            else None
-        ),
-        "fm": (
-            round(fm, 2)
-            if fm is not None
-            else None
-        ),
-        "current_weight": round(
-            weight,
-            2
-        ),
-        "stats_season": stats_season
-    }
+def save_snapshot(data):
+    SNAPSHOT.parent.mkdir(parents=True, exist_ok=True)
+    temp = SNAPSHOT.with_suffix('.tmp')
+    temp.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+    temp.replace(SNAPSHOT)
 
 
 def main():
-    local = load_players()
-
-    print(
-        "Loading API-Football "
-        "Serie A seasons..."
-    )
-
-    current_remote = fetch_all_players(
-        CURRENT_SEASON
-    )
-
-    previous_remote = fetch_all_players(
-        PREVIOUS_SEASON
-    )
-
-    current_index = make_index(
-        current_remote
-    )
-
-    previous_index = make_index(
-        previous_remote
-    )
-
-    updated = 0
-    current_matches = 0
-    previous_matches = 0
-
-    for lp in local:
-        current_best, current_score = (
-            find_best(
-                lp,
-                current_index
-            )
-        )
-
-        previous_best, previous_score = (
-            find_best(
-                lp,
-                previous_index
-            )
-        )
-
-        if current_best:
-            current_matches += 1
-
-        if previous_best:
-            previous_matches += 1
-
-        current_stats = (
-            current_best["stats"]
-            if current_best
-            else None
-        )
-
-        previous_stats = (
-            previous_best["stats"]
-            if previous_best
-            else None
-        )
-
-        if (
-            current_stats is None
-            and previous_stats is None
-        ):
-            continue
-
-        vals = build_values(
-            current_stats,
-            previous_stats
-        )
-
-        lp.update(vals)
-
-        lp["stats_source"] = (
-            "api-football"
-        )
-
-        if current_best:
-            lp["api_id"] = (
-                current_best["api_id"]
-            )
-
-        elif previous_best:
-            lp["api_id"] = (
-                previous_best["api_id"]
-            )
-
-        updated += 1
-
-    save_players(local)
-
-    print(
-        f"Matched current season: "
-        f"{current_matches}/{len(local)}"
-    )
-
-    print(
-        f"Matched previous season: "
-        f"{previous_matches}/{len(local)}"
-    )
-
-    print(
-        f"Updated total: "
-        f"{updated}/{len(local)}"
-    )
+    updated = dt.datetime.now(dt.timezone.utc).isoformat(timespec='seconds')
+    try:
+        players, meta = load_players()
+        season = int(os.environ.get('SERIE_A_SEASON') or str(meta['season']).split('/')[0])
+        if season != int(str(meta['season']).split('/')[0]):
+            raise SyncError('Stagione API diversa dal listone: aggiornare SERIE_A_SEASON')
+        key = os.environ.get('API_FOOTBALL_KEY', '').strip()
+        if not key:
+            raise SyncError('API_FOOTBALL_KEY assente nei secret GitHub Actions')
+        api = Api(key)
+        fixtures = api.get('fixtures', league=LEAGUE, season=season)['response']
+        remote = fetch_players(api, season)
+        mapping_path = ROOT / 'data' / 'player-mappings.json'
+        mappings = json.loads(mapping_path.read_text()) if mapping_path.exists() else {}
+        snapshot = build_snapshot(players, meta, remote, fixtures, season, updated, mappings)
+        save_snapshot(snapshot)
+        print(f"Sincronizzazione riuscita: {snapshot['matched']}/{snapshot['total']} giocatori, giornata {snapshot['matchday']}")
+        return 0
+    except Exception as exc:
+        try:
+            previous = json.loads(SNAPSHOT.read_text(encoding='utf-8'))
+        except (OSError, ValueError):
+            previous = {'schemaVersion': 1, 'players': [], 'lastSuccessAt': None}
+        message = str(exc)
+        key = os.environ.get('API_FOOTBALL_KEY', '').strip()
+        if key:
+            message = message.replace(key, '[redacted]')
+        previous.update(status='error', lastAttemptAt=updated, error=message[:500])
+        save_snapshot(previous)
+        print('Sincronizzazione fallita: ' + message, file=sys.stderr)
+        return 1
 
 
-if __name__ == "__main__":
-    main()
+if __name__ == '__main__':
+    raise SystemExit(main())
