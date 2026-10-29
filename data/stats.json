@@ -4,8 +4,8 @@
   "source": "fantacalcio.it/italia",
   "status": "ok",
   "sourceUrl": "https://www.fantacalcio.it/statistiche-serie-a/2026-27/italia",
-  "lastAttemptAt": "2026-10-28T12:55:18+00:00",
-  "lastSuccessAt": "2026-10-28T12:55:18+00:00",
+  "lastAttemptAt": "2026-10-29T13:01:58+00:00",
+  "lastSuccessAt": "2026-10-29T13:01:58+00:00",
   "error": null,
   "matchday": 9,
   "matched": 535,
@@ -27,7 +27,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 8,
@@ -45,14 +45,14 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 8,
-      "mv": 6.12,
-      "fm": 5.12,
+      "pv": 9,
+      "mv": 6.11,
+      "fm": 5.0,
       "goals": 0,
-      "conceded": 8,
+      "conceded": 10,
       "penaltySaved": 0,
       "assists": 0,
       "yellow": 0,
@@ -63,14 +63,14 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 8,
-      "mv": 6.25,
-      "fm": 5.38,
+      "pv": 9,
+      "mv": 6.17,
+      "fm": 4.94,
       "goals": 0,
-      "conceded": 7,
+      "conceded": 11,
       "penaltySaved": 0,
       "assists": 0,
       "yellow": 0,
@@ -81,7 +81,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 7,
@@ -99,7 +99,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 9,
@@ -117,7 +117,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 7,
@@ -135,7 +135,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 9,
@@ -153,7 +153,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 8,
@@ -171,14 +171,14 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 6,
-      "mv": 5.5,
-      "fm": 4.17,
+      "pv": 7,
+      "mv": 5.64,
+      "fm": 4.21,
       "goals": 0,
-      "conceded": 8,
+      "conceded": 10,
       "penaltySaved": 0,
       "assists": 0,
       "yellow": 0,
@@ -189,7 +189,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 8,
@@ -207,7 +207,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 6,
@@ -225,7 +225,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 7,
@@ -243,15 +243,15 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 8,
-      "mv": 5.94,
-      "fm": 3.69,
+      "pv": 9,
+      "mv": 6.0,
+      "fm": 4.33,
       "goals": 0,
       "conceded": 18,
-      "penaltySaved": 0,
+      "penaltySaved": 1,
       "assists": 0,
       "yellow": 0,
       "red": 0,
@@ -261,7 +261,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 2,
@@ -279,7 +279,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 8,
@@ -297,14 +297,14 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 2,
-      "mv": 6.5,
+      "pv": 3,
+      "mv": 6.67,
       "fm": 6.0,
       "goals": 0,
-      "conceded": 1,
+      "conceded": 2,
       "penaltySaved": 0,
       "assists": 0,
       "yellow": 0,
@@ -315,12 +315,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 8,
-      "mv": 6.0,
-      "fm": 4.38,
+      "pv": 9,
+      "mv": 6.06,
+      "fm": 4.61,
       "goals": 0,
       "conceded": 13,
       "penaltySaved": 0,
@@ -333,12 +333,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 0,
-      "mv": null,
-      "fm": null,
+      "pv": 1,
+      "mv": 6.5,
+      "fm": 6.5,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -351,7 +351,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 7,
@@ -369,14 +369,14 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 8,
-      "mv": 6.31,
-      "fm": 4.56,
+      "pv": 9,
+      "mv": 6.28,
+      "fm": 4.5,
       "goals": 0,
-      "conceded": 17,
+      "conceded": 19,
       "penaltySaved": 1,
       "assists": 0,
       "yellow": 0,
@@ -387,7 +387,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 8,
@@ -405,14 +405,14 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 4,
-      "mv": 6.38,
-      "fm": 4.62,
+      "pv": 5,
+      "mv": 6.4,
+      "fm": 4.2,
       "goals": 0,
-      "conceded": 7,
+      "conceded": 11,
       "penaltySaved": 0,
       "assists": 0,
       "yellow": 0,
@@ -423,7 +423,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 3,
@@ -441,7 +441,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -459,7 +459,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -477,7 +477,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 2,
@@ -495,7 +495,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -513,7 +513,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -531,7 +531,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -549,7 +549,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -567,7 +567,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -585,7 +585,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -603,7 +603,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -621,7 +621,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -639,7 +639,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -657,12 +657,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 1,
-      "mv": 5.5,
-      "fm": 4.5,
+      "pv": 2,
+      "mv": 6.25,
+      "fm": 5.75,
       "goals": 0,
       "conceded": 1,
       "penaltySaved": 0,
@@ -675,7 +675,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -693,7 +693,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -711,7 +711,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -729,7 +729,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -747,7 +747,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -765,7 +765,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -783,7 +783,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -801,7 +801,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -819,7 +819,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 4,
@@ -837,7 +837,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -855,7 +855,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 2,
@@ -873,7 +873,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 2,
@@ -891,7 +891,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -909,7 +909,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -927,7 +927,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -945,7 +945,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -963,7 +963,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -981,7 +981,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -999,7 +999,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -1017,7 +1017,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -1035,7 +1035,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -1053,7 +1053,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -1071,7 +1071,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -1089,7 +1089,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -1107,7 +1107,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -1125,7 +1125,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -1143,7 +1143,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -1161,12 +1161,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 8,
-      "mv": 6.12,
-      "fm": 6.25,
+      "pv": 9,
+      "mv": 6.06,
+      "fm": 6.17,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -1179,7 +1179,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 8,
@@ -1197,12 +1197,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 8,
-      "mv": 6.06,
-      "fm": 6.81,
+      "pv": 9,
+      "mv": 5.94,
+      "fm": 6.61,
       "goals": 2,
       "conceded": 0,
       "penaltySaved": 0,
@@ -1215,7 +1215,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 7,
@@ -1233,12 +1233,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 7,
-      "mv": 6.0,
-      "fm": 6.07,
+      "pv": 8,
+      "mv": 5.94,
+      "fm": 6.0,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -1251,7 +1251,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 8,
@@ -1269,12 +1269,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 7,
-      "mv": 5.86,
-      "fm": 5.86,
+      "pv": 8,
+      "mv": 5.88,
+      "fm": 5.88,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -1287,17 +1287,17 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 7,
-      "mv": 6.07,
-      "fm": 6.0,
+      "pv": 8,
+      "mv": 6.06,
+      "fm": 5.94,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
       "assists": 0,
-      "yellow": 1,
+      "yellow": 2,
       "red": 0,
       "name": "Bastoni",
       "team": "Inter",
@@ -1305,12 +1305,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 7,
-      "mv": 6.36,
-      "fm": 6.79,
+      "pv": 8,
+      "mv": 6.25,
+      "fm": 6.62,
       "goals": 1,
       "conceded": 0,
       "penaltySaved": 0,
@@ -1323,12 +1323,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 8,
-      "mv": 6.0,
-      "fm": 6.0,
+      "pv": 9,
+      "mv": 5.78,
+      "fm": 5.78,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -1341,7 +1341,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 7,
@@ -1359,12 +1359,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 8,
-      "mv": 6.25,
-      "fm": 6.19,
+      "pv": 9,
+      "mv": 6.17,
+      "fm": 6.11,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -1377,7 +1377,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 9,
@@ -1395,16 +1395,16 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 8,
-      "mv": 6.12,
-      "fm": 6.19,
+      "pv": 9,
+      "mv": 6.11,
+      "fm": 6.28,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
-      "assists": 1,
+      "assists": 2,
       "yellow": 1,
       "red": 0,
       "name": "Di Lorenzo",
@@ -1413,7 +1413,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 8,
@@ -1431,7 +1431,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 5,
@@ -1449,7 +1449,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 3,
@@ -1467,7 +1467,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 7,
@@ -1485,7 +1485,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 6,
@@ -1503,16 +1503,16 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 7,
-      "mv": 6.14,
-      "fm": 6.5,
+      "pv": 8,
+      "mv": 6.31,
+      "fm": 6.75,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
-      "assists": 3,
+      "assists": 4,
       "yellow": 1,
       "red": 0,
       "name": "Miranda J.",
@@ -1521,7 +1521,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 7,
@@ -1539,12 +1539,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 8,
-      "mv": 5.81,
-      "fm": 5.56,
+      "pv": 9,
+      "mv": 5.94,
+      "fm": 5.72,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -1557,12 +1557,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 6,
-      "mv": 6.83,
-      "fm": 8.08,
+      "pv": 7,
+      "mv": 6.79,
+      "fm": 7.86,
       "goals": 2,
       "conceded": 0,
       "penaltySaved": 0,
@@ -1575,12 +1575,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 8,
-      "mv": 6.12,
-      "fm": 6.75,
+      "pv": 9,
+      "mv": 6.0,
+      "fm": 6.56,
       "goals": 1,
       "conceded": 0,
       "penaltySaved": 0,
@@ -1593,12 +1593,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 8,
-      "mv": 6.0,
-      "fm": 6.69,
+      "pv": 9,
+      "mv": 5.94,
+      "fm": 6.56,
       "goals": 2,
       "conceded": 0,
       "penaltySaved": 0,
@@ -1611,7 +1611,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 1,
@@ -1629,7 +1629,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 2,
@@ -1647,7 +1647,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 4,
@@ -1665,7 +1665,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 6,
@@ -1683,7 +1683,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 8,
@@ -1701,7 +1701,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 8,
@@ -1719,12 +1719,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 7,
-      "mv": 5.57,
-      "fm": 5.43,
+      "pv": 8,
+      "mv": 5.69,
+      "fm": 5.56,
       "goals": 1,
       "conceded": 0,
       "penaltySaved": 0,
@@ -1737,7 +1737,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 8,
@@ -1755,7 +1755,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 7,
@@ -1773,12 +1773,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 8,
-      "mv": 5.62,
-      "fm": 5.62,
+      "pv": 9,
+      "mv": 5.61,
+      "fm": 5.61,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -1791,7 +1791,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 5,
@@ -1809,12 +1809,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 7,
-      "mv": 5.71,
-      "fm": 5.57,
+      "pv": 8,
+      "mv": 5.62,
+      "fm": 5.5,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -1827,7 +1827,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 9,
@@ -1845,7 +1845,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 9,
@@ -1863,7 +1863,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 6,
@@ -1881,7 +1881,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 8,
@@ -1899,7 +1899,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 3,
@@ -1917,7 +1917,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 7,
@@ -1935,7 +1935,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 7,
@@ -1953,7 +1953,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 4,
@@ -1971,7 +1971,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 7,
@@ -1989,12 +1989,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 8,
-      "mv": 5.75,
-      "fm": 5.62,
+      "pv": 9,
+      "mv": 5.78,
+      "fm": 5.67,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -2007,7 +2007,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 9,
@@ -2025,7 +2025,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 9,
@@ -2043,12 +2043,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 8,
-      "mv": 5.62,
-      "fm": 5.62,
+      "pv": 9,
+      "mv": 5.67,
+      "fm": 5.67,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -2061,12 +2061,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 8,
+      "pv": 9,
       "mv": 6.06,
-      "fm": 6.94,
+      "fm": 6.83,
       "goals": 2,
       "conceded": 0,
       "penaltySaved": 0,
@@ -2079,7 +2079,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 8,
@@ -2097,7 +2097,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 6,
@@ -2115,12 +2115,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 5,
-      "mv": 6.0,
-      "fm": 5.9,
+      "pv": 6,
+      "mv": 5.83,
+      "fm": 5.75,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -2133,7 +2133,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 6,
@@ -2151,7 +2151,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 6,
@@ -2169,7 +2169,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 6,
@@ -2187,7 +2187,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 6,
@@ -2205,12 +2205,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 4,
-      "mv": 5.75,
-      "fm": 5.62,
+      "pv": 5,
+      "mv": 5.4,
+      "fm": 5.3,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -2223,12 +2223,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 4,
-      "mv": 6.25,
-      "fm": 6.25,
+      "pv": 5,
+      "mv": 5.9,
+      "fm": 5.5,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -2241,12 +2241,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 8,
-      "mv": 5.94,
-      "fm": 6.06,
+      "pv": 9,
+      "mv": 5.83,
+      "fm": 5.94,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -2259,7 +2259,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 3,
@@ -2277,7 +2277,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 3,
@@ -2295,7 +2295,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 8,
@@ -2313,7 +2313,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 8,
@@ -2331,12 +2331,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 7,
+      "pv": 8,
       "mv": 6.0,
-      "fm": 6.36,
+      "fm": 6.31,
       "goals": 1,
       "conceded": 0,
       "penaltySaved": 0,
@@ -2349,7 +2349,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 6,
@@ -2367,7 +2367,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 7,
@@ -2385,7 +2385,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -2403,7 +2403,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 6,
@@ -2421,7 +2421,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 4,
@@ -2439,16 +2439,16 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 6,
-      "mv": 5.83,
-      "fm": 5.83,
+      "pv": 7,
+      "mv": 5.93,
+      "fm": 6.07,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
-      "assists": 0,
+      "assists": 1,
       "yellow": 0,
       "red": 0,
       "name": "Zortea",
@@ -2457,7 +2457,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 9,
@@ -2475,7 +2475,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 8,
@@ -2493,7 +2493,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 7,
@@ -2511,7 +2511,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 2,
@@ -2529,12 +2529,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 8,
-      "mv": 6.06,
-      "fm": 5.94,
+      "pv": 9,
+      "mv": 5.94,
+      "fm": 5.83,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -2547,7 +2547,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 4,
@@ -2565,7 +2565,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 4,
@@ -2583,7 +2583,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 2,
@@ -2601,7 +2601,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 5,
@@ -2619,7 +2619,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 4,
@@ -2637,7 +2637,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 5,
@@ -2655,7 +2655,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 6,
@@ -2673,7 +2673,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 3,
@@ -2691,7 +2691,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 6,
@@ -2709,7 +2709,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 6,
@@ -2727,7 +2727,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 5,
@@ -2745,17 +2745,17 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 6,
-      "mv": 5.58,
-      "fm": 5.42,
+      "pv": 7,
+      "mv": 5.64,
+      "fm": 5.43,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
       "assists": 0,
-      "yellow": 2,
+      "yellow": 3,
       "red": 0,
       "name": "Heggem",
       "team": "Bologna",
@@ -2763,7 +2763,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 3,
@@ -2781,7 +2781,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 5,
@@ -2799,7 +2799,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 6,
@@ -2817,7 +2817,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 7,
@@ -2835,12 +2835,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 8,
-      "mv": 5.31,
-      "fm": 5.25,
+      "pv": 9,
+      "mv": 5.44,
+      "fm": 5.39,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -2853,7 +2853,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 3,
@@ -2871,12 +2871,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 2,
-      "mv": 6.75,
-      "fm": 8.5,
+      "pv": 3,
+      "mv": 6.17,
+      "fm": 7.33,
       "goals": 1,
       "conceded": 0,
       "penaltySaved": 0,
@@ -2889,7 +2889,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 8,
@@ -2907,7 +2907,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 5,
@@ -2925,7 +2925,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 1,
@@ -2943,16 +2943,16 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 1,
+      "pv": 2,
       "mv": 6.5,
-      "fm": 6.5,
+      "fm": 7.0,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
-      "assists": 0,
+      "assists": 1,
       "yellow": 0,
       "red": 0,
       "name": "Tomori",
@@ -2961,7 +2961,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -2979,7 +2979,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 4,
@@ -2997,7 +2997,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 4,
@@ -3015,7 +3015,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 2,
@@ -3033,12 +3033,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 6,
-      "mv": 5.83,
-      "fm": 5.92,
+      "pv": 7,
+      "mv": 5.79,
+      "fm": 5.86,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -3051,7 +3051,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 3,
@@ -3069,7 +3069,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 6,
@@ -3087,7 +3087,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 4,
@@ -3105,7 +3105,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 2,
@@ -3123,12 +3123,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 0,
-      "mv": null,
-      "fm": null,
+      "pv": 1,
+      "mv": 6.0,
+      "fm": 6.0,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -3141,7 +3141,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -3159,7 +3159,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 8,
@@ -3177,7 +3177,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 3,
@@ -3195,7 +3195,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 6,
@@ -3213,7 +3213,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 8,
@@ -3231,12 +3231,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 6,
-      "mv": 5.58,
-      "fm": 5.42,
+      "pv": 7,
+      "mv": 5.57,
+      "fm": 5.43,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -3249,12 +3249,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 7,
-      "mv": 5.43,
-      "fm": 5.14,
+      "pv": 8,
+      "mv": 5.38,
+      "fm": 5.12,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -3267,7 +3267,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 8,
@@ -3285,12 +3285,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 8,
-      "mv": 5.62,
-      "fm": 5.56,
+      "pv": 9,
+      "mv": 5.56,
+      "fm": 5.5,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -3303,12 +3303,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 4,
-      "mv": 5.75,
-      "fm": 5.75,
+      "pv": 5,
+      "mv": 5.6,
+      "fm": 5.6,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -3321,7 +3321,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 2,
@@ -3339,12 +3339,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 3,
-      "mv": 5.5,
-      "fm": 5.83,
+      "pv": 4,
+      "mv": 5.62,
+      "fm": 5.88,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -3357,12 +3357,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 8,
-      "mv": 5.62,
-      "fm": 5.44,
+      "pv": 9,
+      "mv": 5.78,
+      "fm": 5.61,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -3375,12 +3375,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 4,
-      "mv": 5.5,
-      "fm": 5.38,
+      "pv": 5,
+      "mv": 5.6,
+      "fm": 5.5,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -3393,7 +3393,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 4,
@@ -3411,12 +3411,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 3,
-      "mv": 5.83,
-      "fm": 5.67,
+      "pv": 4,
+      "mv": 5.88,
+      "fm": 5.75,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -3429,7 +3429,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 3,
@@ -3447,12 +3447,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 6,
-      "mv": 5.58,
-      "fm": 5.33,
+      "pv": 7,
+      "mv": 5.57,
+      "fm": 5.07,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -3465,7 +3465,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 4,
@@ -3483,12 +3483,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 5,
-      "mv": 5.9,
-      "fm": 5.7,
+      "pv": 6,
+      "mv": 5.92,
+      "fm": 5.75,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -3501,13 +3501,13 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 4,
-      "mv": 5.75,
-      "fm": 5.62,
-      "goals": 0,
+      "pv": 5,
+      "mv": 6.0,
+      "fm": 6.5,
+      "goals": 1,
       "conceded": 0,
       "penaltySaved": 0,
       "assists": 0,
@@ -3519,7 +3519,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 4,
@@ -3537,7 +3537,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 4,
@@ -3555,7 +3555,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 3,
@@ -3573,7 +3573,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 4,
@@ -3591,10 +3591,10 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 1,
+      "pv": 2,
       "mv": 6.0,
       "fm": 6.0,
       "goals": 0,
@@ -3609,7 +3609,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 9,
@@ -3627,7 +3627,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 1,
@@ -3645,7 +3645,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -3663,12 +3663,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 4,
-      "mv": 5.38,
-      "fm": 5.38,
+      "pv": 5,
+      "mv": 5.6,
+      "fm": 5.6,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -3681,10 +3681,10 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 7,
+      "pv": 8,
       "mv": 5.5,
       "fm": 5.5,
       "goals": 0,
@@ -3699,7 +3699,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 2,
@@ -3717,7 +3717,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 4,
@@ -3735,7 +3735,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 4,
@@ -3753,7 +3753,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 6,
@@ -3771,12 +3771,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 3,
-      "mv": 6.17,
-      "fm": 7.17,
+      "pv": 4,
+      "mv": 6.12,
+      "fm": 6.88,
       "goals": 1,
       "conceded": 0,
       "penaltySaved": 0,
@@ -3789,7 +3789,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 1,
@@ -3807,10 +3807,10 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 3,
+      "pv": 4,
       "mv": 6.0,
       "fm": 6.0,
       "goals": 0,
@@ -3825,7 +3825,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -3843,7 +3843,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 2,
@@ -3861,7 +3861,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -3879,7 +3879,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 4,
@@ -3897,7 +3897,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 2,
@@ -3915,7 +3915,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 1,
@@ -3933,13 +3933,13 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 7,
-      "mv": 5.79,
-      "fm": 5.64,
-      "goals": 0,
+      "pv": 8,
+      "mv": 5.88,
+      "fm": 6.12,
+      "goals": 1,
       "conceded": 0,
       "penaltySaved": 0,
       "assists": 0,
@@ -3951,7 +3951,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 2,
@@ -3969,12 +3969,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 3,
-      "mv": 6.0,
-      "fm": 6.0,
+      "pv": 4,
+      "mv": 6.12,
+      "fm": 6.12,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -3987,12 +3987,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 5,
-      "mv": 5.4,
-      "fm": 4.9,
+      "pv": 6,
+      "mv": 5.5,
+      "fm": 4.75,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -4005,7 +4005,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 6,
@@ -4023,7 +4023,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -4041,7 +4041,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 2,
@@ -4059,7 +4059,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -4077,7 +4077,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 1,
@@ -4095,12 +4095,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 4,
-      "mv": 5.75,
-      "fm": 5.62,
+      "pv": 5,
+      "mv": 5.8,
+      "fm": 5.7,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -4113,7 +4113,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -4131,7 +4131,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -4149,7 +4149,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 3,
@@ -4167,7 +4167,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -4185,7 +4185,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -4203,12 +4203,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 1,
-      "mv": 6.0,
-      "fm": 6.0,
+      "pv": 2,
+      "mv": 5.75,
+      "fm": 5.75,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -4221,7 +4221,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 2,
@@ -4239,7 +4239,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -4257,7 +4257,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -4275,7 +4275,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 3,
@@ -4293,12 +4293,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 1,
-      "mv": 6.0,
-      "fm": 6.0,
+      "pv": 2,
+      "mv": 5.5,
+      "fm": 5.5,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -4311,12 +4311,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 0,
-      "mv": null,
-      "fm": null,
+      "pv": 1,
+      "mv": 6.0,
+      "fm": 6.0,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -4329,12 +4329,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 0,
-      "mv": null,
-      "fm": null,
+      "pv": 1,
+      "mv": 6.0,
+      "fm": 6.0,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -4347,10 +4347,10 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 2,
+      "pv": 3,
       "mv": 6.0,
       "fm": 6.0,
       "goals": 0,
@@ -4365,7 +4365,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 1,
@@ -4383,10 +4383,10 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 1,
+      "pv": 2,
       "mv": 5.5,
       "fm": 5.5,
       "goals": 0,
@@ -4401,7 +4401,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -4419,7 +4419,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -4437,7 +4437,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -4455,7 +4455,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -4473,7 +4473,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -4491,7 +4491,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 1,
@@ -4509,17 +4509,17 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 3,
-      "mv": 6.33,
-      "fm": 7.33,
+      "pv": 4,
+      "mv": 6.0,
+      "fm": 6.62,
       "goals": 1,
       "conceded": 0,
       "penaltySaved": 0,
       "assists": 0,
-      "yellow": 0,
+      "yellow": 1,
       "red": 0,
       "name": "Goglichidze",
       "team": "Monza",
@@ -4527,7 +4527,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -4545,7 +4545,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 1,
@@ -4563,7 +4563,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -4581,7 +4581,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 8,
@@ -4599,12 +4599,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 6,
-      "mv": 6.42,
-      "fm": 7.83,
+      "pv": 7,
+      "mv": 6.43,
+      "fm": 7.64,
       "goals": 3,
       "conceded": 0,
       "penaltySaved": 0,
@@ -4617,12 +4617,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 5,
-      "mv": 6.5,
-      "fm": 7.8,
+      "pv": 6,
+      "mv": 6.25,
+      "fm": 7.33,
       "goals": 2,
       "conceded": 0,
       "penaltySaved": 0,
@@ -4635,7 +4635,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 7,
@@ -4653,12 +4653,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 5,
-      "mv": 5.9,
-      "fm": 7.1,
+      "pv": 6,
+      "mv": 6.0,
+      "fm": 7.0,
       "goals": 2,
       "conceded": 0,
       "penaltySaved": 0,
@@ -4671,7 +4671,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 4,
@@ -4689,7 +4689,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 8,
@@ -4707,7 +4707,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 6,
@@ -4725,17 +4725,17 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 7,
-      "mv": 6.36,
-      "fm": 7.0,
+      "pv": 8,
+      "mv": 6.31,
+      "fm": 6.81,
       "goals": 1,
       "conceded": 0,
       "penaltySaved": 0,
       "assists": 2,
-      "yellow": 1,
+      "yellow": 2,
       "red": 0,
       "name": "Barella",
       "team": "Inter",
@@ -4743,7 +4743,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 9,
@@ -4761,7 +4761,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 9,
@@ -4779,13 +4779,13 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 8,
-      "mv": 6.25,
-      "fm": 7.12,
-      "goals": 3,
+      "pv": 9,
+      "mv": 6.33,
+      "fm": 7.44,
+      "goals": 4,
       "conceded": 0,
       "penaltySaved": 0,
       "assists": 1,
@@ -4797,17 +4797,17 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 3,
-      "mv": 5.67,
+      "pv": 4,
+      "mv": 5.75,
       "fm": 5.5,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
       "assists": 0,
-      "yellow": 1,
+      "yellow": 2,
       "red": 0,
       "name": "Zaniolo",
       "team": "Udinese",
@@ -4815,12 +4815,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 5,
-      "mv": 5.9,
-      "fm": 6.4,
+      "pv": 6,
+      "mv": 5.83,
+      "fm": 6.25,
       "goals": 1,
       "conceded": 0,
       "penaltySaved": 0,
@@ -4833,7 +4833,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 5,
@@ -4851,7 +4851,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 8,
@@ -4869,7 +4869,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 5,
@@ -4887,7 +4887,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 7,
@@ -4905,7 +4905,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 6,
@@ -4923,12 +4923,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 8,
-      "mv": 6.12,
-      "fm": 7.38,
+      "pv": 9,
+      "mv": 6.11,
+      "fm": 7.22,
       "goals": 3,
       "conceded": 0,
       "penaltySaved": 0,
@@ -4941,7 +4941,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 8,
@@ -4959,7 +4959,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 8,
@@ -4977,7 +4977,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 4,
@@ -4995,12 +4995,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 7,
-      "mv": 6.43,
-      "fm": 7.57,
+      "pv": 8,
+      "mv": 6.38,
+      "fm": 7.38,
       "goals": 2,
       "conceded": 0,
       "penaltySaved": 0,
@@ -5013,7 +5013,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 9,
@@ -5031,7 +5031,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 6,
@@ -5049,12 +5049,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 7,
+      "pv": 8,
       "mv": 6.5,
-      "fm": 7.21,
+      "fm": 7.12,
       "goals": 2,
       "conceded": 0,
       "penaltySaved": 0,
@@ -5067,7 +5067,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 8,
@@ -5085,7 +5085,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 9,
@@ -5103,12 +5103,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 8,
-      "mv": 6.25,
-      "fm": 6.44,
+      "pv": 9,
+      "mv": 6.17,
+      "fm": 6.33,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -5121,7 +5121,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 4,
@@ -5139,7 +5139,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 9,
@@ -5157,7 +5157,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 4,
@@ -5175,7 +5175,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 8,
@@ -5193,12 +5193,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 7,
-      "mv": 6.43,
-      "fm": 7.0,
+      "pv": 8,
+      "mv": 6.38,
+      "fm": 6.88,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -5211,12 +5211,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 6,
-      "mv": 5.83,
-      "fm": 6.0,
+      "pv": 7,
+      "mv": 5.79,
+      "fm": 5.93,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -5229,7 +5229,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 6,
@@ -5247,7 +5247,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 4,
@@ -5265,7 +5265,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 8,
@@ -5283,16 +5283,16 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 7,
-      "mv": 5.93,
-      "fm": 6.57,
-      "goals": 1,
+      "pv": 8,
+      "mv": 6.06,
+      "fm": 7.12,
+      "goals": 2,
       "conceded": 0,
       "penaltySaved": 0,
-      "assists": 2,
+      "assists": 3,
       "yellow": 1,
       "red": 0,
       "name": "Politano",
@@ -5301,7 +5301,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 7,
@@ -5319,7 +5319,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 7,
@@ -5337,7 +5337,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 9,
@@ -5355,7 +5355,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 8,
@@ -5373,7 +5373,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 3,
@@ -5391,7 +5391,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 2,
@@ -5409,7 +5409,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 9,
@@ -5427,16 +5427,16 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 5,
-      "mv": 5.7,
-      "fm": 5.7,
-      "goals": 0,
+      "pv": 6,
+      "mv": 6.0,
+      "fm": 6.67,
+      "goals": 1,
       "conceded": 0,
       "penaltySaved": 0,
-      "assists": 0,
+      "assists": 1,
       "yellow": 0,
       "red": 0,
       "name": "Baldanzi",
@@ -5445,17 +5445,17 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 5,
-      "mv": 6.3,
-      "fm": 7.7,
+      "pv": 6,
+      "mv": 6.08,
+      "fm": 7.17,
       "goals": 2,
       "conceded": 0,
       "penaltySaved": 0,
       "assists": 1,
-      "yellow": 0,
+      "yellow": 1,
       "red": 0,
       "name": "Zhegrova",
       "team": "Juventus",
@@ -5463,7 +5463,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 7,
@@ -5481,7 +5481,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 7,
@@ -5499,7 +5499,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 6,
@@ -5517,7 +5517,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 9,
@@ -5535,12 +5535,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 7,
-      "mv": 6.14,
-      "fm": 6.57,
+      "pv": 8,
+      "mv": 6.06,
+      "fm": 6.44,
       "goals": 1,
       "conceded": 0,
       "penaltySaved": 0,
@@ -5553,12 +5553,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 4,
-      "mv": 5.75,
-      "fm": 6.5,
+      "pv": 5,
+      "mv": 5.8,
+      "fm": 6.4,
       "goals": 1,
       "conceded": 0,
       "penaltySaved": 0,
@@ -5571,12 +5571,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 4,
-      "mv": 6.25,
-      "fm": 7.12,
+      "pv": 5,
+      "mv": 6.2,
+      "fm": 6.9,
       "goals": 1,
       "conceded": 0,
       "penaltySaved": 0,
@@ -5589,7 +5589,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 7,
@@ -5607,7 +5607,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 8,
@@ -5625,7 +5625,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 8,
@@ -5643,7 +5643,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 4,
@@ -5661,17 +5661,17 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 8,
-      "mv": 5.81,
-      "fm": 6.0,
+      "pv": 9,
+      "mv": 5.83,
+      "fm": 5.94,
       "goals": 1,
       "conceded": 0,
       "penaltySaved": 0,
       "assists": 0,
-      "yellow": 3,
+      "yellow": 4,
       "red": 0,
       "name": "Karlstrom",
       "team": "Udinese",
@@ -5679,12 +5679,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 8,
-      "mv": 6.25,
-      "fm": 6.25,
+      "pv": 9,
+      "mv": 6.28,
+      "fm": 6.28,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -5697,17 +5697,17 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 7,
+      "pv": 8,
       "mv": 6.0,
-      "fm": 6.36,
+      "fm": 6.25,
       "goals": 1,
       "conceded": 0,
       "penaltySaved": 0,
       "assists": 0,
-      "yellow": 1,
+      "yellow": 2,
       "red": 0,
       "name": "Pobega",
       "team": "Bologna",
@@ -5715,12 +5715,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 8,
-      "mv": 6.12,
-      "fm": 6.31,
+      "pv": 9,
+      "mv": 6.22,
+      "fm": 6.39,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -5733,7 +5733,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 8,
@@ -5751,7 +5751,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 8,
@@ -5769,7 +5769,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 8,
@@ -5787,7 +5787,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 3,
@@ -5805,7 +5805,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -5823,12 +5823,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 5,
-      "mv": 6.3,
-      "fm": 7.1,
+      "pv": 6,
+      "mv": 6.25,
+      "fm": 6.92,
       "goals": 1,
       "conceded": 0,
       "penaltySaved": 0,
@@ -5841,7 +5841,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 8,
@@ -5859,12 +5859,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 7,
-      "mv": 6.07,
-      "fm": 6.21,
+      "pv": 8,
+      "mv": 5.94,
+      "fm": 6.06,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -5877,12 +5877,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 5,
-      "mv": 5.9,
-      "fm": 6.5,
+      "pv": 6,
+      "mv": 5.83,
+      "fm": 6.33,
       "goals": 1,
       "conceded": 0,
       "penaltySaved": 0,
@@ -5895,7 +5895,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 4,
@@ -5913,7 +5913,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 8,
@@ -5931,7 +5931,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 9,
@@ -5949,7 +5949,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 2,
@@ -5967,7 +5967,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 2,
@@ -5985,7 +5985,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 5,
@@ -6003,16 +6003,16 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 6,
-      "mv": 5.58,
-      "fm": 5.5,
+      "pv": 7,
+      "mv": 5.79,
+      "fm": 5.86,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
-      "assists": 0,
+      "assists": 1,
       "yellow": 1,
       "red": 0,
       "name": "Odgaard",
@@ -6021,7 +6021,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 4,
@@ -6039,7 +6039,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 7,
@@ -6057,12 +6057,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 8,
-      "mv": 5.81,
-      "fm": 5.81,
+      "pv": 9,
+      "mv": 5.89,
+      "fm": 5.89,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -6075,7 +6075,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 8,
@@ -6093,12 +6093,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 8,
-      "mv": 6.12,
-      "fm": 6.5,
+      "pv": 9,
+      "mv": 6.11,
+      "fm": 6.44,
       "goals": 1,
       "conceded": 0,
       "penaltySaved": 0,
@@ -6111,7 +6111,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -6129,7 +6129,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 7,
@@ -6147,12 +6147,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 4,
-      "mv": 6.25,
-      "fm": 6.62,
+      "pv": 5,
+      "mv": 6.0,
+      "fm": 6.3,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -6165,7 +6165,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 5,
@@ -6183,12 +6183,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 3,
-      "mv": 6.0,
-      "fm": 7.0,
+      "pv": 4,
+      "mv": 6.12,
+      "fm": 6.88,
       "goals": 1,
       "conceded": 0,
       "penaltySaved": 0,
@@ -6201,12 +6201,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 4,
-      "mv": 5.75,
-      "fm": 5.75,
+      "pv": 5,
+      "mv": 5.5,
+      "fm": 5.5,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -6219,13 +6219,13 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 0,
-      "mv": null,
-      "fm": null,
-      "goals": 0,
+      "pv": 1,
+      "mv": 9.0,
+      "fm": 18.0,
+      "goals": 3,
       "conceded": 0,
       "penaltySaved": 0,
       "assists": 0,
@@ -6237,7 +6237,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 7,
@@ -6255,7 +6255,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 5,
@@ -6273,7 +6273,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 6,
@@ -6291,7 +6291,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 5,
@@ -6309,7 +6309,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 7,
@@ -6327,7 +6327,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 2,
@@ -6345,7 +6345,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 7,
@@ -6363,12 +6363,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 5,
-      "mv": 6.1,
-      "fm": 6.7,
+      "pv": 6,
+      "mv": 6.17,
+      "fm": 6.67,
       "goals": 1,
       "conceded": 0,
       "penaltySaved": 0,
@@ -6381,12 +6381,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 8,
-      "mv": 5.62,
-      "fm": 5.56,
+      "pv": 9,
+      "mv": 5.67,
+      "fm": 5.61,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -6399,12 +6399,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 6,
-      "mv": 5.83,
-      "fm": 5.83,
+      "pv": 7,
+      "mv": 5.71,
+      "fm": 5.29,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -6417,7 +6417,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 7,
@@ -6435,7 +6435,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 2,
@@ -6453,12 +6453,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 5,
-      "mv": 5.7,
-      "fm": 6.1,
+      "pv": 6,
+      "mv": 5.75,
+      "fm": 6.08,
       "goals": 1,
       "conceded": 0,
       "penaltySaved": 0,
@@ -6471,7 +6471,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 6,
@@ -6489,13 +6489,13 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 5,
-      "mv": 6.4,
-      "fm": 7.5,
-      "goals": 2,
+      "pv": 6,
+      "mv": 6.58,
+      "fm": 8.5,
+      "goals": 4,
       "conceded": 0,
       "penaltySaved": 0,
       "assists": 0,
@@ -6507,7 +6507,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 4,
@@ -6525,7 +6525,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 4,
@@ -6543,7 +6543,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 4,
@@ -6561,7 +6561,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 6,
@@ -6579,7 +6579,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 8,
@@ -6597,7 +6597,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 2,
@@ -6615,7 +6615,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 4,
@@ -6633,7 +6633,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 5,
@@ -6651,7 +6651,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 4,
@@ -6669,12 +6669,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 8,
-      "mv": 5.88,
-      "fm": 6.12,
+      "pv": 9,
+      "mv": 5.94,
+      "fm": 6.17,
       "goals": 1,
       "conceded": 0,
       "penaltySaved": 0,
@@ -6687,7 +6687,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 5,
@@ -6705,7 +6705,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 8,
@@ -6723,7 +6723,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -6741,7 +6741,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 7,
@@ -6759,12 +6759,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 5,
-      "mv": 5.7,
-      "fm": 5.6,
+      "pv": 6,
+      "mv": 5.75,
+      "fm": 5.67,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -6777,12 +6777,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 7,
-      "mv": 5.64,
-      "fm": 5.64,
+      "pv": 8,
+      "mv": 5.62,
+      "fm": 5.62,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -6795,12 +6795,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 8,
-      "mv": 5.88,
-      "fm": 5.69,
+      "pv": 9,
+      "mv": 5.94,
+      "fm": 5.78,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -6813,7 +6813,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 5,
@@ -6831,7 +6831,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 3,
@@ -6849,7 +6849,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 1,
@@ -6867,7 +6867,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 7,
@@ -6885,7 +6885,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 2,
@@ -6903,11 +6903,11 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 5,
-      "mv": 5.3,
+      "pv": 6,
+      "mv": 5.33,
       "fm": 5.5,
       "goals": 0,
       "conceded": 0,
@@ -6921,7 +6921,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 4,
@@ -6939,12 +6939,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 3,
-      "mv": 5.67,
-      "fm": 5.5,
+      "pv": 4,
+      "mv": 5.88,
+      "fm": 5.75,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -6957,12 +6957,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 2,
-      "mv": 5.75,
-      "fm": 5.75,
+      "pv": 3,
+      "mv": 5.83,
+      "fm": 5.83,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -6975,7 +6975,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 2,
@@ -6993,7 +6993,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 4,
@@ -7011,12 +7011,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 8,
-      "mv": 5.88,
-      "fm": 6.31,
+      "pv": 9,
+      "mv": 5.72,
+      "fm": 6.11,
       "goals": 1,
       "conceded": 0,
       "penaltySaved": 0,
@@ -7029,7 +7029,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 5,
@@ -7047,7 +7047,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 8,
@@ -7065,7 +7065,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 8,
@@ -7083,7 +7083,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -7101,7 +7101,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -7119,12 +7119,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 4,
-      "mv": 6.0,
-      "fm": 6.0,
+      "pv": 5,
+      "mv": 5.9,
+      "fm": 5.9,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -7137,12 +7137,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 8,
-      "mv": 6.12,
-      "fm": 6.12,
+      "pv": 9,
+      "mv": 6.0,
+      "fm": 6.0,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -7155,7 +7155,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 7,
@@ -7173,7 +7173,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -7191,7 +7191,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 4,
@@ -7209,7 +7209,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 5,
@@ -7227,7 +7227,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 6,
@@ -7245,7 +7245,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -7263,7 +7263,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -7281,7 +7281,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 2,
@@ -7299,7 +7299,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 5,
@@ -7317,7 +7317,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 2,
@@ -7335,7 +7335,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -7353,7 +7353,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 2,
@@ -7371,7 +7371,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 5,
@@ -7389,7 +7389,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 6,
@@ -7407,7 +7407,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 5,
@@ -7425,7 +7425,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 2,
@@ -7443,7 +7443,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 6,
@@ -7461,12 +7461,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 5,
-      "mv": 5.6,
-      "fm": 5.6,
+      "pv": 6,
+      "mv": 5.67,
+      "fm": 5.67,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -7479,7 +7479,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 2,
@@ -7497,7 +7497,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 2,
@@ -7515,7 +7515,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 1,
@@ -7533,7 +7533,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 2,
@@ -7551,7 +7551,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -7569,12 +7569,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 1,
-      "mv": 6.0,
-      "fm": 6.0,
+      "pv": 2,
+      "mv": 5.75,
+      "fm": 5.75,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -7587,7 +7587,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 3,
@@ -7605,17 +7605,17 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 1,
+      "pv": 2,
       "mv": 5.5,
       "fm": 5.0,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
       "assists": 0,
-      "yellow": 1,
+      "yellow": 2,
       "red": 0,
       "name": "Colombo L.",
       "team": "Monza",
@@ -7623,7 +7623,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 1,
@@ -7641,7 +7641,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 3,
@@ -7659,12 +7659,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 3,
-      "mv": 5.67,
-      "fm": 5.67,
+      "pv": 4,
+      "mv": 5.88,
+      "fm": 5.88,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -7677,7 +7677,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 3,
@@ -7695,17 +7695,17 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 5,
-      "mv": 5.6,
-      "fm": 5.8,
+      "pv": 6,
+      "mv": 5.58,
+      "fm": 5.67,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
       "assists": 1,
-      "yellow": 0,
+      "yellow": 1,
       "red": 0,
       "name": "Foe Ondoa",
       "team": "Monza",
@@ -7713,12 +7713,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 4,
-      "mv": 5.62,
-      "fm": 5.5,
+      "pv": 5,
+      "mv": 5.7,
+      "fm": 5.6,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -7731,7 +7731,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 1,
@@ -7749,7 +7749,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -7767,7 +7767,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -7785,7 +7785,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -7803,7 +7803,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -7821,7 +7821,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -7839,7 +7839,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -7857,7 +7857,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -7875,7 +7875,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -7893,7 +7893,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 4,
@@ -7911,7 +7911,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 2,
@@ -7929,7 +7929,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -7947,7 +7947,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -7965,7 +7965,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -7983,7 +7983,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 1,
@@ -8001,7 +8001,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -8019,7 +8019,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 1,
@@ -8037,7 +8037,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 2,
@@ -8055,7 +8055,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 1,
@@ -8073,7 +8073,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 8,
@@ -8091,7 +8091,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 5,
@@ -8109,12 +8109,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 7,
-      "mv": 6.86,
-      "fm": 9.21,
+      "pv": 8,
+      "mv": 6.88,
+      "fm": 8.94,
       "goals": 5,
       "conceded": 0,
       "penaltySaved": 0,
@@ -8127,13 +8127,13 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 8,
-      "mv": 6.12,
-      "fm": 6.88,
-      "goals": 2,
+      "pv": 9,
+      "mv": 6.22,
+      "fm": 7.22,
+      "goals": 3,
       "conceded": 0,
       "penaltySaved": 0,
       "assists": 0,
@@ -8145,12 +8145,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 8,
-      "mv": 6.0,
-      "fm": 6.38,
+      "pv": 9,
+      "mv": 5.83,
+      "fm": 6.17,
       "goals": 2,
       "conceded": 0,
       "penaltySaved": 0,
@@ -8163,7 +8163,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 4,
@@ -8181,12 +8181,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 8,
-      "mv": 5.5,
-      "fm": 6.0,
+      "pv": 9,
+      "mv": 5.39,
+      "fm": 5.83,
       "goals": 1,
       "conceded": 0,
       "penaltySaved": 0,
@@ -8199,7 +8199,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 9,
@@ -8217,12 +8217,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 5,
-      "mv": 5.7,
-      "fm": 5.7,
+      "pv": 6,
+      "mv": 5.67,
+      "fm": 5.67,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -8235,7 +8235,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 1,
@@ -8253,7 +8253,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 7,
@@ -8271,12 +8271,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 7,
-      "mv": 5.93,
-      "fm": 6.14,
+      "pv": 8,
+      "mv": 5.94,
+      "fm": 6.12,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -8289,12 +8289,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 7,
-      "mv": 6.14,
-      "fm": 7.07,
+      "pv": 8,
+      "mv": 6.12,
+      "fm": 6.94,
       "goals": 2,
       "conceded": 0,
       "penaltySaved": 0,
@@ -8307,7 +8307,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 8,
@@ -8325,7 +8325,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 6,
@@ -8343,7 +8343,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 8,
@@ -8361,7 +8361,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 8,
@@ -8379,7 +8379,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 9,
@@ -8397,7 +8397,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 9,
@@ -8415,7 +8415,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 8,
@@ -8433,7 +8433,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 4,
@@ -8451,7 +8451,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 4,
@@ -8469,7 +8469,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 5,
@@ -8487,7 +8487,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 6,
@@ -8505,7 +8505,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 4,
@@ -8523,7 +8523,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 7,
@@ -8541,7 +8541,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 9,
@@ -8559,12 +8559,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 7,
-      "mv": 6.14,
-      "fm": 7.0,
+      "pv": 8,
+      "mv": 6.0,
+      "fm": 6.75,
       "goals": 2,
       "conceded": 0,
       "penaltySaved": 0,
@@ -8577,7 +8577,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 4,
@@ -8595,7 +8595,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 8,
@@ -8613,7 +8613,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 9,
@@ -8631,11 +8631,11 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 8,
-      "mv": 5.75,
+      "pv": 9,
+      "mv": 5.83,
       "fm": 6.5,
       "goals": 2,
       "conceded": 0,
@@ -8649,7 +8649,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 9,
@@ -8667,7 +8667,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 6,
@@ -8685,7 +8685,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 8,
@@ -8703,7 +8703,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 7,
@@ -8721,7 +8721,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 6,
@@ -8739,7 +8739,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 7,
@@ -8757,13 +8757,13 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 7,
-      "mv": 6.93,
+      "pv": 8,
+      "mv": 6.94,
       "fm": 10.0,
-      "goals": 7,
+      "goals": 8,
       "conceded": 0,
       "penaltySaved": 0,
       "assists": 1,
@@ -8775,7 +8775,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 6,
@@ -8793,12 +8793,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 8,
+      "pv": 9,
       "mv": 5.5,
-      "fm": 5.62,
+      "fm": 5.61,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -8811,7 +8811,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 5,
@@ -8829,12 +8829,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 7,
-      "mv": 6.21,
-      "fm": 7.64,
+      "pv": 8,
+      "mv": 6.25,
+      "fm": 7.5,
       "goals": 3,
       "conceded": 0,
       "penaltySaved": 0,
@@ -8847,7 +8847,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 7,
@@ -8865,7 +8865,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 9,
@@ -8883,12 +8883,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 6,
-      "mv": 6.25,
-      "fm": 7.25,
+      "pv": 7,
+      "mv": 6.07,
+      "fm": 6.93,
       "goals": 2,
       "conceded": 0,
       "penaltySaved": 0,
@@ -8901,7 +8901,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 5,
@@ -8919,12 +8919,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 8,
-      "mv": 6.06,
-      "fm": 6.06,
+      "pv": 9,
+      "mv": 6.0,
+      "fm": 6.0,
       "goals": 1,
       "conceded": 0,
       "penaltySaved": 0,
@@ -8937,16 +8937,16 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 5,
+      "pv": 6,
       "mv": 6.5,
-      "fm": 7.7,
+      "fm": 7.67,
       "goals": 2,
       "conceded": 0,
       "penaltySaved": 0,
-      "assists": 0,
+      "assists": 1,
       "yellow": 0,
       "red": 0,
       "name": "Robinson J.",
@@ -8955,7 +8955,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 2,
@@ -8973,12 +8973,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 6,
-      "mv": 5.58,
-      "fm": 5.5,
+      "pv": 7,
+      "mv": 5.71,
+      "fm": 5.64,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -8991,7 +8991,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 5,
@@ -9009,7 +9009,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 4,
@@ -9027,12 +9027,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 2,
+      "pv": 3,
       "mv": 6.0,
-      "fm": 7.5,
+      "fm": 7.0,
       "goals": 1,
       "conceded": 0,
       "penaltySaved": 0,
@@ -9045,7 +9045,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 5,
@@ -9063,12 +9063,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 4,
-      "mv": 5.75,
-      "fm": 5.75,
+      "pv": 5,
+      "mv": 5.7,
+      "fm": 5.7,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -9081,7 +9081,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 5,
@@ -9099,7 +9099,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 5,
@@ -9117,7 +9117,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 6,
@@ -9135,7 +9135,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 4,
@@ -9153,17 +9153,17 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 8,
-      "mv": 5.94,
-      "fm": 6.69,
+      "pv": 9,
+      "mv": 5.89,
+      "fm": 6.5,
       "goals": 2,
       "conceded": 0,
       "penaltySaved": 0,
       "assists": 0,
-      "yellow": 0,
+      "yellow": 1,
       "red": 0,
       "name": "Lontani",
       "team": "Parma",
@@ -9171,7 +9171,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 3,
@@ -9189,7 +9189,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 3,
@@ -9207,7 +9207,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -9225,7 +9225,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 7,
@@ -9243,7 +9243,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -9261,7 +9261,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 7,
@@ -9279,12 +9279,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 0,
-      "mv": null,
-      "fm": null,
+      "pv": 1,
+      "mv": 5.0,
+      "fm": 5.0,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -9297,16 +9297,16 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 6,
-      "mv": 5.92,
-      "fm": 6.42,
+      "pv": 7,
+      "mv": 6.07,
+      "fm": 6.64,
       "goals": 1,
       "conceded": 0,
       "penaltySaved": 0,
-      "assists": 0,
+      "assists": 1,
       "yellow": 0,
       "red": 0,
       "name": "Lang",
@@ -9315,12 +9315,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 4,
-      "mv": 5.75,
-      "fm": 5.75,
+      "pv": 5,
+      "mv": 5.7,
+      "fm": 5.7,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -9333,7 +9333,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -9351,7 +9351,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -9369,7 +9369,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -9387,12 +9387,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 2,
-      "mv": 5.75,
-      "fm": 5.75,
+      "pv": 3,
+      "mv": 5.5,
+      "fm": 5.5,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -9405,7 +9405,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -9423,7 +9423,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 3,
@@ -9441,7 +9441,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 6,
@@ -9459,7 +9459,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 3,
@@ -9477,7 +9477,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -9495,7 +9495,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 3,
@@ -9513,12 +9513,12 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
-      "pv": 1,
-      "mv": 5.5,
-      "fm": 5.5,
+      "pv": 2,
+      "mv": 6.0,
+      "fm": 6.0,
       "goals": 0,
       "conceded": 0,
       "penaltySaved": 0,
@@ -9531,7 +9531,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 5,
@@ -9549,7 +9549,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -9567,7 +9567,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -9585,7 +9585,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -9603,7 +9603,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 0,
@@ -9621,7 +9621,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     },
     {
       "pv": 2,
@@ -9639,7 +9639,7 @@
       "stats_season": 2026,
       "stats_source": "fantacalcio.it/italia",
       "stats_estimated": false,
-      "stats_updated_at": "2026-10-28T12:55:18+00:00"
+      "stats_updated_at": "2026-10-29T13:01:58+00:00"
     }
   ],
   "unmatched": [],
