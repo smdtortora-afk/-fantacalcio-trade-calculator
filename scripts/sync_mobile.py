@@ -21,7 +21,11 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 DEST = ROOT / "mobile" / "www"
 
-COPIE_ESATTE = ["players.js", "fs_engine.js"]
+# player-utils.js espone FS_DATA_UTILS, usata dal client infortuni di injuries.js.
+# data-client.js resta ESCLUSO di proposito: pilota #quoteStatus, #syncDetail e
+# #refreshDataButton, che nella index mobile non esistono, e la Store Edition ha
+# gia' il suo caricamento dati inline.
+COPIE_ESATTE = ["players.js", "fs_engine.js", "player-utils.js"]
 
 # Ogni voce deve corrispondere esattamente una volta: se il testo sorgente cambia
 # lo script si ferma invece di produrre silenziosamente una Store Edition sbagliata.
@@ -40,6 +44,11 @@ DEBRANDING = [
     (
         "Importa il file delle rose di Fantacalcio qui sopra.",
         "Importa il file XLSX/CSV delle rose della tua lega qui sopra.",
+        1,
+    ),
+    (
+        "Fantamedia dalla tabella pubblica Fantacalcio (Italia)",
+        "Fantamedia dalla tabella pubblica italiana",
         1,
     ),
     (

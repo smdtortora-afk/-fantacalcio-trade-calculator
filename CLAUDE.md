@@ -31,6 +31,14 @@ Il deploy avviene da GitHub → Vercel. Non ci sono comandi di build/lint/test d
 
 Ordine di caricamento effettivo (da `index.html`):
 
+Da `index.html` oggi: `player-utils.js` → `players.js` → `fs_engine.js` → `data-client.js`, tutti con `?v=105`.
+
+- **`player-utils.js`** — espone `FS_DATA_UTILS` (normalizzazione nomi/squadre e `matchPlayer`), usata dal client infortuni. **Richiesto da `injuries.js`.**
+- **`data-client.js`** — definisce `window.refreshData` e `window.updateStatus`, chiama `/api/data` e aggiorna la barra di stato. Pilota `#quoteStatus`, `#syncDetail`, `#refreshDataButton`.
+- **`lib/catalog.js`** — usato lato serverless da `api/data.js`.
+
+Lo schema sottostante descrive la catena di sovrascritture, che regge ancora:
+
 ```
 1. players.js          → const PLAYERS + const PLAYERS_META  (dati)
                        + IIFE "Ricerca giocatore globale V1"  (UI ricerca fuzzy)
@@ -61,6 +69,8 @@ Ogni strato è protetto da un flag idempotente: `window.FS_V9_LOADED`, `window.F
 - `localStorage`: `fantascamLeagueBudget` (crediti iniziali lega, default 500), `fantascamLeagueV10` (lega attiva), `fantascamSavedLeaguesV101`, `fantascamActiveLeagueIdV101`. IndexedDB `fantascam-local` / store `leagues` per il vault multi-lega.
 
 ## Analisi funzionale: come viene valutato uno scambio
+
+> ⚠️ **Da riverificare.** Questa sezione descrive il motore nella versione di settembre 2026. A ottobre `injuries.js` è stato riscritto ("FANTASCAM 10.5", 188 righe cambiate) insieme a `fs_engine.js` e `index.html`. L'impianto — FS per giocatore, pesi decrescenti sui pacchetti, guardrail anti-scam — regge, ma **soglie e coefficienti non sono stati riletti sulla nuova versione**. Prima di modificare una formula, leggi il codice attuale invece di fidarti dei numeri qui sotto.
 
 Il modello ruota intorno a un unico numero per giocatore, **FS (0–99)**, calcolato in `fsBreakdownV9()` (`injuries.js`). FS *non* è il FVM: è una stima di quanto quel giocatore vale davvero in uno scambio.
 
@@ -103,16 +113,20 @@ Poi vengono applicati i **guardrail anti-scam**, che possono solo abbassare:
 
 ## Dati
 
-`players.js` — 533 giocatori, stagione dichiarata 2026/27 "post-calciomercato". Campi: `id, role (P/D/C/A), mantraRole, name, team, quote, initial, fvm, fvmMantra`. **Nessun record ha `pv`/`mv`/`fm`**: finché non arrivano le statistiche, `META.matchday` resta 0 e tutto il layer forma/presenze è dormiente — l'app gira in modalità strutturale pura.
+`players.js` — il listone statico di partenza: `id, role (P/D/C/A), mantraRole, name, team, quote, initial, fvm, fvmMantra`, senza statistiche. È solo il fallback.
 
-`fallback.json` — 496 giocatori, snapshot più vecchio (FVM diversi), pensato per `/api/data`. Contiene meno campi (`no mantraRole`).
+`data/stats.json` + `api/data.js` — **la fonte vera**, aggiornata ogni giorno dal workflow. `/api/data` restituisce 535 giocatori con `pv`, `mv`, `fm`, gol, assist, cartellini, gol subiti, più un `meta` ricco (`matchday`, `statsStale`, `statsLastSuccessAt`, `quoteUpdatedAt`…). Al 2026-11-18: giornata 11, `live: true`.
+
+**Il layer forma/presenze è quindi ATTIVO in produzione**, non più dormiente: la forma entra dalla 6ª giornata e oggi pesa fino al 15%.
+
+`fallback.json` — 496 giocatori, snapshot di agosto. Residuo storico.
 
 ## Trappole note (verificare prima di "aggiustare")
 
 Queste sono incoerenze reali già presenti nel codice. Non sono ancora state corrette: se tocchi l'area, sappi che esistono.
 
-1. **`/api/data` non esiste.** `index.html:429` fa `fetch('/api/data?day=...')`, ma il file è `data.js` nella root (non in `api/`) e per di più fa `require("../data/fallback.json")`, path inesistente (il file è `fallback.json` in root). Risultato: 404 → l'app resta permanentemente sul listone locale e su `META.matchday = 0`. Per attivarlo: spostare in `api/data.js` e correggere il require.
-2. **La GitHub Action di aggiornamento statistiche fallisce.** `scripts/update_stats.py::load_players()` cerca `const PLAYERS = [...]` **a fine file**, ma `players.js` ha una IIFE di UI dopo l'array: la regex non matcha → `SystemExit('players.js format not recognized')`. Inoltre `save_players()` riscriverebbe il file con il solo array, **cancellando `PLAYERS_META` e tutta la IIFE di ricerca globale**. Da sistemare prima di riabilitare il workflow.
+1. ~~`/api/data` non esiste~~ — **risolto a monte nell'ottobre 2026**: esiste `api/data.js`, risponde 200 con 535 giocatori completi di `pv`/`mv`/`fm`/gol/assist/cartellini. Il `data.js` in root è il vecchio abbozzo, ora morto.
+2. ~~La GitHub Action fallisce~~ — **risolto a monte**: `scripts/update_stats.py` è stato riscritto e il workflow gira. Il bot `trade-lab-bot` committa `data/stats.json` ogni giorno.
 3. **`window.ACTIVE_PLAYERS` non esiste.** `ACTIVE_PLAYERS` è dichiarato con `let` in `index.html` → non finisce su `window`. La ricerca globale (`players.js:27`) e il picker V10.3 (`injuries.js:989`) lo leggono da `window` e ricadono sempre su `PLAYERS`, ignorando eventuali dati live.
 4. **Squadre disallineate.** `players.js` ha Frosinone/Monza/Venezia; `api/injuries.js` cerca Cremonese/Pisa/Verona. Gli infortuni di quelle squadre non matcheranno mai, e viceversa. Le tabelle `TEAM`/`TEAM_DEF` (in `fs_engine.js`, `injuries.js`, `roster_patch.js`) sono hardcoded e vanno aggiornate tutte insieme a ogni cambio di stagione.
 5. **File morti da non toccare né aggiornare per sbaglio:**
@@ -155,7 +169,16 @@ Wrapper **Capacitor 8.5.1** (`appId com.smdtortora.fantascam`, `webDir: www`, te
 
 Le differenze in `injuries.js` sono deliberate: (1) tutti i `fetch("/api/...")` diventano assoluti su `https://fantacalcio-trade-calculator.vercel.app/api/...`, (2) ogni occorrenza visibile di "Fantacalcio" è sostituita da "lega fantasy" (de-branding per la review degli store). L'`index.html` mobile ha UI nuova (tema viola, gauge circolare, Scambia lati / Svuota / Copia riepilogo, toast, meta PWA + manifest) ma **conserva lo stesso contratto DOM** (`#sideA`, `#sideB`, `.footballer`, `#score`, `#verdict`, `#valueA/B`, `rowTpl`), perciò `fs_engine.js` e `injuries.js` funzionano senza modifiche. Non c'è più la foto "Here We Go" hotlinkata da `skrill.com`.
 
-**Il motore esiste quindi in tre copie non sincronizzate** (repo web + 2 cartelle store). Nessun symlink, build step o git: ogni fix va propagato a mano.
+### Sincronizzazione del motore
+
+`python3 scripts/sync_mobile.py` allinea `mobile/www/` alla web app; `--check` verifica senza scrivere ed esce 1 se c'è divergenza.
+
+- **Copie esatte**: `players.js`, `fs_engine.js`, `player-utils.js` (quest'ultimo serve perché `injuries.js` usa `FS_DATA_UTILS`).
+- **`injuries.js`**: copiato col solo de-branding, dichiarato voce per voce con il numero di occorrenze attese. Se un testo sorgente cambia lo script **si ferma** invece di produrre una Store Edition sbagliata.
+- **`data-client.js` è escluso di proposito**: pilota `#quoteStatus`, `#syncDetail` e `#refreshDataButton`, che nella index mobile non esistono. La Store Edition ha il suo caricamento dati inline.
+- **Gli URL non si riscrivono più**: `injuries.js` usa `window.FS_API()`, vuota sul web e valorizzata da `FS_API_BASE` in `mobile/www/index.html`.
+
+Dopo un sync: `npx cap sync ios && xcodebuild …` e riprova nel simulatore.
 
 ## Build — verificato funzionante il 2026-09-16
 
