@@ -3,6 +3,9 @@
    FVM indipendente, pacchetti non lineari, crediti controllati e banner motivato.
 */
 window.FS_INJURIES = window.FS_INJURIES || {};
+/* Base delle API: vuota sul web (URL relativi), valorizzata dalla Store Edition
+   che gira da capacitor://localhost e deve puntare al backend Vercel. */
+window.FS_API = () => window.FS_API_BASE || "";
 
 /* -------------------- INJURY CLIENT -------------------- */
 (() => {
@@ -80,7 +83,7 @@ window.FS_INJURIES = window.FS_INJURIES || {};
     return db;
   };
 
-  window.FS_INJURIES_READY = fetch("https://fantacalcio-trade-calculator.vercel.app/api/injuries",{headers:{accept:"application/json"}})
+  window.FS_INJURIES_READY = fetch(`${window.FS_API()}/api/injuries`,{headers:{accept:"application/json"}})
     .then(r => { if(!r.ok) throw new Error(`injuries api ${r.status}`); return r.json(); })
     .then(apply)
     .catch(err => {
@@ -653,7 +656,7 @@ window.FS_INJURIES = window.FS_INJURIES || {};
     let m=document.getElementById('fs-v10-league-modal');if(m)return m;
     m=document.createElement('div');m.id='fs-v10-league-modal';m.className='fsv10-modal';m.innerHTML=`<div class="fsv10-sheet"><h3>Collega la tua lega</h3><p>Per una lega pubblica supportata puoi provare il relativo link. In alternativa importa manualmente le rose senza condividere password.</p><input id="fsLeagueUrl" placeholder="https://leghe.fantacalcio.it/nome-lega"><div class="fsv10-buttons"><button class="primary" data-sync>Sincronizza</button><button data-refresh>Aggiorna</button></div><textarea id="fsLeagueJson" placeholder='Fallback JSON: {"name":"Fantapolli","teams":[{"name":"Atletico Chava","players":[123,456]}]}'></textarea><div class="fsv10-buttons"><button data-import>Importa JSON</button><button data-clear>Cancella lega</button><button data-close>Chiudi</button></div><div class="fsv10-msg"></div></div>`;document.body.appendChild(m);
     const msg=t=>m.querySelector('.fsv10-msg').textContent=t;
-    const sync=async()=>{const url=m.querySelector('#fsLeagueUrl').value.trim()||league?.sourceUrl;if(!url){msg('Inserisci il link della lega.');return}msg('Sincronizzazione in corso…');try{const r=await fetch(`https://fantacalcio-trade-calculator.vercel.app/api/league-sync?url=${encodeURIComponent(url)}`,{headers:{accept:'application/json'}}),j=await r.json();if(!r.ok)throw new Error(j.error||`HTTP ${r.status}`);j.sourceUrl=url;saveLeague(j);msg(`✅ ${league.name}: ${league.teams.length} rose caricate.`)}catch(e){msg(`⚠️ ${e.message}. Se la lega è privata o le rose non sono pubbliche, usa il JSON di fallback.`)}};
+    const sync=async()=>{const url=m.querySelector('#fsLeagueUrl').value.trim()||league?.sourceUrl;if(!url){msg('Inserisci il link della lega.');return}msg('Sincronizzazione in corso…');try{const r=await fetch(`${window.FS_API()}/api/league-sync?url=${encodeURIComponent(url)}`,{headers:{accept:'application/json'}}),j=await r.json();if(!r.ok)throw new Error(j.error||`HTTP ${r.status}`);j.sourceUrl=url;saveLeague(j);msg(`✅ ${league.name}: ${league.teams.length} rose caricate.`)}catch(e){msg(`⚠️ ${e.message}. Se la lega è privata o le rose non sono pubbliche, usa il JSON di fallback.`)}};
     m.querySelector('[data-sync]').onclick=sync;m.querySelector('[data-refresh]').onclick=sync;
     m.querySelector('[data-import]').onclick=()=>{try{saveLeague(JSON.parse(m.querySelector('#fsLeagueJson').value));msg(`✅ ${league.name}: ${league.teams.length} rose importate.`)}catch(e){msg(`Errore: ${e.message}`)}};
     m.querySelector('[data-clear]').onclick=()=>{clearLeague();msg('Lega rimossa.')};m.querySelector('[data-close]').onclick=()=>m.classList.remove('show');m.onclick=e=>{if(e.target===m)m.classList.remove('show')};return m;
@@ -663,7 +666,7 @@ window.FS_INJURIES = window.FS_INJURIES || {};
     const prevA=a.value,prevB=b.value,opts=league?`<option value="">Scegli squadra…</option>${league.teams.map(t=>`<option value="${t.id}">${t.name} · ${t.players.length} giocatori</option>`).join('')}`:`<option value="">Nessuna lega collegata</option>`;
     a.innerHTML=opts;b.innerHTML=opts;if(league){if(league.teams.some(t=>String(t.id)===prevA))a.value=prevA;if(league.teams.some(t=>String(t.id)===prevB))b.value=prevB;status.innerHTML=`✅ <b>${league.name}</b><span class="fsv10-roster-chip">${league.teams.length} squadre</span><span class="fsv10-roster-chip">agg. ${new Date(league.updatedAt).toLocaleDateString('it-IT')}</span>`}else status.textContent='Collega una lega per attivare l’impatto rosa; senza lega resta attivo il motore V9.0.';
   };
-  window.FS_LEAGUE={get:()=>league,set:saveLeague,clear:clearLeague,sanitize:sanitizeLeague,async sync(url){const r=await fetch(`https://fantacalcio-trade-calculator.vercel.app/api/league-sync?url=${encodeURIComponent(url)}`),j=await r.json();if(!r.ok)throw new Error(j.error||`HTTP ${r.status}`);j.sourceUrl=url;return saveLeague(j)}};
+  window.FS_LEAGUE={get:()=>league,set:saveLeague,clear:clearLeague,sanitize:sanitizeLeague,async sync(url){const r=await fetch(`${window.FS_API()}/api/league-sync?url=${encodeURIComponent(url)}`),j=await r.json();if(!r.ok)throw new Error(j.error||`HTTP ${r.status}`);j.sourceUrl=url;return saveLeague(j)}};
 
   /* -------- final V10 verdict wrapper -------- */
   const baseCalculate=window.calculate;
