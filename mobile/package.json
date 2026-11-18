@@ -1,0 +1,23 @@
+{
+  "name": "fantascam-store-edition",
+  "version": "1.0.0",
+  "private": true,
+  "description": "FANTASCAM Store Edition for iOS and Android",
+  "scripts": {
+    "native:init": "npx cap add android && npx cap add ios",
+    "native:sync": "npx cap sync",
+    "assets": "npx @capacitor/assets generate --iconBackgroundColor '#090511' --iconBackgroundColorDark '#090511' --splashBackgroundColor '#090511' --splashBackgroundColorDark '#090511'",
+    "android:open": "npx cap open android",
+    "ios:open": "npx cap open ios"
+  },
+  "dependencies": {
+    "@capacitor/android": "8.5.1",
+    "@capacitor/core": "8.5.1",
+    "@capacitor/ios": "8.5.1"
+  },
+  "devDependencies": {
+    "@capacitor/assets": "3.0.5",
+    "@capacitor/cli": "8.5.1",
+    "typescript": "^5.8.3"
+  }
+}

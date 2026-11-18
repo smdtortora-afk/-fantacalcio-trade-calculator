@@ -1,0 +1,10 @@
+# Rigenerati da `npx cap add` / `npm install`: non vanno versionati.
+node_modules/
+android/
+ios/
+package-lock.json
+
+# Generati da `npm run assets`
+www/icons/
+
+.DS_Store

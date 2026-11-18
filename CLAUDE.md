@@ -135,12 +135,11 @@ Queste sono incoerenze reali già presenti nel codice. Non sono ancora state cor
 
 # Store Edition — app mobile iOS/Android
 
-Fuori dal repo git, come cartelle sorelle in `../`:
+Vive in **`mobile/`**, dentro questo repo (spostata qui il 2026-11-18 dalla cartella sorella `FANTASCAM_Store_Edition_iOS_Android_READY/`).
 
-- `FANTASCAM_Store_Edition_iOS_Android_READY/` ← **usa questa**
-- `FANTASCAM_Store_Edition_iOS_Android/` — iterazione precedente, `_READY` ne è un superset esatto. Archiviabile.
+`mobile/.gitignore` esclude `node_modules/`, `android/`, `ios/`, `package-lock.json` e `www/icons/`: sono tutti rigenerati da `npm install` / `cap add` / `npm run assets`. `.vercelignore` esclude `mobile/` dal deploy web.
 
-Nessuna delle due è un repo git: **non sono versionate**.
+Resta fuori dal repo, come cartella sorella in `../`, `FANTASCAM_Store_Edition_iOS_Android/`: iterazione precedente di cui `mobile/` è un superset esatto. Archiviabile o cancellabile.
 
 Wrapper **Capacitor 8.5.1** (`appId com.smdtortora.fantascam`, `webDir: www`, tema `#090511`, `CapacitorHttp` abilitato). Capacitor 8 su iOS usa **Swift Package Manager, non CocoaPods**: viene generato `App.xcodeproj` + `CapApp-SPM`, **non esiste `App.xcworkspace`**.
 
@@ -171,7 +170,9 @@ npx cap sync
 
 Toolchain locale presente: Node 26.6, npm 11.18, Xcode 26.6, CocoaPods 1.15.2 (non serve, SPM), Java 21, Android SDK. `ANDROID_HOME` non è esportato nell'ambiente: `export ANDROID_HOME=~/Library/Android/sdk` prima dei comandi gradle. Capacitor 8 richiede compileSdk/targetSdk **36**: Gradle lo scarica da solo al primo sync.
 
-`android/`, `ios/` e `node_modules/` non sono presenti nella cartella e vengono rigenerati da `cap add`. **Conseguenza da decidere subito: ogni personalizzazione nativa (versione, permessi, chiavi Info.plist) va persa a ogni rigenerazione.** O si committano i progetti nativi, o le personalizzazioni vanno scriptate. Oggi il nativo generato è pulito: unico permesso Android `INTERNET`, `versionCode 1` / `versionName "1.0"` (disallineato da `package.json` 1.0.0).
+`android/`, `ios/` e `node_modules/` sono gitignorati e vengono rigenerati da `cap add`. Il codice nativo generato è **boilerplate vuoto** — iOS: `SceneDelegate.swift` con la sola riga `window?.rootViewController = CAPBridgeViewController()`; Android: `MainActivity extends BridgeActivity {}`, 5 righe — quindi oggi rigenerare non perde nulla. Diventa un problema appena si tocca il nativo (`versionCode` per una release, chiavi `Info.plist`, un plugin da configurare a mano): a quel punto vanno committati i progetti o scriptate le personalizzazioni. Oggi: unico permesso Android `INTERNET`, `versionCode 1` / `versionName "1.0"` (disallineato da `package.json` 1.0.0).
+
+**Su questa macchina `xcode-select` punta a `/Library/Developer/CommandLineTools`**, quindi `xcodebuild` fallisce. Prefissa i comandi con `DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer` (oppure sistema una volta per tutte con `sudo xcode-select -s /Applications/Xcode.app/Contents/Developer`).
 
 ## Stato backend in produzione (verificato con curl)
 
@@ -184,14 +185,14 @@ Nota: `CapacitorHttp` patcha `fetch` a livello nativo, quindi le chiamate cross-
 
 ## Bug mobile trovati a runtime
 
-1. **Safe area non rispettata (da sistemare prima della submission).** `index.html` dichiara `viewport-fit=cover` ma **non usa `env(safe-area-inset-*)` da nessuna parte**; `.wrap` ha solo 12px di padding superiore. Risultato: il primo badge finisce sotto la status bar / Dynamic Island. Visibile al primo avvio.
+1. ~~Safe area non rispettata~~ — **risolto il 2026-11-18**: `.wrap` e `.toast` in `mobile/www/index.html` ora sommano `env(safe-area-inset-*)` ai padding. Verificato nel simulatore.
 2. **"Infortuni caricati • N" mostra un numero gonfiato.** `FS_INJURIES_META.count` conta le *chiavi* della mappa, e ogni giocatore riconosciuto ne genera due (`id` e `name`). Con 77 infortuni reali l'app scrive 127. Il dato utile — quanti sono stati agganciati al listone — è ~50/77.
 3. **Il matching lato server è cieco.** `/api/injuries` risponde `"playersLoaded":0, "matchedCount":0`: `loadPlayers()` in `api/injuries.js` non riesce a parsare `players.js` (stessa IIFE che rompe `update_stats.py`). Non è bloccante — il matching vero avviene nel browser — ma la diagnostica server è inutilizzabile.
 4. **Doppio controllo "Le mie leghe"** nel pannello lega: lo strato V10.1 inietta selettore e bottone sopra il pannello V10.0, con due empty state di testo diverso ("Nessuna lega salvata" / "Nessuna lega collegata").
 
 ## CI
 
-`.github/workflows/{ios,android}-validate.yml`, da usare con la cartella store come root del repo. Android: `cap add` + APK debug + AAB release non firmato come artifact. **iOS: rotta.** Punta a `xcodebuild -workspace ios/App/App.xcworkspace`, che con Capacitor 8/SPM non esiste — va cambiato in `-project ios/App/App.xcodeproj`.
+`.github/workflows/mobile-{ios,android}-validate.yml` alla radice del repo (GitHub Actions legge i workflow solo da lì), con `working-directory: mobile`. Si attivano sui push che toccano `mobile/**`, oppure a mano con `workflow_dispatch`. Android: `cap add` + APK debug + AAB release non firmato come artifact. iOS: build per simulatore senza firma — il riferimento a `App.xcworkspace` è stato corretto in `-project ios/App/App.xcodeproj` (Capacitor 8 usa SPM).
 
 ## Pacchetto store
 
