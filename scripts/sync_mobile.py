@@ -6,9 +6,13 @@ injuries.js viene copiato applicando il de-branding richiesto dalla review degli
 store: nessuna menzione di "Fantacalcio" nei testi mostrati all'utente. Resta il
 placeholder del campo URL, che e' un indirizzo reale e non una menzione di marca.
 
-Gli URL delle API non vengono piu' riscritti: injuries.js usa window.FS_API(),
-vuota sul web (URL relativi) e valorizzata nella Store Edition da
-window.FS_API_BASE, definita in mobile/www/index.html.
+Gli URL relativi delle API vengono resi assoluti: la webview gira da
+capacitor://localhost, dove "/api/..." non porta da nessuna parte. L'indirizzo
+non e' scritto qui: viene letto da FS_API_BASE in mobile/www/index.html, che
+resta l'unico posto in cui dichiararlo.
+
+REGOLA: i file del motore appartengono all'altro autore e non vanno modificati
+nel repo. Tutto l'adattamento alla Store Edition vive in questo script.
 
 Uso:
     python3 scripts/sync_mobile.py            applica
@@ -64,6 +68,49 @@ DEBRANDING = [
 # L'unica occorrenza ammessa dopo il de-branding: il placeholder del campo URL.
 PLACEHOLDER = 'placeholder="https://leghe.fantacalcio.it/nome-lega"'
 
+# Chiamate relative da rendere assolute per la webview.
+API_RELATIVE = ["'/api/injuries'", "`/api/league-sync?url=", "'/api/data"]
+
+
+def api_base() -> str:
+    """Legge FS_API_BASE da mobile/www/index.html: unica fonte dell'indirizzo."""
+    html = (DEST / "index.html").read_text(encoding="utf-8")
+    marker = 'window.FS_API_BASE="'
+    i = html.find(marker)
+    if i < 0:
+        raise SystemExit(
+            "ERRORE: FS_API_BASE non trovata in mobile/www/index.html.\n"
+            "La Store Edition deve dichiarare l'indirizzo del backend."
+        )
+    i += len(marker)
+    return html[i:html.index('"', i)].rstrip("/")
+
+
+def assolutizza(testo: str) -> str:
+    """Rende assolute le chiamate /api/: da capacitor://localhost non risolvono."""
+    base = api_base()
+    sostituite = 0
+    for frammento in API_RELATIVE:
+        sostituite += testo.count(frammento)
+        testo = testo.replace(frammento, frammento.replace("/api/", f"{base}/api/", 1))
+    if not sostituite:
+        raise SystemExit(
+            "ERRORE: nessuna chiamata relativa /api/ trovata in injuries.js.\n"
+            "Il motore ha cambiato il modo di chiamare le API: aggiorna API_RELATIVE."
+        )
+    rimaste = [
+        riga for riga in testo.split("\n")
+        if "fetch('/api/" in riga or "fetch(`/api/" in riga or 'fetch("/api/' in riga
+    ]
+    if rimaste:
+        raise SystemExit(
+            "ERRORE: chiamate /api/ ancora relative dopo la riscrittura:\n"
+            + "\n".join(r.strip()[:160] for r in rimaste)
+        )
+    return testo
+
+
+
 
 def debrand(testo: str) -> str:
     for vecchio, nuovo, attese in DEBRANDING:
@@ -92,7 +139,7 @@ def main() -> int:
     check = "--check" in sys.argv[1:]
 
     attesi = {f: (ROOT / f).read_text(encoding="utf-8") for f in COPIE_ESATTE}
-    attesi["injuries.js"] = debrand((ROOT / "injuries.js").read_text(encoding="utf-8"))
+    attesi["injuries.js"] = assolutizza(debrand((ROOT / "injuries.js").read_text(encoding="utf-8")))
 
     divergenti = 0
     for nome, contenuto in attesi.items():

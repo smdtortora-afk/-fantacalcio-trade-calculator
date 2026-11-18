@@ -2,6 +2,26 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## ⛔ Confine di lavoro — leggere prima di toccare qualsiasi cosa
+
+Sul repo lavorano **due autori**.
+
+**Il motore è di smdtortora-afk e non va modificato:** `injuries.js`, `fs_engine.js`, `players.js`, `player-utils.js`, `data-client.js`, `lib/`, `api/`, `scripts/update_stats.py`, `data/stats.json`, `index.html`.
+
+**Qui si lavora sui contenitori:** `mobile/` (Store Edition), build e CI, configurazione nativa, asset, pacchetto store, e `scripts/sync_mobile.py`.
+
+Se la app mobile ha bisogno che il motore si comporti diversamente, l'adattamento va in `scripts/sync_mobile.py`, che trasforma la copia in `mobile/www/` — **mai nel file sorgente**. Ogni divergenza locale nel motore produce un conflitto a ogni merge con `origin/main`.
+
+Controllo rapido prima di committare:
+
+```bash
+for f in injuries.js players.js fs_engine.js player-utils.js data-client.js index.html; do
+  git diff --quiet origin/main -- "$f" || echo "ATTENZIONE: $f diverge dal motore upstream"
+done
+```
+
+Se trovi un bug nel motore, segnalalo — non correggerlo.
+
 ## Cos'è questo progetto
 
 **FANTASCAM / Fantacalcio Trade Calculator** — web app single-page (vanilla JS, zero build, zero dipendenze npm) che valuta l'equità di uno scambio di fantacalcio Serie A. L'utente seleziona i giocatori ceduti da due squadre ("Scammatore cede" / "Scammato cede"), aggiunge eventuali crediti, e l'app restituisce un punteggio di equità (0–100%) con verdetto `SCAMBIO EQUILIBRATO` / `SCAMBIO ACCETTABILE` / `FANTASCAM!!` e le motivazioni testuali.
@@ -176,7 +196,8 @@ Le differenze in `injuries.js` sono deliberate: (1) tutti i `fetch("/api/...")` 
 - **Copie esatte**: `players.js`, `fs_engine.js`, `player-utils.js` (quest'ultimo serve perché `injuries.js` usa `FS_DATA_UTILS`).
 - **`injuries.js`**: copiato col solo de-branding, dichiarato voce per voce con il numero di occorrenze attese. Se un testo sorgente cambia lo script **si ferma** invece di produrre una Store Edition sbagliata.
 - **`data-client.js` è escluso di proposito**: pilota `#quoteStatus`, `#syncDetail` e `#refreshDataButton`, che nella index mobile non esistono. La Store Edition ha il suo caricamento dati inline.
-- **Gli URL non si riscrivono più**: `injuries.js` usa `window.FS_API()`, vuota sul web e valorizzata da `FS_API_BASE` in `mobile/www/index.html`.
+- **URL assoluti**: da `capacitor://localhost` un `/api/...` relativo non risolve, quindi lo script li rende assoluti. L'indirizzo non è scritto nello script: lo legge da `FS_API_BASE` in `mobile/www/index.html`, unico posto in cui dichiararlo.
+- Lo script **si ferma** se non trova più le chiamate relative attese o se ne resta una non riscritta.
 
 Dopo un sync: `npx cap sync ios && xcodebuild …` e riprova nel simulatore.
 
