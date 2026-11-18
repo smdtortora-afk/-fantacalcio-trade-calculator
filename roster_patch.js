@@ -232,3 +232,4 @@
   setTimeout(()=>window.calculate?.(),0);
   console.info('FANTASCAM V10.0 Roster Impact active');
 })();
+

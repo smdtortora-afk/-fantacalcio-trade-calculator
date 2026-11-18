@@ -1,581 +1,163 @@
 #!/usr/bin/env python3
+"""Free daily statistics from Fantacalcio's public Serie A table.
 
+No API key, account or paid subscription. Two public requests per daily run.
+Keep the last successful snapshot on source/network/validation errors.
+"""
+import datetime as dt
+import html
 import json
-import os
+from pathlib import Path
 import re
+import sys
 import unicodedata
 import urllib.request
-import urllib.parse
-from pathlib import Path
-from difflib import SequenceMatcher
 
 ROOT = Path(__file__).resolve().parents[1]
-PLAYERS_FILE = ROOT / "players.js"
-
-API_KEY = os.environ.get("API_FOOTBALL_KEY", "").strip()
-
-LEAGUE_ID = 135
-
-CURRENT_SEASON = 2026
-PREVIOUS_SEASON = 2025
-
-if not API_KEY:
-    raise SystemExit("Missing API_FOOTBALL_KEY")
+SNAPSHOT = ROOT / 'data' / 'stats.json'
+SOURCE = 'fantacalcio.it/italia'
 
 
-def norm(s):
-    s = "".join(
-        c
-        for c in unicodedata.normalize("NFKD", s or "")
-        if not unicodedata.combining(c)
-    )
-    s = re.sub(r"[^a-z0-9 ]+", " ", s.lower())
-    return re.sub(r"\s+", " ", s).strip()
-
-
-def surname(s):
-    parts = norm(s).split()
-    return parts[-1] if parts else ""
-
-
-def api_get(path, params):
-    url = (
-        "https://v3.football.api-sports.io/"
-        + path
-        + "?"
-        + urllib.parse.urlencode(params)
-    )
-
-    req = urllib.request.Request(
-        url,
-        headers={"x-apisports-key": API_KEY}
-    )
-
-    with urllib.request.urlopen(req, timeout=30) as r:
-        return json.loads(r.read().decode("utf-8"))
-
-
-def load_players():
-    text = PLAYERS_FILE.read_text(encoding="utf-8")
-
-    m = re.search(
-        r"const\s+PLAYERS\s*=\s*(\[.*\])\s*;?\s*$",
-        text,
-        re.S
-    )
-
+def declaration(text, name):
+    m = re.search(r'\bconst\s+' + re.escape(name) + r'\s*=\s*', text)
     if not m:
-        raise SystemExit("players.js format not recognized")
-
-    return json.loads(m.group(1))
-
-
-def save_players(players):
-    PLAYERS_FILE.write_text(
-        "const PLAYERS="
-        + json.dumps(
-            players,
-            ensure_ascii=False,
-            separators=(",", ":")
-        )
-        + ";\n",
-        encoding="utf-8"
-    )
+        raise ValueError('Dichiarazione assente: ' + name)
+    return json.JSONDecoder().raw_decode(text[m.end():])[0]
 
 
-def fetch_all_players(season):
-    out = []
-    page = 1
-
-    while True:
-        data = api_get(
-            "players",
-            {
-                "league": LEAGUE_ID,
-                "season": season,
-                "page": page
-            }
-        )
-
-        errors = data.get("errors")
-
-        if errors:
-            print(
-                f"API warning season {season}: "
-                f"{errors}"
-            )
-
-        out.extend(data.get("response", []))
-
-        paging = data.get("paging") or {}
-
-        if page >= int(paging.get("total") or 1):
-            break
-
-        page += 1
-
-    print(
-        f"API season {season}: "
-        f"{len(out)} player records"
-    )
-
-    return out
+def norm(value):
+    value = ''.join(c for c in unicodedata.normalize('NFKD', str(value)) if not unicodedata.combining(c))
+    return re.sub(r'[^a-z0-9]', '', value.lower())
 
 
-def best_stat_block(item):
-    stats = item.get("statistics") or []
-
-    for st in stats:
-        league = (st.get("league") or {}).get("id")
-
-        if league == LEAGUE_ID:
-            return st
-
-    return stats[0] if stats else {}
+def clean(value):
+    return html.unescape(re.sub(r'<[^>]*>', '', value)).strip()
 
 
-def similarity(
-    local,
-    api_name,
-    local_team="",
-    api_team=""
-):
-    a = norm(local)
-    b = norm(api_name)
-
-    score = SequenceMatcher(
-        None,
-        a,
-        b
-    ).ratio()
-
-    if surname(a) and surname(a) == surname(b):
-        score += 0.25
-
-    if (
-        local_team
-        and api_team
-        and norm(local_team) == norm(api_team)
-    ):
-        score += 0.20
-
-    return score
+def download(url):
+    req = urllib.request.Request(url, headers={'User-Agent': 'Fantascam/10.6 (daily public statistics)', 'Accept': 'text/html'})
+    with urllib.request.urlopen(req, timeout=45) as r:
+        data = r.read(8_000_001)
+        if len(data) > 8_000_000:
+            raise ValueError('Risposta troppo grande')
+        return data.decode('utf-8')
 
 
-def make_index(remote):
-    indexed = []
-
-    for item in remote:
-        st = best_stat_block(item)
-
-        p = item.get("player") or {}
-
-        team = (
-            st.get("team") or {}
-        ).get("name", "")
-
-        indexed.append(
-            {
-                "name": p.get("name", ""),
-                "team": team,
-                "stats": st,
-                "api_id": p.get("id")
-            }
-        )
-
-    return indexed
+def check_season(page, season):
+    title = re.search(r'<title[^>]*>(.*?)</title>', page, re.S | re.I)
+    if not title or not re.search(str(season) + r'\s*[/\-]\s*(?:' + str(season + 1) + '|' + str(season + 1)[-2:] + r')\b', clean(title[1])):
+        raise ValueError('La fonte non conferma la stagione richiesta')
 
 
-def find_best(lp, indexed):
-    best = None
-    best_score = 0
-
-    for item in indexed:
-        score = similarity(
-            lp.get("name", ""),
-            item["name"],
-            lp.get("team", ""),
-            item["team"]
-        )
-
-        if score > best_score:
-            best_score = score
-            best = item
-
-    if best_score >= 0.82:
-        return best, best_score
-
-    return None, best_score
-
-
-def extract_raw_stats(st):
-    games = st.get("games") or {}
-    goals = st.get("goals") or {}
-    cards = st.get("cards") or {}
-
-    apps = int(
-        games.get("appearences") or 0
-    )
-
-    minutes = int(
-        games.get("minutes") or 0
-    )
-
-    starts = int(
-        games.get("lineups") or 0
-    )
-
-    rating_raw = games.get("rating")
-
-    try:
-        rating = (
-            float(rating_raw)
-            if rating_raw is not None
-            else None
-        )
-    except:
-        rating = None
-
-    return {
-        "apps": apps,
-        "minutes": minutes,
-        "starts": starts,
-        "rating": rating,
-        "goals": int(
-            goals.get("total") or 0
-        ),
-        "assists": int(
-            goals.get("assists") or 0
-        ),
-        "yellow": int(
-            cards.get("yellow") or 0
-        ),
-        "red": int(
-            cards.get("red") or 0
-        ),
-        "conceded": int(
-            goals.get("conceded") or 0
-        ),
-        "position": norm(
-            games.get("position") or ""
-        )
-    }
-
-
-def internal_mv(raw):
-    rating = raw["rating"]
-
-    if rating is None:
+def numeric(value, integer=False):
+    if value.strip() in ('', '-', '–', '—', 's.v.', 'SV'):
         return None
-
-    return max(
-        4.5,
-        min(
-            7.5,
-            6.0 + (rating - 6.8) * 0.70
-        )
-    )
+    number = float(value.replace(',', '.'))
+    if not 0 <= number <= 1000 or (integer and not number.is_integer()):
+        raise ValueError('Valore statistico non valido')
+    return int(number) if integer else number
 
 
-def internal_fm(raw, mv):
-    if mv is None:
-        return None
-
-    apps = max(1, raw["apps"])
-
-    fm = mv
-
-    fm += (
-        3.0 * raw["goals"]
-        + 1.0 * raw["assists"]
-        - 0.5 * raw["yellow"]
-        - 1.0 * raw["red"]
-    ) / apps
-
-    if "goalkeeper" in raw["position"]:
-        fm -= min(
-            0.45,
-            raw["conceded"]
-            / apps
-            * 0.08
-        )
-
-    return max(
-        4.0,
-        min(9.5, fm)
-    )
-
-
-def season_weight(current_apps):
-    # Prime giornate: affidabilità ridotta.
-    if current_apps <= 0:
-        return 0.0
-
-    if current_apps == 1:
-        return 0.10
-
-    if current_apps == 2:
-        return 0.18
-
-    if current_apps == 3:
-        return 0.28
-
-    if current_apps == 4:
-        return 0.40
-
-    if current_apps == 5:
-        return 0.52
-
-    if current_apps == 6:
-        return 0.63
-
-    if current_apps == 7:
-        return 0.73
-
-    if current_apps == 8:
-        return 0.82
-
-    if current_apps == 9:
-        return 0.90
-
-    return 1.0
+def parse_stats(page, season):
+    check_season(page, season)
+    table = re.search(r'<table\b[^>]*\bid="stats"[^>]*>(.*?)</table>', page, re.S)
+    if not table:
+        raise ValueError('Tabella statistiche non trovata')
+    result = {}
+    for row in re.findall(r'<tr\b[^>]*\bclass="player-row"[^>]*>(.*?)</tr>', table[1], re.S):
+        link = re.search(r'href="https://www\.fantacalcio\.it/serie-a/squadre/([^/]+)/[^/]+/(\d+)/' + str(season) + '-' + str(season + 1)[-2:] + r'/italia"', row)
+        name = re.search(r'<th\b[^>]*class="player-name"[^>]*>(.*?)</th>', row, re.S)
+        if not link or not name:
+            raise ValueError('Identita o stagione calciatore non riconosciuta')
+        cells = dict((key, clean(val)) for key, val in re.findall(r'<td\b[^>]*data-col-key="([^"]+)"[^>]*>(.*?)</td>', row, re.S))
+        fields = {'pg': 'pv', 'mv': 'mv', 'mfv': 'fm', 'gol': 'goals', 'gs': 'conceded', 'rp': 'penaltySaved', 'ass': 'assists', 'amm': 'yellow', 'esp': 'red'}
+        if not all(key in cells for key in fields):
+            raise ValueError('Colonne statistiche incomplete')
+        values = {field: numeric(cells[key], field not in ('mv', 'fm')) for key, field in fields.items()}
+        if values['pv'] is None or values['pv'] > 38:
+            raise ValueError('Partite a voto non valide')
+        if values['pv'] == 0:
+            values['mv'] = values['fm'] = None
+        elif values['mv'] is None or values['fm'] is None or not 0 <= values['mv'] <= 10 or not 0 <= values['fm'] <= 30:
+            raise ValueError('Medie mancanti o non valide')
+        identifier = link[2]
+        if identifier in result:
+            raise ValueError('Calciatore duplicato nella fonte')
+        result[identifier] = dict(values, name=clean(name[1]), team=link[1])
+    if len(result) < 300:
+        raise ValueError('Tabella incompleta: meno di 300 calciatori')
+    return result
 
 
-def blend_number(
-    previous,
-    current,
-    weight
-):
-    if current is None:
-        return previous
+def parse_matchday(page, season):
+    seasons = set(re.findall(r'href="https://www\.fantacalcio\.it/serie-a/calendario/\d+/(\d{4}-\d{2})/', page))
+    if seasons != {f'{season}-{str(season+1)[-2:]}'}:
+        raise ValueError('Stagione della classifica non confermata')
+    table = re.search(r'<table\b[^>]*class="serie-a-table[^\"]*"[^>]*>(.*?)</table>', page, re.S)
+    if not table:
+        raise ValueError('Classifica assente')
+    teams = {}
+    for name, row in re.findall(r'<tr\b[^>]*data-name="([^"]+)"[^>]*>(.*?)</tr>', table[1], re.S):
+        played = re.search(r'<td\b[^>]*class="played\b[^\"]*"[^>]*>(.*?)</td>', row, re.S)
+        if played:
+            teams[norm(html.unescape(name))] = numeric(clean(played[1]), True)
+    if len(teams) != 20 or any(n is None or not 0 <= n <= 38 for n in teams.values()):
+        raise ValueError('Classifica incompleta o partite non valide')
+    return max(teams.values()), teams
 
-    if previous is None:
-        return current
 
-    return (
-        previous * (1 - weight)
-        + current * weight
-    )
+def build_snapshot(players, season, stats_page, table_page, updated):
+    remote = parse_stats(stats_page, season)
+    matchday, teams = parse_matchday(table_page, season)
+    matched, unmatched = [], []
+    for player in players:
+        row = remote.get(str(player['id']))
+        if not row or norm(row['name']) != norm(player['name']) or norm(row['team']) != norm(player['team']):
+            unmatched.append({k: player[k] for k in ('id', 'name', 'team')})
+            continue
+        if norm(row['team']) not in teams or row['pv'] > matchday:
+            raise ValueError('Statistiche e classifica non coerenti')
+        matched.append(dict(row, id=player['id'], name=player['name'], team=player['team'], stats_season=season,
+                            stats_source=SOURCE, stats_estimated=False, stats_updated_at=updated))
+    if len(matched) < len(players) * .70 or not any(p['pv'] > 0 for p in matched):
+        raise ValueError(f'Copertura insufficiente: {len(matched)}/{len(players)}')
+    return {'schemaVersion': 1, 'season': season, 'source': SOURCE, 'status': 'ok',
+            'sourceUrl': f'https://www.fantacalcio.it/statistiche-serie-a/{season}-{str(season+1)[-2:]}/italia',
+            'lastAttemptAt': updated, 'lastSuccessAt': updated, 'error': None, 'matchday': matchday,
+            'matched': len(matched), 'total': len(players), 'players': matched, 'unmatched': unmatched,
+            'estimatedAverages': False}
 
 
-def build_values(
-    current_stats,
-    previous_stats
-):
-    current_raw = (
-        extract_raw_stats(current_stats)
-        if current_stats
-        else None
-    )
-
-    previous_raw = (
-        extract_raw_stats(previous_stats)
-        if previous_stats
-        else None
-    )
-
-    current_apps = (
-        current_raw["apps"]
-        if current_raw
-        else 0
-    )
-
-    weight = season_weight(
-        current_apps
-    )
-
-    current_mv = (
-        internal_mv(current_raw)
-        if current_raw
-        else None
-    )
-
-    previous_mv = (
-        internal_mv(previous_raw)
-        if previous_raw
-        else None
-    )
-
-    current_fm = (
-        internal_fm(
-            current_raw,
-            current_mv
-        )
-        if current_raw
-        else None
-    )
-
-    previous_fm = (
-        internal_fm(
-            previous_raw,
-            previous_mv
-        )
-        if previous_raw
-        else None
-    )
-
-    mv = blend_number(
-        previous_mv,
-        current_mv,
-        weight
-    )
-
-    fm = blend_number(
-        previous_fm,
-        current_fm,
-        weight
-    )
-
-    minutes = (
-        current_raw["minutes"]
-        if current_raw
-        else 0
-    )
-
-    starts = (
-        current_raw["starts"]
-        if current_raw
-        else 0
-    )
-
-    if current_apps > 0:
-        stats_season = CURRENT_SEASON
-
-    elif previous_raw:
-        stats_season = PREVIOUS_SEASON
-
-    else:
-        stats_season = None
-
-    return {
-        "pv": current_apps,
-        "minutes": minutes,
-        "starts": starts,
-        "mv": (
-            round(mv, 2)
-            if mv is not None
-            else None
-        ),
-        "fm": (
-            round(fm, 2)
-            if fm is not None
-            else None
-        ),
-        "current_weight": round(
-            weight,
-            2
-        ),
-        "stats_season": stats_season
-    }
+def save_snapshot(data):
+    SNAPSHOT.parent.mkdir(parents=True, exist_ok=True)
+    tmp = SNAPSHOT.with_suffix('.tmp')
+    tmp.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+    tmp.replace(SNAPSHOT)
 
 
 def main():
-    local = load_players()
-
-    print(
-        "Loading API-Football "
-        "Serie A seasons..."
-    )
-
-    current_remote = fetch_all_players(
-        CURRENT_SEASON
-    )
-
-    previous_remote = fetch_all_players(
-        PREVIOUS_SEASON
-    )
-
-    current_index = make_index(
-        current_remote
-    )
-
-    previous_index = make_index(
-        previous_remote
-    )
-
-    updated = 0
-    current_matches = 0
-    previous_matches = 0
-
-    for lp in local:
-        current_best, current_score = (
-            find_best(
-                lp,
-                current_index
-            )
-        )
-
-        previous_best, previous_score = (
-            find_best(
-                lp,
-                previous_index
-            )
-        )
-
-        if current_best:
-            current_matches += 1
-
-        if previous_best:
-            previous_matches += 1
-
-        current_stats = (
-            current_best["stats"]
-            if current_best
-            else None
-        )
-
-        previous_stats = (
-            previous_best["stats"]
-            if previous_best
-            else None
-        )
-
-        if (
-            current_stats is None
-            and previous_stats is None
-        ):
-            continue
-
-        vals = build_values(
-            current_stats,
-            previous_stats
-        )
-
-        lp.update(vals)
-
-        lp["stats_source"] = (
-            "api-football"
-        )
-
-        if current_best:
-            lp["api_id"] = (
-                current_best["api_id"]
-            )
-
-        elif previous_best:
-            lp["api_id"] = (
-                previous_best["api_id"]
-            )
-
-        updated += 1
-
-    save_players(local)
-
-    print(
-        f"Matched current season: "
-        f"{current_matches}/{len(local)}"
-    )
-
-    print(
-        f"Matched previous season: "
-        f"{previous_matches}/{len(local)}"
-    )
-
-    print(
-        f"Updated total: "
-        f"{updated}/{len(local)}"
-    )
+    updated = dt.datetime.now(dt.timezone.utc).isoformat(timespec='seconds')
+    try:
+        text = (ROOT / 'players.js').read_text(encoding='utf-8')
+        players, meta = declaration(text, 'PLAYERS'), declaration(text, 'PLAYERS_META')
+        if not players or len({str(p['id']) for p in players}) != len(players):
+            raise ValueError('Listone vuoto o ID duplicati')
+        season = int(str(meta['season']).split('/')[0])
+        url = f'https://www.fantacalcio.it/statistiche-serie-a/{season}-{str(season+1)[-2:]}/italia'
+        snapshot = build_snapshot(players, season, download(url), download('https://www.fantacalcio.it/serie-a/classifica'), updated)
+        save_snapshot(snapshot)
+        print(f"Statistiche gratuite: {snapshot['matched']}/{snapshot['total']} calciatori, giornata {snapshot['matchday']}")
+        return 0
+    except Exception as exc:
+        try:
+            previous = json.loads(SNAPSHOT.read_text(encoding='utf-8'))
+        except (OSError, ValueError):
+            previous = {'schemaVersion': 1, 'players': [], 'lastSuccessAt': None}
+        previous.update(status='error', lastAttemptAt=updated, error=str(exc)[:500])
+        save_snapshot(previous)
+        print('Aggiornamento fallito; ultimi dati validi conservati: ' + str(exc), file=sys.stderr)
+        return 1
 
 
-if __name__ == "__main__":
-    main()
+if __name__ == '__main__':
+    raise SystemExit(main())

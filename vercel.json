@@ -1,3 +1,7 @@
 {
-  "version": 2
+  "version": 2,
+  "functions": {
+    "api/data.js": {"includeFiles": "{players.js,data/stats.json}", "maxDuration": 30},
+    "api/injuries.js": {"includeFiles": "players.js", "maxDuration": 30}
+  }
 }
