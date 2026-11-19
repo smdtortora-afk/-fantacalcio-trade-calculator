@@ -1,0 +1,41 @@
+name: Mobile — Android validate
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'mobile/**'
+      - '.github/workflows/mobile-android-validate.yml'
+
+defaults:
+  run:
+    working-directory: mobile
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+      - run: npm install
+      - run: npx cap add android
+      - run: npx @capacitor/assets generate --android --iconBackgroundColor '#090511' --iconBackgroundColorDark '#090511' --splashBackgroundColor '#090511' --splashBackgroundColorDark '#090511'
+      - run: npx cap sync android
+      - name: Build debug APK
+        run: cd android && ./gradlew assembleDebug
+      - name: Validate release AAB (unsigned)
+        run: cd android && ./gradlew bundleRelease
+      - uses: actions/upload-artifact@v4
+        with:
+          name: FANTASCAM-Android-debug
+          path: mobile/android/app/build/outputs/apk/debug/app-debug.apk
+      - uses: actions/upload-artifact@v4
+        with:
+          name: FANTASCAM-Android-release-unsigned
+          path: mobile/android/app/build/outputs/bundle/release/app-release.aab

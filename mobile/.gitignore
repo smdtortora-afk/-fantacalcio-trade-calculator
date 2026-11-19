@@ -1,0 +1,15 @@
+# Rigenerati da `npx cap add` / `npm install`: non vanno versionati.
+# Ancorati alla radice di mobile/: senza la barra iniziale la regola
+# catturerebbe anche store-assets/screenshots/ios/ e android/.
+/node_modules/
+/android/
+/ios/
+/package-lock.json
+
+# Generati da `npm run assets`, non usati dall'app:
+# il manifest buono e' www/manifest.webmanifest, che punta a www/icon-*.png
+/www/icons/
+/icons/
+/www/manifest.json
+
+.DS_Store
