@@ -149,9 +149,86 @@ select:focus,input:focus{border-color:var(--line-strong);box-shadow:0 0 0 3px rg
   .verdict{font-size:22px}
   .metrics{grid-template-columns:1fr 1fr}
 }
+
+/* ---------- INTRO: launch screen nativa -> video -> app ----------
+   Il poster e' la stessa immagine della launch screen e il primo fotogramma
+   del video coincide con essa, quindi il passaggio non si vede. Il video
+   chiude sul fondo #090511 dell'app, quindi non si vede nemmeno l'uscita. */
+#fsIntro{
+  position:fixed;inset:0;z-index:2147483647;background:#090511;
+  display:block
+}
+/* Nessuna dissolvenza: il video chiude gia' sul fondo #090511 dell'app,
+   quindi lo stacco istantaneo non si vede. */
+#fsIntro.done{display:none}
+#fsIntro video{
+  width:100%;height:100%;object-fit:cover;display:block;background:#090511
+}
 </style>
 </head>
 <body>
+<div id="fsIntro" aria-hidden="true">
+  <video id="fsIntroVideo" src="intro/intro.mp4" poster="intro/poster.png"
+         muted playsinline webkit-playsinline preload="auto" disablepictureinpicture></video>
+</div>
+<script>
+/* INTRO FANTASCAM — sequenza launch screen -> video -> app.
+   Regola non negoziabile: qualunque cosa vada storta, l'app deve comparire.
+   Ogni uscita passa da finish(), che e' idempotente e nasconde comunque lo
+   splash nativo. Un timeout di sicurezza copre il caso in cui il video non
+   emetta mai ne' 'ended' ne' 'error'. */
+(() => {
+  const ATTESA_MAX_AVVIO = 1200;   // oltre: si rinuncia all'intro
+  const DURATA_MAX = 6000;         // oltre: si chiude comunque
+  const overlay = document.getElementById('fsIntro');
+  const video = document.getElementById('fsIntroVideo');
+  const splash = () => window.Capacitor?.Plugins?.SplashScreen;
+
+  let concluso = false;
+  const nascondiSplash = () => { try { splash()?.hide({fadeOutDuration: 0}); } catch (e) {} };
+
+  const finish = () => {
+    if (concluso) return;
+    concluso = true;
+    clearTimeout(tAvvio); clearTimeout(tMax);
+    nascondiSplash();
+    if (!overlay) return;
+    overlay.classList.add('done');
+    try { video?.pause(); } catch (e) {}
+    overlay.remove();
+  };
+
+  // Rete di sicurezza: se entro DURATA_MAX non e' finito, si chiude lo stesso.
+  const tMax = setTimeout(finish, DURATA_MAX);
+
+  if (!overlay || !video || !video.canPlayType || !video.canPlayType('video/mp4')) {
+    finish();
+  }
+
+  // Il video parte solo quando puo' andare liscio: e' il momento in cui
+  // togliamo lo splash nativo, cosi' l'immagine sotto non cambia mai.
+  const avvia = () => {
+    if (concluso) return;
+    clearTimeout(tAvvio);
+    const p = video.play();
+    nascondiSplash();
+    if (p && typeof p.catch === 'function') p.catch(finish);
+  };
+
+  // Se il video tarda a essere pronto non teniamo l'utente fermo sullo splash.
+  const tAvvio = setTimeout(() => { if (video.readyState >= 2) avvia(); else finish(); }, ATTESA_MAX_AVVIO);
+
+  video?.addEventListener('canplaythrough', avvia, {once: true});
+  video?.addEventListener('loadeddata', avvia, {once: true});
+  video?.addEventListener('ended', finish, {once: true});
+  video?.addEventListener('error', finish, {once: true});
+  // Se l'utente manda l'app in background a meta' intro, al ritorno non la rivede.
+  document.addEventListener('visibilitychange', () => { if (document.hidden) finish(); });
+
+  window.FS_INTRO = {finish, get concluso(){return concluso}};
+})();
+</script>
+
 <div class="wrap">
   <section class="hero">
     <div class="topline">
@@ -276,7 +353,7 @@ select:focus,input:focus{border-color:var(--line-strong);box-shadow:0 0 0 3px rg
 <script>window.FS_STORE_EDITION=true;window.FS_API_BASE="https://fantacalcio-trade-calculator.vercel.app";</script>
 <!-- XLSX nel bundle: l'import delle leghe deve funzionare anche senza rete.
      loadXlsx() in injuries.js trova window.XLSX gia' presente e non scarica dal CDN. -->
-<script src="vendor/xlsx.full.min.js"></script>
+<script defer src="vendor/xlsx.full.min.js"></script>
 <script src="player-utils.js"></script>
 <script src="players.js"></script>
 <script>

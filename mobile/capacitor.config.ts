@@ -21,6 +21,17 @@ const config: CapacitorConfig = {
   plugins: {
     CapacitorHttp: {
       enabled: true
+    },
+    // Lo splash nativo resta finche' l'intro e' pronta a partire: lo nasconde
+    // il codice in www/index.html, non il sistema, cosi' non c'e' stacco
+    // fra launch screen e primo fotogramma del video.
+    SplashScreen: {
+      launchAutoHide: false,
+      backgroundColor: '#090511',
+      androidScaleType: 'CENTER_CROP',
+      showSpinner: false,
+      splashFullScreen: true,
+      splashImmersive: false
     }
   }
 };
