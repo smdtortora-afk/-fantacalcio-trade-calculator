@@ -4,7 +4,10 @@ android/
 ios/
 package-lock.json
 
-# Generati da `npm run assets`
+# Generati da `npm run assets`, non usati dall'app:
+# il manifest buono e' www/manifest.webmanifest, che punta a www/icon-*.png
 www/icons/
+icons/
+www/manifest.json
 
 .DS_Store
