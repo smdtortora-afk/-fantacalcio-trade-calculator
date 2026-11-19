@@ -274,6 +274,9 @@ select:focus,input:focus{border-color:var(--line-strong);box-shadow:0 0 0 3px rg
 </template>
 
 <script>window.FS_STORE_EDITION=true;window.FS_API_BASE="https://fantacalcio-trade-calculator.vercel.app";</script>
+<!-- XLSX nel bundle: l'import delle leghe deve funzionare anche senza rete.
+     loadXlsx() in injuries.js trova window.XLSX gia' presente e non scarica dal CDN. -->
+<script src="vendor/xlsx.full.min.js"></script>
 <script src="player-utils.js"></script>
 <script src="players.js"></script>
 <script>
