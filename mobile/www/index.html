@@ -2,8 +2,9 @@
 <html lang="it">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#120819">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#090511">
+<meta name="color-scheme" content="dark">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="FANTASCAM">
@@ -12,159 +13,8 @@
 <link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="icon-512.png">
 <title>FANTASCAM</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet">
-<style>
-:root{
-  --bg:#090511;
-  --bg2:#12081b;
-  --panel:rgba(20,13,34,.88);
-  --panel-2:rgba(28,16,46,.92);
-  --panel-soft:rgba(255,255,255,.04);
-  --line:rgba(206,171,255,.16);
-  --line-strong:rgba(206,171,255,.30);
-  --text:#f7f1ff;
-  --muted:#b9a8d8;
-  --muted-2:#8d7daa;
-  --green:#8bff91;
-  --red:#ff7a8f;
-  --gold:#ffc24a;
-  --purple:#a96fff;
-  --purple-2:#7e5dff;
-  --blue:#56b4ff;
-  --shadow:0 24px 70px rgba(0,0,0,.40);
-}
-*{box-sizing:border-box}
-html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif}
-body{
-  background:
-    radial-gradient(circle at 15% -10%, rgba(169,111,255,.22), transparent 28%),
-    radial-gradient(circle at 88% 8%, rgba(86,180,255,.16), transparent 24%),
-    radial-gradient(circle at 50% 110%, rgba(255,194,74,.09), transparent 30%),
-    linear-gradient(180deg,#07040e 0%,#0c0614 42%,#080510 100%);
-}
-body:before{
-  content:"";position:fixed;inset:0;pointer-events:none;opacity:.08;
-  background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);
-  background-size:28px 28px;
-}
-/* viewport-fit=cover estende la webview sotto Dynamic Island / notch e home bar:
-   i margini di sicurezza vanno aggiunti a mano, altrimenti il contenuto ci finisce sotto. */
-.wrap{
-  max-width:1120px;margin:0 auto;position:relative;
-  padding:calc(18px + env(safe-area-inset-top)) calc(14px + env(safe-area-inset-right)) calc(36px + env(safe-area-inset-bottom)) calc(14px + env(safe-area-inset-left))
-}
-.hero{
-  position:relative;overflow:hidden;border-radius:28px;padding:18px;border:1px solid var(--line);
-  background:linear-gradient(145deg,rgba(26,16,43,.90),rgba(13,8,22,.88));
-  box-shadow:var(--shadow),inset 0 1px 0 rgba(255,255,255,.06);
-}
-.hero:before{content:"";position:absolute;inset:0;background:linear-gradient(120deg,rgba(255,255,255,.06),transparent 30%,transparent 70%,rgba(169,111,255,.08));pointer-events:none}
-.topline{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;flex-wrap:wrap}
-.brand{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-.pill,.status-pill,.factor-pill,.action-btn,.mini-btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;border-radius:999px;font-weight:800;white-space:nowrap}
-.pill{padding:7px 11px;font-size:12px;border:1px solid rgba(206,171,255,.22);background:rgba(255,255,255,.05);color:#f2eaff}
-.pill.live:before{content:"";width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 12px var(--green)}
-.hero h1{margin:14px 0 8px;font-family:'Outfit',sans-serif;font-size:clamp(34px,6vw,58px);line-height:0.96;letter-spacing:-2px}
-.hero h1 span{background:linear-gradient(90deg,#fff 0%,#eadcff 42%,#9afdb8 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
-.subtitle{margin:0;max-width:760px;color:var(--muted);line-height:1.5;font-size:14px}
-.status-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
-.status-pill{padding:8px 11px;font-size:12px;border:1px solid rgba(255,255,255,.09);background:rgba(255,255,255,.04);color:#ddd0f7}
-.hero-side{min-width:240px;display:grid;gap:10px;flex:1;max-width:310px}
-.kpi-card{padding:14px;border-radius:20px;background:linear-gradient(145deg,rgba(255,255,255,.06),rgba(255,255,255,.02));border:1px solid rgba(206,171,255,.14)}
-.kpi-label{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted-2);font-weight:900}
-.kpi-value{margin-top:6px;font-size:28px;font-weight:900;font-family:'Outfit',sans-serif}
-.kpi-sub{margin-top:4px;color:var(--muted);font-size:12px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px}
-.card,.result-card,.toolbar-card{
-  border-radius:26px;border:1px solid var(--line);background:linear-gradient(160deg,rgba(20,13,34,.92),rgba(12,8,21,.92));
-  box-shadow:var(--shadow);position:relative;overflow:hidden;
-}
-.card:before,.result-card:before,.toolbar-card:before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.45),transparent)}
-.card{padding:16px}
-.card-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}
-.card-title{margin:0;font-family:'Outfit',sans-serif;font-size:24px;letter-spacing:-.04em;display:flex;align-items:center;gap:8px}
-.card-sub{color:var(--muted-2);font-size:12px;margin-top:4px}
-.accent-a,.accent-b{width:10px;height:10px;border-radius:50%;display:inline-block;box-shadow:0 0 14px currentColor}
-.accent-a{color:#ff89c0;background:#ff89c0}.accent-b{color:#7effba;background:#7effba}
-.add{border:1px solid rgba(206,171,255,.24);border-radius:14px;background:linear-gradient(135deg,rgba(126,93,255,.40),rgba(72,45,138,.55));color:#fff;padding:10px 14px;font-weight:900;font-size:13px;box-shadow:inset 0 1px 0 rgba(255,255,255,.08)}
-.player{padding:12px;border-radius:18px;border:1px solid rgba(255,255,255,.07);background:linear-gradient(145deg,rgba(255,255,255,.05),rgba(255,255,255,.02));margin:10px 0}
-.rowtop{display:grid;grid-template-columns:86px minmax(0,1fr) 42px;gap:8px}
-select,button,input{font:inherit}
-select,input{width:100%;min-width:0;border:1px solid rgba(206,171,255,.18);border-radius:14px;background:rgba(11,8,18,.94);color:#fff;padding:11px 10px;outline:none}
-select:focus,input:focus{border-color:var(--line-strong);box-shadow:0 0 0 3px rgba(169,111,255,.11)}
-.remove{border:1px solid rgba(255,122,143,.24);border-radius:14px;background:rgba(100,23,41,.55);color:#ffd4da;font-size:22px;font-weight:700}
-.meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px;min-height:26px}
-.chip{display:inline-flex;align-items:center;gap:4px;padding:5px 8px;border-radius:999px;font-size:11px;font-weight:800;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);color:#f5ebff}
-.top30{background:linear-gradient(135deg,rgba(255,194,74,.22),rgba(107,77,18,.30));border-color:rgba(255,194,74,.28);color:#ffd979}
-.empty{font-size:12px;color:var(--muted-2);padding:4px 0}
-.toolbar-card{padding:12px 14px;margin-top:14px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
-.toolbar-left{display:flex;gap:8px;flex-wrap:wrap}
-.mini-btn{padding:10px 14px;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.05);color:#fff;font-size:12px}
-.mini-btn.primary{background:linear-gradient(135deg,rgba(255,194,74,.26),rgba(126,93,255,.28));border-color:rgba(255,194,74,.22)}
-.result-card{margin-top:18px;padding:18px}
-.result-layout{display:grid;grid-template-columns:260px 1fr;gap:18px;align-items:center}
-.gauge-wrap{display:flex;justify-content:center;align-items:center}
-.gauge{--pct:50;position:relative;width:220px;aspect-ratio:1;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--gold) calc(var(--pct)*1%), rgba(255,255,255,.08) 0)}
-.gauge:before{content:"";position:absolute;inset:14px;border-radius:50%;background:linear-gradient(180deg,rgba(20,13,34,.98),rgba(13,8,21,.98));border:1px solid rgba(255,255,255,.06);box-shadow:inset 0 1px 0 rgba(255,255,255,.04)}
-.gauge-inner{position:relative;z-index:1;text-align:center;padding:18px}
-.result-kicker{font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:var(--muted-2);font-weight:900}
-.score{font-family:'Outfit',sans-serif;font-size:76px;line-height:1;font-weight:900;letter-spacing:-3px;margin:8px 0 2px;background:linear-gradient(180deg,#fff 0%,#efe0ff 55%,#ffdf8f 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
-.verdict{font-family:'Outfit',sans-serif;font-size:26px;line-height:1.04;font-weight:900;letter-spacing:-.04em}
-.good{color:var(--green)}.warn{color:var(--gold)}.bad{color:var(--red)}
-.detail{color:var(--muted);font-size:13px;line-height:1.5;margin-top:8px}
-.quick-factors{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
-.factor-pill{padding:8px 11px;font-size:12px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:#f7f1ff}
-.factor-pill b{font-variant-numeric:tabular-nums}
-.factor-pill.pos b{color:var(--green)}.factor-pill.neg b{color:var(--red)}.factor-pill.neu b{color:#ffe39b}
-.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px}
-.metric{padding:12px;border-radius:18px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)}
-.metric span{display:block;font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted-2);font-weight:900}
-.metric strong{display:block;margin-top:4px;font-size:26px;font-family:'Outfit',sans-serif}
-.result-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}
-.action-btn{padding:11px 14px;font-size:13px;border:1px solid rgba(206,171,255,.20);background:rgba(255,255,255,.05);color:#fff}
-.action-btn.primary{background:linear-gradient(135deg,rgba(126,93,255,.40),rgba(76,194,255,.22));border-color:rgba(206,171,255,.28)}
-.legend{margin-top:14px;color:var(--muted-2);font-size:11px;line-height:1.45;text-align:center}
-.footer{display:flex;justify-content:center;align-items:center;gap:8px;margin-top:14px;color:#7e70a0;font-size:11px;font-weight:800;letter-spacing:.10em;text-transform:uppercase}
-.footer i{width:6px;height:6px;border-radius:50%;background:var(--purple);box-shadow:0 0 10px var(--purple)}
-.toast{position:fixed;left:50%;bottom:calc(26px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(20px);opacity:0;pointer-events:none;padding:12px 16px;border-radius:16px;border:1px solid rgba(206,171,255,.20);background:rgba(18,11,28,.94);color:#fff;box-shadow:var(--shadow);transition:.25s ease;z-index:30000;font-weight:800}
-.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-.herewego{position:fixed;inset:auto 0 90px 0;display:flex;justify-content:center;pointer-events:none;z-index:29999;opacity:0;transform:translateY(16px);transition:.22s ease}
-.herewego span{padding:10px 14px;border-radius:999px;background:linear-gradient(135deg,#15b85c,#6eff9d);color:#07150c;font-family:'Outfit',sans-serif;font-weight:900;letter-spacing:.08em;box-shadow:0 14px 40px rgba(20,184,92,.35)}
-.herewego.show{opacity:1;transform:translateY(0)}
-@media(max-width:900px){
-  .grid{grid-template-columns:1fr}
-  .result-layout{grid-template-columns:1fr}
-  .gauge{width:200px}
-  .metrics{grid-template-columns:repeat(2,1fr)}
-}
-@media(max-width:640px){
-  .wrap{padding:calc(12px + env(safe-area-inset-top)) calc(10px + env(safe-area-inset-right)) calc(28px + env(safe-area-inset-bottom)) calc(10px + env(safe-area-inset-left))}
-  .hero,.card,.result-card{border-radius:22px}
-  .hero{padding:15px}
-  .hero h1{font-size:40px}
-  .rowtop{grid-template-columns:82px minmax(0,1fr) 40px}
-  .score{font-size:68px}
-  .verdict{font-size:22px}
-  .metrics{grid-template-columns:1fr 1fr}
-}
-
-/* ---------- INTRO: launch screen nativa -> video -> app ----------
-   Il poster e' la stessa immagine della launch screen e il primo fotogramma
-   del video coincide con essa, quindi il passaggio non si vede. Il video
-   chiude sul fondo #090511 dell'app, quindi non si vede nemmeno l'uscita. */
-#fsIntro{
-  position:fixed;inset:0;z-index:2147483647;background:#090511;
-  display:block
-}
-/* Nessuna dissolvenza: il video chiude gia' sul fondo #090511 dell'app,
-   quindi lo stacco istantaneo non si vede. */
-#fsIntro.done{display:none}
-#fsIntro video{
-  width:100%;height:100%;object-fit:cover;display:block;background:#090511
-}
-</style>
+<!-- Nessun font remoto: l'app usa il font di sistema e parte anche offline. -->
+<link rel="stylesheet" href="app.css">
 </head>
 <body>
 <div id="fsIntro" aria-hidden="true">
@@ -229,110 +79,161 @@ select:focus,input:focus{border-color:var(--line-strong);box-shadow:0 0 0 3px rg
 })();
 </script>
 
-<div class="wrap">
-  <section class="hero">
-    <div class="topline">
-      <div>
-        <div class="brand">
-          <span class="pill live">FANTASCAM STORE EDITION</span>
-          <span class="pill">ALGORITMO V10.3</span>
-          <span class="pill">TRADE LAB</span>
-        </div>
-        <h1><span>Trade Calculator</span></h1>
-        <p class="subtitle">Analisi avanzata degli scambi fantasy football: valore del pacchetto, forma, ruoli, crediti, profondità delle rose e impatto contestuale della lega.</p>
-        <div class="status-row">
-          <span class="status-pill" id="dataStatus">Listone post-mercato • 533 giocatori</span>
+<div class="app">
+  <header class="appbar">
+    <div class="appbar-row">
+      <div class="appbar-brand"><img src="icon-192.png" alt=""> FANTASCAM</div>
+      <div class="appbar-title">Scambio</div>
+      <span class="live-dot" id="liveDot" aria-hidden="true"></span>
+    </div>
+  </header>
+
+  <main class="views">
+    <!-- ===================== SCAMBIO ===================== -->
+    <section class="view" data-view="trade" aria-label="Scambio">
+      <div class="view-inner">
+        <h1 class="large-title">Scambio</h1>
+        <div class="status-strip">
+          <span class="status-pill" id="dataStatus">Listone post-mercato</span>
           <span class="status-pill" id="matchdayStatus">Fantamedia in attesa</span>
-          <span class="status-pill" id="injuryStatus">Infortuni: client pronto</span>
+          <span class="status-pill" id="injuryStatus">Infortuni in caricamento</span>
         </div>
-      </div>
-      <div class="hero-side">
-        <div class="kpi-card">
-          <div class="kpi-label">Target interpretazione</div>
-          <div class="kpi-value">50 = Equilibrio</div>
-          <div class="kpi-sub">Sopra 50 vantaggio A, sotto 50 vantaggio B.</div>
-        </div>
-        <div class="kpi-card">
-          <div class="kpi-label">Cosa pesa di più</div>
-          <div class="kpi-sub">Top player, slot rosa, ruoli, forma e infortuni sono separati, così i 2x1 non vengono premiati troppo.</div>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <div class="grid">
-    <section class="card">
-      <div class="card-head">
-        <div>
-          <h2 class="card-title"><span class="accent-a"></span> Cedi</h2>
-          <div class="card-sub">Squadra A / lato sinistro</div>
+        <!-- Il pannello lega (injuries.js) si inserisce qui, prima di .grid. -->
+        <div class="grid">
+          <section class="card group" data-side="A">
+            <div class="card-head">
+              <h2 class="card-title"><span class="dot-a"></span> Cedi</h2>
+              <span class="card-sub">Squadra A</span>
+            </div>
+            <div id="sideA"></div>
+            <button class="add" type="button" data-side="A"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg> Aggiungi giocatore</button>
+          </section>
+
+          <section class="card group" data-side="B">
+            <div class="card-head">
+              <h2 class="card-title"><span class="dot-b"></span> Ricevi</h2>
+              <span class="card-sub">Squadra B</span>
+            </div>
+            <div id="sideB"></div>
+            <button class="add" type="button" data-side="B"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg> Aggiungi giocatore</button>
+          </section>
         </div>
-        <button class="add" type="button" data-side="A">+ Giocatore</button>
+        <!-- Il box crediti (fs_engine.js) si inserisce qui, dopo .grid. -->
+
+        <div class="btn-row" style="margin-top:14px">
+          <button class="btn ghost" id="swapBtn" type="button"><svg viewBox="0 0 24 24"><path d="M7 4L3 8l4 4M3 8h14M17 20l4-4-4-4M21 16H7"/></svg>Inverti lati</button>
+          <button class="btn ghost" id="clearAllBtn" type="button"><svg viewBox="0 0 24 24"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg>Svuota</button>
+        </div>
       </div>
-      <div id="sideA"></div>
     </section>
 
-    <section class="card">
-      <div class="card-head">
-        <div>
-          <h2 class="card-title"><span class="accent-b"></span> Prendi</h2>
-          <div class="card-sub">Squadra B / lato destro</div>
+    <!-- ===================== ANALISI ===================== -->
+    <section class="view no-trade" data-view="analysis" aria-label="Analisi">
+      <div class="view-inner">
+        <h1 class="large-title">Analisi</h1>
+
+        <div class="empty-state group">
+          <svg viewBox="0 0 24 24"><path d="M4 19h16M7 16V9M12 16V5M17 16v-4"/></svg>
+          <b>Nessuno scambio da valutare</b>
+          Scegli almeno un giocatore per lato nella scheda Scambio.
+          <div style="margin-top:16px"><button class="btn primary" type="button" data-goto="trade">Vai allo scambio</button></div>
         </div>
-        <button class="add" type="button" data-side="B">+ Giocatore</button>
-      </div>
-      <div id="sideB"></div>
-    </section>
-  </div>
 
-  <section class="toolbar-card">
-    <div class="toolbar-left">
-      <button class="mini-btn" id="clearAllBtn" type="button">🗑️ Svuota tutto</button>
-      <button class="mini-btn" id="swapBtn" type="button">🔁 Inverti lati</button>
-      <button class="mini-btn primary" id="copySummaryBtn" type="button">📋 Copia sintesi</button>
-    </div>
-    <div class="card-sub">Valutazione live ad ogni modifica. Non serve premere “calcola”.</div>
-  </section>
-
-  <section class="result-card">
-    <div class="result-layout">
-      <div class="gauge-wrap">
-        <div class="gauge" id="gauge">
-          <div class="gauge-inner">
-            <div class="result-kicker">Indice di equilibrio</div>
-            <div class="score" id="score">—</div>
+        <!-- .result e' il contenitore in cui injuries.js appende l'analisi per giocatore. -->
+        <section class="result needs-trade">
+          <div class="result-hero group">
+            <div class="gauge" id="gauge">
+              <div class="gauge-inner">
+                <div class="result-kicker">Equità</div>
+                <div class="score" id="score">—</div>
+              </div>
+            </div>
+            <div class="verdict" id="verdict">Seleziona almeno un giocatore per parte</div>
+            <div class="detail" id="detail"></div>
           </div>
-        </div>
-      </div>
-      <div>
-        <div class="verdict" id="verdict">Seleziona almeno un giocatore per parte</div>
-        <div class="detail" id="detail">L'algoritmo centra l'equilibrio sul 50%, come lettura immediata stile tool premium.</div>
-        <div class="quick-factors" id="quickFactors">
-          <span class="factor-pill neu" id="fp-base">Base <b>0</b></span>
-          <span class="factor-pill neu" id="fp-form">Momento <b>0</b></span>
-          <span class="factor-pill neu" id="fp-slots">Slot <b>0</b></span>
-          <span class="factor-pill neu" id="fp-role">Ruoli <b>0</b></span>
-          <span class="factor-pill neu" id="fp-cal">Calendario <b>0</b></span>
-        </div>
-        <div class="metrics">
-          <div class="metric"><span>Pacchetto A</span><strong id="valueA">—</strong></div>
-          <div class="metric"><span>Pacchetto B</span><strong id="valueB">—</strong></div>
-          <div class="metric"><span>Equità</span><strong id="equityValue">—</strong></div>
-          <div class="metric"><span>Bias</span><strong id="biasValue">—</strong></div>
-        </div>
-        <div class="result-actions">
-          <button class="action-btn primary" id="copyDeepBtn" type="button">Condividi analisi</button>
-          <button class="action-btn" id="toggleAnalysisBtn" type="button">Apri dettagli sotto</button>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <div class="legend">Legenda rapida: più ti allontani dal 50%, più lo scambio pende da una parte. Il calendario è già predisposto ma per ora resta neutro finché non colleghiamo il feed delle prossime partite.</div>
-  <div class="footer"><i></i> FANTASCAM • Trade Intelligence</div>
+          <div id="fs-trade-receipt" class="trade-receipt group" hidden aria-live="polite">
+            <strong id="fs-recipient-favorite"></strong>
+            <p id="fs-receive-a"></p><p id="fs-receive-b"></p>
+            <small id="fs-trade-data-note"></small>
+          </div>
+
+          <div class="btn-row" style="margin-top:12px">
+            <button class="btn primary" id="shareBtn" type="button"><svg viewBox="0 0 24 24"><path d="M12 3v12M8 7l4-4 4 4M5 12v7h14v-7"/></svg>Condividi</button>
+            <button class="btn ghost" id="copySummaryBtn" type="button"><svg viewBox="0 0 24 24"><path d="M9 9h10v11H9zM5 15V4h10"/></svg>Copia</button>
+          </div>
+
+          <div class="section-label">Perché</div>
+          <div class="group list-group reasons" id="reasonList"></div>
+
+          <div class="section-label">Valore dei pacchetti</div>
+          <div class="group list-group">
+            <div class="li"><span>Pacchetto ceduto da A</span><b id="valueA">—</b></div>
+            <div class="li"><span>Pacchetto ceduto da B</span><b id="valueB">—</b></div>
+            <div class="li"><span>Equità</span><b id="equityValue">—</b></div>
+            <div class="li"><span>Lato avvantaggiato</span><b id="biasValue">—</b></div>
+          </div>
+
+          <div class="section-label">Dettaglio giocatori</div>
+        </section>
+      </div>
+    </section>
+
+    <!-- ===================== INFO ===================== -->
+    <section class="view" data-view="info" aria-label="Info">
+      <div class="view-inner">
+        <h1 class="large-title">Info</h1>
+        <p class="large-sub">FANTASCAM valuta l'equità di uno scambio fantasy: valore dei giocatori, ruoli, forma, infortuni, crediti e, se colleghi la tua lega, l'impatto sulle due rose.</p>
+
+        <div class="section-label">Come leggere il verdetto</div>
+        <div class="group list-group">
+          <div class="li"><span class="good">Equilibrato</span><span class="val">88% e oltre</span></div>
+          <div class="li"><span class="warn">Accettabile</span><span class="val">75 – 87%</span></div>
+          <div class="li"><span class="bad">FANTASCAM</span><span class="val">sotto il 75%</span></div>
+        </div>
+
+        <div class="section-label">Cosa pesa di più</div>
+        <div class="group info-card">I <b>top player</b> sono protetti: nei 2×1 e 3×1 dal secondo giocatore in poi il peso cala molto, così la quantità non compra un campione. <b>Forma</b> e <b>presenze</b> entrano dalla 6ª giornata; gli <b>infortuni</b> riducono il valore in base ai tempi di recupero.</div>
+
+        <div class="section-label">Dati</div>
+        <div class="group list-group">
+          <div class="li"><span>Listone</span><span class="val" id="infoData">—</span></div>
+          <div class="li"><span>Statistiche</span><span class="val" id="infoStats">—</span></div>
+          <div class="li"><span>Infortuni</span><span class="val" id="infoInjuries">—</span></div>
+        </div>
+
+        <div class="section-label">Supporto</div>
+        <div class="group list-group">
+          <a class="li" href="privacy.html"><span>Privacy</span><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></a>
+          <a class="li" href="support.html"><span>Supporto</span><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></a>
+        </div>
+
+        <div class="app-foot">FANTASCAM · app indipendente, non affiliata a leghe o piattaforme terze</div>
+      </div>
+    </section>
+
+    <button class="verdictbar hidden" type="button" aria-label="Apri l'analisi">
+      <span class="vb-ring"><span>—</span></span>
+      <span class="vb-text"><b>—</b><small></small></span>
+      <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+    </button>
+  </main>
+
+  <nav class="tabbar" role="tablist">
+    <button class="tab" type="button" role="tab" data-tab="trade">
+      <svg viewBox="0 0 24 24"><path d="M7 4L3 8l4 4M3 8h14M17 20l4-4-4-4M21 16H7"/></svg>Scambio
+    </button>
+    <button class="tab" type="button" role="tab" data-tab="analysis">
+      <svg viewBox="0 0 24 24"><path d="M4 19h16M7 16V9M12 16V5M17 16v-4"/></svg>Analisi<i class="badge-dot"></i>
+    </button>
+    <button class="tab" type="button" role="tab" data-tab="info">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></svg>Info
+    </button>
+  </nav>
 </div>
 
-<div class="toast" id="toast"></div>
-<div class="herewego" id="herewego"><span>HERE WE GO • TRADE CHECK</span></div>
+<div class="toast" id="toast" role="status"></div>
 
 <template id="rowTpl">
   <div class="player">
@@ -344,7 +245,7 @@ select:focus,input:focus{border-color:var(--line-strong);box-shadow:0 0 0 3px rg
         <option value="A">Attaccante</option>
       </select>
       <select class="footballer" aria-label="Giocatore"></select>
-      <button class="remove" type="button" aria-label="Rimuovi">×</button>
+      <button class="remove" type="button" aria-label="Rimuovi giocatore"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
     </div>
     <div class="meta"><span class="empty">Seleziona un giocatore</span></div>
   </div>
@@ -357,10 +258,13 @@ select:focus,input:focus{border-color:var(--line-strong);box-shadow:0 0 0 3px rg
 <script src="player-utils.js"></script>
 <script src="players.js"></script>
 <script>
+/* Stato e funzioni globali che il motore si aspetta di trovare
+   (getPlayer, sidePlayers, teamAbbr, META, byRole, lastVerdictSound…). */
 let ACTIVE_PLAYERS=[...PLAYERS], META={matchday:0,live:false,quoteMode:"fallback",statsMode:"none"};
 const TEAM_ABBR={"Atalanta":"ATA","Bologna":"BOL","Cagliari":"CAG","Como":"COM","Cremonese":"CRE","Fiorentina":"FIO","Frosinone":"FRO","Genoa":"GEN","Inter":"INT","Juventus":"JUV","Lazio":"LAZ","Lecce":"LEC","Milan":"MIL","Monza":"MON","Napoli":"NAP","Parma":"PAR","Pisa":"PIS","Roma":"ROM","Sassuolo":"SAS","Torino":"TOR","Udinese":"UDI","Venezia":"VEN","Verona":"VER"};
 const teamAbbr=t=>TEAM_ABBR[t]||String(t||"").slice(0,3).toUpperCase();
 let byRole={},TOP30_IDS=new Set();
+let lastVerdictSound='';
 
 function n(x,d=0){return Number.isFinite(Number(x))?Number(x):d}
 function rebuildIndexes(){
@@ -382,14 +286,11 @@ function fillPlayers(row,keepId=''){
   }
   if(typeof window.updateMeta==='function') window.updateMeta(row);
 }
-function defaultUpdateMeta(row){
+window.updateMeta=row=>{
   const p=getPlayer(row.querySelector('.footballer').value),box=row.querySelector('.meta');
   if(!p){box.innerHTML='<span class="empty">Seleziona un giocatore</span>';return}
-  const fm=(p.fm!==null&&p.fm!==undefined)?`<span class="chip">FM ${n(p.fm).toFixed(2)}</span>`:'';
-  const pv=(p.pv!==null&&p.pv!==undefined)?`<span class="chip">PV ${p.pv}</span>`:'';
-  box.innerHTML=`${TOP30_IDS.has(String(p.id))?'<span class="chip top30">🏆 TOP 30</span>':''}<span class="chip">${teamAbbr(p.team)}</span><span class="chip">Q ${p.quote}</span><span class="chip">FVM ${p.fvm}</span>${fm}${pv}`;
-}
-window.updateMeta=defaultUpdateMeta;
+  box.innerHTML=`<span class="chip">${teamAbbr(p.team)}</span><span class="chip">Q ${p.quote}</span><span class="chip">FVM ${p.fvm}</span>`;
+};
 function sidePlayers(side){return [...document.querySelectorAll('#side'+side+' .footballer')].map(s=>getPlayer(s.value)).filter(Boolean)}
 
 function addRow(side,role='P'){
@@ -400,45 +301,40 @@ function addRow(side,role='P'){
   node.querySelector('.role').addEventListener('change',()=>{fillPlayers(node);window.calculate&&window.calculate()});
   node.querySelector('.footballer').addEventListener('change',e=>{
     const id=e.target.value;
-    if(id&&selectedIds().filter(x=>x===id).length>1){e.target.value='';showToast('Questo giocatore è già presente nello scambio.');}
+    if(id&&selectedIds().filter(x=>x===id).length>1){e.target.value='';showToast('Questo giocatore è già nello scambio');window.FS_HAPTIC?.('warning');}
     window.updateMeta(node);window.calculate&&window.calculate();
   });
-  node.querySelector('.remove').addEventListener('click',()=>{node.remove();window.calculate&&window.calculate()});
+  node.querySelector('.remove').addEventListener('click',()=>{
+    window.FS_HAPTIC?.('light');
+    // Un lato non resta mai senza riga: si svuota invece di sparire.
+    const host=node.parentElement;node.remove();
+    if(host&&!host.querySelector('.player'))addRow(host.id.slice(-1),'P');
+    window.calculate&&window.calculate();
+  });
   window.calculate&&window.calculate();
+  return node;
 }
 
-function playTradeSound(type){
-  try{
-    const AudioCtx=window.AudioContext||window.webkitAudioContext;if(!AudioCtx)return;
-    const ctx=new AudioCtx(),now=ctx.currentTime;
-    const map=type==='good'?[523.25,659.25,783.99]:type==='warn'?[466.16,587.33]:[360,620,360];
-    map.forEach((freq,i)=>{const osc=ctx.createOscillator(),gain=ctx.createGain();osc.type=type==='bad'?'sawtooth':'sine';osc.frequency.setValueAtTime(freq,now+i*.10);gain.gain.setValueAtTime(.0001,now+i*.10);gain.gain.exponentialRampToValueAtTime(.06,now+i*.10+.02);gain.gain.exponentialRampToValueAtTime(.0001,now+i*.10+.18);osc.connect(gain);gain.connect(ctx.destination);osc.start(now+i*.10);osc.stop(now+i*.10+.20)});
-    setTimeout(()=>ctx.close(),900);
-  }catch(e){}
-}
-let lastVerdictSound='';
-function soundVerdict(type,key){if(key!==lastVerdictSound){lastVerdictSound=key;playTradeSound(type)}}
-function playMiracleSound(){playTradeSound('good')}
-function showHereWeGo(){
-  const el=document.getElementById('herewego');if(!el)return;
-  el.classList.add('show');setTimeout(()=>el.classList.remove('show'),1250);
-}
 function fmStageCap(md){if(md<=3)return 0;if(md<=6)return .05;if(md<=10)return .10;if(md<=15)return .15;return .20}
 
 function updateStatus(){
-  const ds=document.getElementById('dataStatus'),ms=document.getElementById('matchdayStatus'),ins=document.getElementById('injuryStatus');
-  ds.textContent=META.live?`Dati live • ${new Date(META.updatedAt||Date.now()).toLocaleDateString('it-IT')}`:'Listone post-mercato • 533 giocatori';
+  const set=(id,t)=>{const el=document.getElementById(id);if(el)el.textContent=t};
   const md=Number(META.matchday)||0,cap=fmStageCap(md);
-  ms.textContent=md?`Giornata ${md} • peso forma max ${Math.round(cap*100)}%`:'Fantamedia non attiva';
-  const c=window.FS_INJURIES_META?.count||0;
-  ins.textContent=c?`Infortuni caricati • ${c}`:'Infortuni: client pronto';
+  const data=META.live?`Dati live · ${new Date(META.updatedAt||Date.now()).toLocaleDateString('it-IT')}`:`Listone · ${ACTIVE_PLAYERS.length} giocatori`;
+  const stats=md?`Giornata ${md} · forma fino al ${Math.round(cap*100)}%`:'Fantamedia non attiva';
+  // FS_INJURIES_META.count conta le chiavi della mappa (id e nome per ogni
+  // giocatore): il numero da mostrare e' quello degli infortuni nel report.
+  const im=window.FS_INJURIES_META||{},inj=im.total?`${im.total} infortuni`:im.status==='error'?'Infortuni non disponibili':'Infortuni in caricamento';
+  set('dataStatus',data);set('matchdayStatus',stats);set('injuryStatus',inj);
+  set('infoData',`${ACTIVE_PLAYERS.length} giocatori`);set('infoStats',md?`Giornata ${md}`:'Non attive');set('infoInjuries',im.total?`${im.total} nel report`:'—');
+  document.getElementById('liveDot')?.classList.toggle('on',!!META.live);
 }
 
 async function refreshData(){
   rebuildIndexes();updateStatus();
   try{
     const day=new Date().toISOString().slice(0,10);
-    const r=await fetch(`https://fantacalcio-trade-calculator.vercel.app/api/data?day=${day}`,{headers:{accept:'application/json'}});
+    const r=await fetch(`${window.FS_API_BASE}/api/data?day=${day}`,{headers:{accept:'application/json'}});
     if(!r.ok) throw new Error('no api');
     const j=await r.json();
     if(Array.isArray(j.players)&&j.players.length){
@@ -451,57 +347,48 @@ async function refreshData(){
   }catch(e){updateStatus()}
 }
 
-function fallbackCalculate(){
-  const A=sidePlayers('A'),B=sidePlayers('B');
-  const s=document.getElementById('score'),v=document.getElementById('verdict'),va=document.getElementById('valueA'),vb=document.getElementById('valueB'),d=document.getElementById('detail');
-  v.className='verdict';
-  if(!A.length||!B.length){s.textContent='—';v.textContent='Seleziona almeno un giocatore per parte';va.textContent=A.length?A.length:'—';vb.textContent=B.length?B.length:'—';d.textContent='In attesa del motore avanzato.';return}
-  const score=50;s.textContent=score+'%';va.textContent=A.length;vb.textContent=B.length;v.textContent='Scambio da analizzare';d.textContent='Caricamento motore avanzato in corso…';
-}
-window.calculate=fallbackCalculate;
+window.calculate=()=>{};
 
 function showToast(msg){
-  const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(showToast._tm);showToast._tm=setTimeout(()=>t.classList.remove('show'),1800);
+  const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(showToast._tm);showToast._tm=setTimeout(()=>t.classList.remove('show'),1900);
 }
 async function copyText(text){
-  try{await navigator.clipboard.writeText(text);showToast('Copiato');}
+  try{await navigator.clipboard.writeText(text);showToast('Copiato negli appunti');window.FS_HAPTIC?.('success');}
   catch(e){showToast('Copia non riuscita');}
 }
+async function shareText(text){
+  if(navigator.share){try{await navigator.share({title:'FANTASCAM',text});return}catch(e){if(e&&e.name==='AbortError')return}}
+  copyText(text);
+}
+const tradeSummary=()=>typeof window.getTradeSummary==='function'?window.getTradeSummary():'Nessuno scambio';
 function clearSide(side){document.getElementById('side'+side).innerHTML='';}
-function clearAll(){clearSide('A');clearSide('B');addRow('A','P');addRow('B','P');if(document.getElementById('fsCreditsA'))document.getElementById('fsCreditsA').value=0;if(document.getElementById('fsCreditsB'))document.getElementById('fsCreditsB').value=0;window.calculate&&window.calculate();}
+function clearAll(){clearSide('A');clearSide('B');addRow('A','P');addRow('B','P');['fsCreditsA','fsCreditsB'].forEach(id=>{const el=document.getElementById(id);if(el)el.value=0});window.calculate&&window.calculate();}
 function captureSelections(side){return [...document.querySelectorAll('#side'+side+' .player')].map(row=>({role:row.querySelector('.role').value,id:row.querySelector('.footballer').value}))}
-function rebuildSideFromSelections(side,items){clearSide(side);items.forEach(it=>{addRow(side,it.role||'P');const rows=[...document.querySelectorAll('#side'+side+' .player')];const row=rows[rows.length-1];row.querySelector('.role').value=it.role||'P';fillPlayers(row,it.id||'');row.querySelector('.footballer').value=it.id||'';window.updateMeta(row);});}
+function rebuildSideFromSelections(side,items){clearSide(side);items.forEach(it=>{const row=addRow(side,it.role||'P');row.querySelector('.role').value=it.role||'P';fillPlayers(row,it.id||'');row.querySelector('.footballer').value=it.id||'';row.querySelector('.footballer').dispatchEvent(new Event('change',{bubbles:true}));});}
 function swapSides(){const A=captureSelections('A'),B=captureSelections('B');const ca=document.getElementById('fsCreditsA'),cb=document.getElementById('fsCreditsB');const caV=ca?ca.value:0,cbV=cb?cb.value:0;rebuildSideFromSelections('A',B.length?B:[{role:'P',id:''}]);rebuildSideFromSelections('B',A.length?A:[{role:'P',id:''}]);if(ca&&cb){ca.value=cbV;cb.value=caV;}window.calculate&&window.calculate();}
 
-function setFactor(elId,label,val){
-  const el=document.getElementById(elId);if(!el)return;
-  const v=Math.round((Number(val)||0)*10)/10;
-  const cls=v>0.15?'pos':v<-0.15?'neg':'neu';
-  el.className='factor-pill '+cls;
-  el.innerHTML=`${label} <b>${v>0?`+${v}`:v}</b>`;
-}
-window.addEventListener('fantascam:trade-updated',e=>{
-  const x=e.detail||{},g=document.getElementById('gauge');
-  if(g&&Number.isFinite(Number(x.center)))g.style.setProperty('--pct',Math.max(0,Math.min(100,Number(x.center))));
+const onTradeEvent=()=>{
+  const x=window.FS_LAST_TRADE||{},g=document.getElementById('gauge');
+  if(g&&Number.isFinite(Number(x.fairness)))g.style.setProperty('--pct',Math.max(0,Math.min(100,Number(x.fairness))));
   document.getElementById('equityValue').textContent=Number.isFinite(Number(x.fairness))?`${Math.round(Number(x.fairness))}%`:'—';
-  document.getElementById('biasValue').textContent=Number.isFinite(Number(x.center))?(Number(x.center)>50?'A':Number(x.center)<50?'B':'—'):'—';
-  setFactor('fp-base','Base',x.t?.base||0);setFactor('fp-form','Momento',x.t?.momentum||0);setFactor('fp-slots','Slot',x.t?.slots||0);setFactor('fp-role','Ruoli',x.t?.role||0);setFactor('fp-cal','Calend.',x.t?.calendar||0);
+  document.getElementById('biasValue').textContent=x.stronger?`Squadra ${x.stronger}`:'—';
+  const st=x.status||(x.fairness<75?'bad':x.fairness<88?'warn':'good');
+  if(g)g.dataset.status=st;
   updateStatus();
-});
+};
+window.addEventListener('fantascam:trade-updated',()=>setTimeout(onTradeEvent,0));
+window.addEventListener('fantascam:trade-v10',()=>setTimeout(onTradeEvent,0));
 window.addEventListener('fantascam:injuries-updated',updateStatus);
 
-document.querySelectorAll('.add').forEach(b=>b.addEventListener('click',()=>addRow(b.dataset.side)));
-document.getElementById('clearAllBtn').addEventListener('click',clearAll);
-document.getElementById('swapBtn').addEventListener('click',swapSides);
-document.getElementById('copySummaryBtn').addEventListener('click',()=>copyText(typeof window.getTradeSummary==='function'?window.getTradeSummary():'Nessuno scambio'));
-document.getElementById('copyDeepBtn').addEventListener('click',()=>copyText(typeof window.getTradeSummary==='function'?window.getTradeSummary():'Nessuno scambio'));
-document.getElementById('toggleAnalysisBtn').addEventListener('click',()=>{const btn=document.querySelector('#fs-trade-analysis .fs-an-toggle');if(btn){btn.click();btn.scrollIntoView({behavior:'smooth',block:'center'});}else showToast('Analisi disponibile dopo il primo calcolo');});
+document.querySelectorAll('.add').forEach(b=>b.addEventListener('click',()=>{window.FS_HAPTIC?.('light');const row=addRow(b.dataset.side);setTimeout(()=>row.querySelector('.fs-global-search input')?.focus(),30);}));
+document.getElementById('clearAllBtn').addEventListener('click',()=>{window.FS_HAPTIC?.('medium');clearAll();showToast('Scambio svuotato');});
+document.getElementById('swapBtn').addEventListener('click',()=>{window.FS_HAPTIC?.('medium');swapSides();});
+document.getElementById('copySummaryBtn').addEventListener('click',()=>copyText(tradeSummary()));
+document.getElementById('shareBtn').addEventListener('click',()=>shareText(tradeSummary()));
 
 rebuildIndexes();addRow('A','P');addRow('B','P');refreshData();
 </script>
-<footer style="max-width:1180px;margin:22px auto 8px;padding:0 18px 24px;text-align:center;font:600 11px 'Outfit',sans-serif;color:#7f7a89">
-  <a href="privacy.html" style="color:#a99bb8;text-decoration:none">Privacy</a> · <a href="support.html" style="color:#a99bb8;text-decoration:none">Supporto</a> · FANTASCAM indipendente
-</footer>
+<script src="app-shell.js"></script>
 <script src="fs_engine.js"></script>
 </body>
 </html>

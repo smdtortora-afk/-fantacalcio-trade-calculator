@@ -9,7 +9,9 @@ const config: CapacitorConfig = {
     androidScheme: 'https'
   },
   ios: {
-    contentInset: 'automatic',
+    // La shell e' a schermo intero e gestisce le safe area via env(): con
+    // 'automatic' la webview rientrerebbe una seconda volta.
+    contentInset: 'never',
     preferredContentMode: 'mobile',
     backgroundColor: '#090511'
   },

@@ -1,0 +1,346 @@
+/* FANTASCAM Store Edition — shell nativa.
+   Il motore (fs_engine.js, injuries.js, players.js) inietta il proprio CSS:
+   qui lo si riveste per l'app senza toccarne il codice. Dove serve vincere
+   sugli stili iniettati si usa una specificita' maggiore o !important. */
+
+:root{
+  --bg:#090511;
+  --surface:#140c22;
+  --surface-2:#1b1130;
+  --surface-3:#24183d;
+  --hair:rgba(206,171,255,.12);
+  --hair-strong:rgba(206,171,255,.24);
+  --text:#f7f1ff;
+  --muted:#b3a3d1;
+  --muted-2:#857699;
+  --accent:#a96fff;
+  --accent-2:#7e5dff;
+  --green:#7dffa0;
+  --red:#ff7a8f;
+  --gold:#ffc24a;
+  --side-a:#ff89c0;
+  --side-b:#7effba;
+  --font:-apple-system,BlinkMacSystemFont,system-ui,"SF Pro Text",Roboto,"Segoe UI",sans-serif;
+  --font-display:ui-rounded,"SF Pro Rounded",-apple-system,BlinkMacSystemFont,system-ui,Roboto,sans-serif;
+  --appbar-h:48px;
+  --tabbar-h:56px;
+  --verdictbar-h:68px;
+  --ease:cubic-bezier(.2,.8,.2,1);
+}
+
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:var(--font);-webkit-font-smoothing:antialiased;-webkit-text-size-adjust:100%}
+body{overscroll-behavior:none}
+/* Un'app non fa selezionare i testi dell'interfaccia; i campi restano editabili. */
+body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+input,textarea{-webkit-user-select:text;user-select:text}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;touch-action:manipulation}
+/* Il motore usa Outfit/Sora: nell'app vale il font di sistema. */
+.app *,#csSheet *,.fsv10-modal *,#fs-v101-manager *{font-family:var(--font)!important}
+
+/* ---------- struttura ---------- */
+.app{position:fixed;inset:0;display:flex;flex-direction:column;background:
+  radial-gradient(120% 60% at 10% -10%,rgba(169,111,255,.18),transparent 55%),
+  radial-gradient(90% 50% at 100% 0%,rgba(86,180,255,.10),transparent 50%),var(--bg)}
+
+.appbar{flex:0 0 auto;position:relative;z-index:20;padding:env(safe-area-inset-top) calc(16px + env(safe-area-inset-right)) 0 calc(16px + env(safe-area-inset-left));
+  background:rgba(9,5,17,.72);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-bottom:.5px solid transparent;transition:border-color .2s}
+.appbar.scrolled{border-bottom-color:var(--hair)}
+.appbar-row{height:var(--appbar-h);display:flex;align-items:center;justify-content:space-between;gap:12px}
+.appbar-brand{display:flex;align-items:center;gap:8px;font:800 15px var(--font-display);letter-spacing:.04em}
+.appbar-brand img{width:26px;height:26px;border-radius:7px}
+.appbar-title{position:absolute;left:50%;transform:translateX(-50%) translateY(4px);font-weight:700;font-size:16px;opacity:0;transition:opacity .2s,transform .2s;pointer-events:none}
+.appbar.scrolled .appbar-title{opacity:1;transform:translateX(-50%) translateY(0)}
+.appbar.scrolled .appbar-brand{opacity:0}
+.appbar-brand{transition:opacity .2s}
+.live-dot{width:8px;height:8px;border-radius:50%;background:var(--muted-2)}
+.live-dot.on{background:var(--green);box-shadow:0 0 10px var(--green)}
+
+.views{flex:1 1 auto;position:relative;overflow:hidden}
+.view{position:absolute;inset:0;overflow-x:hidden;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior-y:contain;
+  padding:4px calc(16px + env(safe-area-inset-right)) 28px calc(16px + env(safe-area-inset-left));
+  opacity:0;visibility:hidden;transform:translateX(12px);transition:opacity .22s var(--ease),transform .22s var(--ease),visibility 0s .22s}
+.view.active{opacity:1;visibility:visible;transform:none;transition:opacity .22s var(--ease),transform .22s var(--ease)}
+.view[data-view="trade"]{padding-bottom:calc(var(--verdictbar-h) + 28px)}
+.view-inner{max-width:720px;margin:0 auto}
+
+.large-title{margin:6px 0 2px;font:800 34px/1.1 var(--font-display);letter-spacing:-.02em}
+.large-sub{margin:0 0 14px;color:var(--muted);font-size:14px;line-height:1.4}
+.section-label{margin:22px 4px 8px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted-2)}
+
+/* ---------- tab bar ---------- */
+.tabbar{flex:0 0 auto;position:relative;z-index:20;display:flex;padding:0 env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  background:rgba(13,8,22,.82);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-top:.5px solid var(--hair)}
+.tab{flex:1;height:var(--tabbar-h);border:0;background:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--muted-2);font-size:10.5px;font-weight:600;position:relative}
+.tab svg{width:25px;height:25px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.tab.active{color:var(--accent)}
+.tab .badge-dot{position:absolute;top:8px;left:calc(50% + 9px);width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 2px #0d0816;display:none}
+.tab.has-news .badge-dot{display:block}
+body.kb-open .tabbar,body.kb-open .verdictbar{display:none}
+
+/* ---------- elementi comuni ---------- */
+.group{background:var(--surface);border:.5px solid var(--hair);border-radius:18px;overflow:visible}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:44px;padding:0 16px;border-radius:12px;border:0;font-weight:600;font-size:15px;
+  background:var(--surface-2);color:var(--text);transition:transform .12s,opacity .12s}
+.btn:active,.tab:active,.cs-btn:active,.add:active,.verdictbar:active{transform:scale(.97);opacity:.85}
+.btn.primary{background:linear-gradient(135deg,var(--accent-2),var(--accent));color:#fff}
+.btn.ghost{background:transparent;border:.5px solid var(--hair-strong)}
+.btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.btn-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+.status-strip{display:flex;gap:6px;overflow-x:auto;margin:0 -16px 14px;padding:0 16px;scrollbar-width:none}
+.status-strip::-webkit-scrollbar{display:none}
+.status-pill{flex:0 0 auto;padding:6px 10px;border-radius:999px;font-size:12px;font-weight:600;color:var(--muted);background:var(--surface);border:.5px solid var(--hair)}
+
+/* ---------- lati dello scambio ---------- */
+.grid{display:grid;gap:12px}
+.card{padding:14px;position:relative}
+.card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.card-title{margin:0;font:700 20px var(--font-display);display:flex;align-items:center;gap:8px}
+.card-sub{color:var(--muted-2);font-size:12px;font-weight:600}
+.dot-a,.dot-b{width:9px;height:9px;border-radius:50%}
+.dot-a{background:var(--side-a);box-shadow:0 0 10px var(--side-a)}
+.dot-b{background:var(--side-b);box-shadow:0 0 10px var(--side-b)}
+.card[data-side="A"]{box-shadow:inset 3px 0 0 -1px rgba(255,137,192,.55)}
+.card[data-side="B"]{box-shadow:inset 3px 0 0 -1px rgba(126,255,186,.55)}
+
+.add{width:100%;margin-top:8px;min-height:46px;border-radius:12px;border:1px dashed var(--hair-strong);background:transparent;color:var(--accent);font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center;gap:6px;transition:transform .12s}
+.add svg{width:18px;height:18px;stroke:currentColor;stroke-width:2.2;fill:none;stroke-linecap:round}
+
+.player{padding:10px 0;border-top:.5px solid var(--hair);animation:rowIn .24s var(--ease)}
+.player:first-child{border-top:0}
+@keyframes rowIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+.rowtop{display:grid;grid-template-columns:minmax(0,1fr) 44px;gap:8px;align-items:start}
+.player select.role,.player select.footballer{display:none}
+.remove{width:44px;height:46px;border:0;border-radius:12px;background:rgba(255,122,143,.10);color:var(--red);display:grid;place-items:center}
+.remove svg{width:18px;height:18px;stroke:currentColor;stroke-width:2.2;fill:none;stroke-linecap:round}
+.meta{display:flex!important;flex-wrap:nowrap!important;gap:5px;margin-top:8px;overflow-x:auto!important;scrollbar-width:none;white-space:nowrap}
+.meta::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;display:inline-flex;align-items:center;gap:3px;padding:4px 8px!important;border-radius:8px;font-size:11px!important;font-weight:700;background:var(--surface-2);color:#eadfff}
+.chip.top30{background:rgba(255,194,74,.16);color:#ffd979}
+.empty{font-size:12px;color:var(--muted-2)}
+
+/* Ricerca globale (players.js): campo nativo, risultati in tema. */
+.player .fs-global-search input{height:46px!important;border-radius:12px!important;border:0!important;background:var(--surface-2)!important;padding:0 14px!important;font:600 16px var(--font)!important;color:var(--text)!important;-webkit-appearance:none;appearance:none}
+.player .fs-global-search input:focus{box-shadow:0 0 0 2px var(--accent)!important}
+.player .fs-global-search input::placeholder{color:var(--muted-2)}
+.player .fs-global-results{border:.5px solid var(--hair-strong)!important;border-radius:14px!important;background:#1a1029!important;box-shadow:0 18px 50px rgba(0,0,0,.6)!important;padding:4px!important;max-height:min(46vh,360px)!important}
+.player .fs-global-option{min-height:48px;border-radius:10px;border-bottom:0!important;padding:8px 10px!important;font:600 15px var(--font)!important}
+.player .fs-global-option:active{background:rgba(169,111,255,.18)}
+.player .fs-global-option .fs-info{color:var(--muted-2)!important;font-size:11px!important}
+.player .fs-global-empty{color:var(--muted-2)!important}
+
+/* Picker di rosa (V10.3): il select resta nel DOM per il motore, si vede il bottone custom. */
+.fs-roster-picker .fs-rp-hint{color:var(--muted-2)!important;font-size:11px!important;margin-top:5px!important}
+
+/* ---------- select custom ---------- */
+select.cs-native{display:none!important}
+.cs-btn{width:100%;min-height:46px;display:flex;align-items:center;gap:8px;padding:0 12px 0 14px;border:0;border-radius:12px;background:var(--surface-2);color:var(--text);text-align:left;font-size:16px;font-weight:600;transition:transform .12s,opacity .12s}
+.cs-btn .cs-label{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cs-btn .cs-label.placeholder{color:var(--muted-2);font-weight:500}
+.cs-btn svg{flex:0 0 auto;width:16px;height:16px;stroke:var(--muted-2);stroke-width:2.2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.cs-btn:disabled{opacity:.45}
+
+#csSheet{position:fixed;inset:0;z-index:90000;display:none}
+#csSheet.open{display:block}
+#csSheet .cs-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.5);opacity:0;transition:opacity .25s}
+#csSheet.show .cs-backdrop{opacity:1}
+#csSheet .cs-panel{position:absolute;left:0;right:0;bottom:0;max-height:78vh;display:flex;flex-direction:column;background:#1a1029;border-radius:22px 22px 0 0;border-top:.5px solid var(--hair-strong);
+  padding-bottom:env(safe-area-inset-bottom);transform:translateY(100%);transition:transform .32s var(--ease);box-shadow:0 -20px 60px rgba(0,0,0,.5)}
+#csSheet.show .cs-panel{transform:none}
+#csSheet .cs-grab{width:38px;height:5px;border-radius:3px;background:rgba(255,255,255,.22);margin:8px auto 4px}
+#csSheet .cs-head{display:flex;align-items:center;justify-content:space-between;padding:6px 18px 10px}
+#csSheet .cs-title{font-weight:700;font-size:17px}
+#csSheet .cs-done{border:0;background:none;color:var(--accent);font-weight:700;font-size:16px;padding:8px 0 8px 12px}
+#csSheet .cs-search{margin:0 16px 10px;height:40px;border:0;border-radius:11px;background:rgba(255,255,255,.07);padding:0 12px;font-size:16px;outline:none;-webkit-appearance:none}
+#csSheet .cs-list{overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding:0 8px 12px}
+#csSheet .cs-group{position:sticky;top:0;z-index:1;padding:12px 10px 6px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted-2);background:#1a1029}
+#csSheet .cs-opt{width:100%;min-height:50px;display:flex;align-items:center;gap:10px;padding:8px 12px;border:0;border-radius:12px;background:none;text-align:left;font-size:16px;color:var(--text)}
+#csSheet .cs-opt:active{background:rgba(169,111,255,.16)}
+#csSheet .cs-opt .cs-main{flex:1;min-width:0}
+#csSheet .cs-opt .cs-name{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:600}
+#csSheet .cs-opt .cs-extra{display:block;margin-top:2px;font-size:12px;color:var(--muted-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#csSheet .cs-opt .cs-check{width:20px;height:20px;stroke:var(--accent);stroke-width:2.6;fill:none;stroke-linecap:round;stroke-linejoin:round;visibility:hidden}
+#csSheet .cs-opt.selected .cs-check{visibility:visible}
+#csSheet .cs-opt.selected .cs-name{color:var(--accent)}
+#csSheet .cs-opt:disabled{opacity:.4}
+#csSheet .cs-empty{padding:24px;text-align:center;color:var(--muted-2)}
+
+/* ---------- crediti (fs_engine.js) ---------- */
+.app #fantascam-credit-controls{margin:12px 0 0!important;padding:14px!important;border:.5px solid var(--hair)!important;border-radius:18px!important;background:var(--surface)!important}
+.app .fs-credit-title{font:700 15px var(--font)!important;color:var(--text)!important;margin-bottom:6px!important}
+.app .fs-credit-row{display:block!important}
+.app .fs-credit-row label{display:flex!important;align-items:center;justify-content:space-between;gap:12px;padding:8px 0;border-top:.5px solid var(--hair);font-size:15px!important;font-weight:500!important;color:var(--text)!important}
+.app .fs-credit-row label:first-child{border-top:0}
+.stepper{flex:0 0 auto;display:flex;align-items:center;background:var(--surface-2);border-radius:12px;overflow:hidden}
+.stepper button{width:40px;height:40px;border:0;background:none;color:var(--accent);font-size:22px;font-weight:500;line-height:1}
+.stepper button:active{background:rgba(169,111,255,.18)}
+.app .stepper input{width:58px!important;margin:0!important;border:0!important;background:transparent!important;text-align:center;font-weight:700!important;font-size:16px!important;padding:0!important;color:var(--text)!important;-moz-appearance:textfield}
+.stepper input::-webkit-outer-spin-button,.stepper input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+
+/* ---------- pannello lega (injuries.js V10/V10.1) ---------- */
+.app #fs-v10-league{margin:0 0 12px!important;padding:14px!important;border:.5px solid var(--hair)!important;border-radius:18px!important;background:var(--surface)!important;box-shadow:none!important}
+.app .fsv10-head b{font:700 15px var(--font)!important}
+.app .fsv10-head small{color:var(--muted-2)!important;font-size:12px!important;line-height:1.35}
+/* Doppio controllo "Le mie leghe": resta solo quello della riga lega attiva. */
+/* Senza lega il pannello e' una riga sola con il bottone; con la lega
+   compaiono lega attiva e fantasquadre, e resta un solo "Le mie leghe". */
+.app #fs-v10-league:not(.fs-has-league) :is(.fsv101-active,.fsv10-teams,.fsv10-status){display:none!important}
+.app #fs-v10-league.fs-has-league .fsv10-manage{display:none!important}
+.app .fsv10-head{align-items:center!important}
+.app .fsv10-head small{display:block;margin-top:2px}
+/* Lo stile V10.1 della riga arriva solo all'apertura del gestore: lo diamo noi. */
+.app .fsv101-active{display:grid;gap:8px;margin-top:10px;padding-top:10px;grid-template-columns:minmax(0,1fr) auto!important}
+.app .fsv101-quick,.app .fsv10-manage{width:auto!important;white-space:nowrap}
+.app .fsv10-manage,.app .fsv101-quick{min-height:40px;border:0!important;border-radius:11px!important;background:rgba(169,111,255,.16)!important;color:var(--accent)!important;font-weight:700!important;padding:0 12px!important}
+.app .fsv101-active{border-top:.5px solid var(--hair)!important;align-items:end}
+.app .fsv101-active label,.app .fsv10-teams label{font-size:12px!important;font-weight:600!important;color:var(--muted-2)!important;letter-spacing:.02em}
+.app .fsv101-active .cs-btn,.app .fsv10-teams .cs-btn{margin-top:6px}
+.app .fsv101-quick{height:46px!important}
+.app .fsv10-teams{grid-template-columns:1fr!important}
+.app .fsv10-status{color:var(--muted-2)!important;font-size:12px!important}
+
+/* Modali dell'engine resi bottom sheet in tema. */
+.fsv10-modal,#fs-v101-manager{padding:0!important;align-items:flex-end!important;background:rgba(0,0,0,.5)!important}
+.fsv10-sheet,.fsv101-sheet{width:100%!important;max-width:720px;border-radius:22px 22px 0 0!important;border:0!important;border-top:.5px solid var(--hair-strong)!important;
+  background:#1a1029!important;padding:18px 18px calc(18px + env(safe-area-inset-bottom))!important;max-height:88vh!important;animation:sheetUp .32s var(--ease)}
+@keyframes sheetUp{from{transform:translateY(100%)}to{transform:none}}
+.fsv10-sheet input,.fsv10-sheet textarea,.fsv101-sheet input{font-size:16px!important;border-radius:12px!important;border:0!important;background:rgba(255,255,255,.07)!important;color:var(--text)!important;min-height:44px}
+.fsv10-sheet button,.fsv101-sheet button{min-height:42px;border-radius:12px!important}
+.fsv101-sheet input[type=file]::file-selector-button{border:0;border-radius:10px;background:rgba(169,111,255,.2);color:var(--accent);font-weight:700;padding:8px 12px;margin-right:10px}
+
+/* ---------- barra verdetto (vista Scambio) ---------- */
+.verdictbar{position:absolute;left:calc(12px + env(safe-area-inset-left));right:calc(12px + env(safe-area-inset-right));bottom:10px;z-index:15;height:var(--verdictbar-h);
+  display:flex;align-items:center;gap:12px;padding:0 14px 0 10px;border:.5px solid var(--hair-strong);border-radius:20px;color:var(--text);text-align:left;
+  background:rgba(27,17,48,.86);-webkit-backdrop-filter:saturate(180%) blur(22px);backdrop-filter:saturate(180%) blur(22px);box-shadow:0 14px 40px rgba(0,0,0,.45);
+  transition:transform .3s var(--ease),opacity .3s}
+.verdictbar.hidden{transform:translateY(calc(100% + 20px));opacity:0;pointer-events:none}
+.vb-ring{--p:0;--c:var(--muted-2);flex:0 0 auto;width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--c) calc(var(--p)*1%),rgba(255,255,255,.08) 0)}
+.vb-ring span{width:40px;height:40px;border-radius:50%;background:#1b1130;display:grid;place-items:center;font:800 14px var(--font-display)}
+.vb-text{flex:1;min-width:0}
+.vb-text b{display:block;font-size:15px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.vb-text small{display:block;margin-top:2px;font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.verdictbar>svg{width:18px;height:18px;stroke:var(--muted-2);stroke-width:2.2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.verdictbar.good .vb-ring{--c:var(--green)}.verdictbar.warn .vb-ring{--c:var(--gold)}.verdictbar.bad .vb-ring{--c:var(--red)}
+.verdictbar.good b{color:var(--green)}.verdictbar.warn b{color:var(--gold)}.verdictbar.bad b{color:var(--red)}
+.verdictbar.pulse{animation:vbPulse .5s var(--ease)}
+@keyframes vbPulse{40%{transform:scale(1.03)}}
+
+/* ---------- vista Analisi ---------- */
+.result{display:block}
+.result-hero{padding:22px 16px 18px;text-align:center}
+.gauge{--pct:50;position:relative;width:200px;max-width:62vw;aspect-ratio:1;margin:0 auto;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--gc,var(--gold)) calc(var(--pct)*1%),rgba(255,255,255,.07) 0);transition:background .4s}
+.gauge[data-status=good]{--gc:var(--green)}.gauge[data-status=warn]{--gc:var(--gold)}.gauge[data-status=bad]{--gc:var(--red)}
+.gauge:before{content:"";position:absolute;inset:13px;border-radius:50%;background:var(--surface)}
+.gauge-inner{position:relative;z-index:1;text-align:center}
+.result-kicker{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted-2);font-weight:700}
+.score{font:800 60px/1 var(--font-display);letter-spacing:-.03em;margin-top:6px}
+.verdict{margin-top:16px;font:800 22px/1.15 var(--font-display)}
+.good{color:var(--green)}.warn{color:var(--gold)}.bad{color:var(--red)}
+.detail{margin-top:8px;color:var(--muted);font-size:13px;line-height:1.45}
+
+.trade-receipt{margin-top:12px;padding:14px;font-size:14px;line-height:1.45}
+.trade-receipt strong{display:block;font-size:15px;margin-bottom:6px}
+.trade-receipt p{margin:4px 0;color:var(--muted)}
+.trade-receipt small{display:block;margin-top:8px;color:var(--muted-2);font-size:11.5px;line-height:1.4}
+.trade-receipt[hidden]{display:none}
+
+.list-group .li{display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:48px;padding:10px 16px;border-top:.5px solid var(--hair);font-size:15px}
+.list-group .li:first-child{border-top:0}
+.list-group .li b{font:700 17px var(--font-display);font-variant-numeric:tabular-nums}
+
+.reasons .li{display:block;color:#e9e0fb;font-size:14px;line-height:1.45}
+.reasons .empty{padding:16px;display:block}
+
+.empty-state{padding:40px 24px;text-align:center;color:var(--muted)}
+.empty-state svg{width:54px;height:54px;stroke:var(--muted-2);stroke-width:1.5;fill:none;stroke-linecap:round;stroke-linejoin:round;margin-bottom:12px}
+.empty-state b{display:block;color:var(--text);font-size:17px;margin-bottom:6px}
+.has-trade .empty-state{display:none}
+.no-trade .needs-trade{display:none}
+
+/* Pannello giocatori V9 (injuries.js): sempre aperto, senza toggle. */
+.app #fs-v9-analysis{margin-top:0!important;border:0!important;background:transparent!important;border-radius:0!important}
+.app .fsv9-analysis-toggle{display:none!important}
+.app .fsv9-analysis-body{display:block!important;padding:0!important}
+.app .fsv9-factor{background:var(--surface)!important;border:.5px solid var(--hair);border-radius:14px!important;padding:12px!important;font-size:11.5px!important;color:var(--muted)!important}
+.app .fsv9-factor b{font:800 20px var(--font-display)!important;margin-top:2px}
+.app .fsv9-side-title{color:var(--muted-2)!important;font-size:12px!important;letter-spacing:.06em;margin:16px 4px 8px!important}
+.app .fsv9-player{background:var(--surface);border:.5px solid var(--hair)!important;border-radius:14px!important;padding:12px!important;font-size:13px!important}
+.app .fsv9-player>span{color:var(--muted-2)!important}
+.app .fsv9-player small{color:var(--muted-2)!important}
+#fs-trade-analysis{display:none!important}
+
+/* I popup verdetto dell'engine si aprivano a ogni modifica: nell'app il
+   verdetto vive nella barra in basso e nella vista Analisi. */
+#fs-v9-verdict-overlay,#fs-v10-verdict-overlay,#fs-v83-verdict-overlay{display:none!important}
+
+/* ---------- vista Info ---------- */
+.info-card{padding:16px;font-size:14px;line-height:1.5;color:var(--muted)}
+.info-card b{color:var(--text)}
+.list-group a.li{color:var(--text);text-decoration:none}
+.list-group a.li svg{width:16px;height:16px;stroke:var(--muted-2);stroke-width:2.2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.li .val{color:var(--muted);font-size:14px;text-align:right}
+.app-foot{margin:24px 0 8px;text-align:center;color:var(--muted-2);font-size:12px}
+
+/* ---------- toast ---------- */
+.toast{position:fixed;left:50%;top:calc(env(safe-area-inset-top) + 10px);z-index:95000;transform:translate(-50%,-140%);padding:11px 16px;border-radius:14px;
+  background:rgba(36,24,61,.96);border:.5px solid var(--hair-strong);color:#fff;font-weight:600;font-size:14px;box-shadow:0 12px 32px rgba(0,0,0,.45);transition:transform .32s var(--ease);pointer-events:none;max-width:calc(100% - 32px)}
+.toast.show{transform:translate(-50%,0)}
+
+@media(min-width:780px){
+  .grid{grid-template-columns:1fr 1fr}
+}
+
+/* ---------- INTRO: launch screen nativa -> video -> app ----------
+   Il poster e' la stessa immagine della launch screen e il primo fotogramma
+   del video coincide con essa, quindi il passaggio non si vede. Il video
+   chiude sul fondo #090511 dell'app, quindi non si vede nemmeno l'uscita. */
+#fsIntro{position:fixed;inset:0;z-index:2147483647;background:#090511;display:block}
+#fsIntro.done{display:none}
+#fsIntro video{width:100%;height:100%;object-fit:cover;display:block;background:#090511}
+
+/* =====================================================================
+   MOVIMENTO
+   Ingressi a cascata quando si apre una scheda (app-shell.js: reveal()),
+   cerchi che si riempiono, punteggio che conta, piccoli rimbalzi.
+   ===================================================================== */
+/* Proprietà registrate: così i conic-gradient si animano invece di saltare. */
+@property --pct{syntax:'<number>';inherits:true;initial-value:0}
+@property --p{syntax:'<number>';inherits:false;initial-value:0}
+@property --gc{syntax:'<color>';inherits:true;initial-value:#f5c84c}
+
+.gauge{isolation:isolate;transition:--pct 1s cubic-bezier(.22,1,.36,1),--gc .5s ease}
+.gauge.no-anim{transition:none}
+.vb-ring{transition:--p .8s cubic-bezier(.22,1,.36,1)}
+
+.rv{animation:rvIn .52s cubic-bezier(.22,1,.36,1) both}
+.rv-sub{animation:rvSub .42s cubic-bezier(.22,1,.36,1) both}
+@keyframes rvIn{from{opacity:0;transform:translateY(18px) scale(.98)}to{opacity:1;transform:none}}
+@keyframes rvSub{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:none}}
+
+/* Il cerchio entra con una leggera rotazione, il verdetto "batte" quando cambia. */
+.gauge.rv{animation-name:gaugeIn;animation-duration:.7s}
+@keyframes gaugeIn{from{opacity:0;transform:scale(.82) rotate(-25deg)}to{opacity:1;transform:none}}
+.gauge:after{content:"";position:absolute;inset:-6px;border-radius:50%;background:radial-gradient(closest-side,var(--gc),transparent);opacity:0;z-index:-1;pointer-events:none}
+.gauge.glow:after{animation:gaugeGlow 1.1s ease-out}
+@keyframes gaugeGlow{30%{opacity:.35}to{opacity:0}}
+.verdict.pop{animation:pop .5s cubic-bezier(.34,1.56,.64,1)}
+@keyframes pop{0%{transform:scale(.9);opacity:.4}60%{transform:scale(1.05);opacity:1}to{transform:none}}
+
+/* Icona del tab che rimbalza quando diventa attiva. */
+.tab.active svg{animation:tabPop .42s cubic-bezier(.34,1.56,.64,1)}
+@keyframes tabPop{40%{transform:translateY(-3px) scale(1.14)}}
+
+/* Stato vuoto: icona che respira. */
+.empty-state svg{animation:breathe 3.2s ease-in-out infinite}
+@keyframes breathe{50%{transform:translateY(-4px);opacity:.75}}
+
+/* Pressione: le righe toccabili rispondono. */
+.list-group a.li{transition:background .15s}
+.list-group a.li:active{background:rgba(169,111,255,.12)}
+
+@media (prefers-reduced-motion:reduce){
+  .rv,.rv-sub,.gauge.rv,.verdict.pop,.tab.active svg,.empty-state svg,.gauge.glow:after{animation:none!important}
+  .gauge,.vb-ring{transition:none}
+}
