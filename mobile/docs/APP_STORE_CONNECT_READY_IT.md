@@ -12,34 +12,46 @@
 Scambi fantasy, più equi
 
 ### Testo promozionale (max 170)
-Valuta gli scambi dentro le rose reali: valori, crediti, profondità e Roster Impact in un unico verdetto FANTASCAM.
+Prima di dire sì, chiedi a FANTASCAM: lo scambio valutato sulle rose reali della tua lega, con statistiche aggiornate e infortuni. Un verdetto chiaro in pochi secondi.
 
 ### Descrizione (max 4000)
-FANTASCAM è uno strumento indipendente per analizzare gli scambi nelle leghe fantasy football.
+Ti hanno proposto uno scambio e non sai se è un affare o una fregatura? FANTASCAM te lo dice in pochi secondi.
 
-Confronta il valore dei giocatori e dei pacchetti, considera crediti, ruoli, profondità della rosa e impatto sulla miglior formazione.
+Scegli i giocatori che cedi e quelli che ricevi, aggiungi eventuali crediti e ottieni un punteggio di equità da 0 a 100% con un verdetto netto: SCAMBIO EQUILIBRATO, SCAMBIO ACCETTABILE oppure FANTASCAM!! — sempre accompagnato dalle motivazioni.
 
-IMPORTA E SALVA PIÙ LEGHE
-Importa XLSX, XLS o CSV, salva più leghe direttamente sul dispositivo e passa da una lega all’altra senza ripetere ogni volta l’importazione.
+UN VALORE PER OGNI GIOCATORE
+Ogni calciatore riceve un punteggio che stima quanto vale davvero in uno scambio: titolarità nel suo club, ruolo, forza della squadra, quotazione di mercato, presenze e forma recente.
 
-ROSE REALI NELLO SCAMBIO
-Scegli Fantasquadra A e Fantasquadra B. I selettori mostrano soltanto i giocatori realmente appartenenti alle due rose.
+DATI AGGIORNATI
+Statistiche e presenze vengono aggiornate durante la stagione. Dalla sesta giornata entra in gioco anche la forma, pesata in base a quante partite sono state giocate: tre gare storte non bastano a bocciare un top.
 
-ROSTER IMPACT
-Oltre all’equità pura, FANTASCAM analizza come lo scambio modifica la miglior formazione, la profondità e l’equilibrio della rosa.
-
-COPERTURA PORTIERI REALISTICA
-La coppia primo + secondo portiere può ricevere un piccolo bonus assicurativo quando ha un’utilità reale. Il bonus è dinamico e non rivaluta artificialmente un secondo portiere.
+INFORTUNI INCLUSI
+I giocatori infortunati perdono valore in base alla gravità e ai tempi di recupero. Una contusione non pesa come un crociato.
 
 PROTEZIONE TOP PLAYER
-Pacchetti di giocatori medi e crediti non possono sostituire automaticamente un giocatore di fascia alta: il motore applica controlli specifici anti-diluizione.
+La quantità non compra la qualità: un pacchetto di giocatori medi più crediti non basta per prendersi un campione. Il motore riconosce questi casi e li segnala.
 
-FANTASCAM è un prodotto indipendente e non è affiliato, sponsorizzato o approvato da federazioni, leghe o piattaforme fantasy di terze parti.
+CREDITI E PACCHETTI
+Scambi 1×1, 2×1, 3×1, con o senza crediti. Il valore dei crediti dipende dal budget della tua lega e cala con l'avanzare della stagione.
 
-Le valutazioni sono strumenti di supporto e non costituiscono previsioni certe sui risultati sportivi.
+LE TUE LEGHE, SUL TUO TELEFONO
+Importa le rose da un file XLSX, XLS o CSV, salva più leghe sul dispositivo e passa dall'una all'altra al volo. Scelte le due fantasquadre, vedi soltanto i giocatori che possiedono davvero.
+
+ROSTER IMPACT
+Con una lega collegata, FANTASCAM misura anche come lo scambio cambia la miglior formazione, la profondità della rosa e il blocco difensivo di entrambe le squadre. Il contesto può correggere il verdetto, ma non trasformerà mai una fregatura in un buon affare.
+
+PENSATA PER IL TELEFONO
+Interfaccia nativa a schede, ricerca rapida dei giocatori, nessuna registrazione e nessuna pubblicità.
+
+PRIVACY
+Le leghe importate restano sul dispositivo. Non servono account né password di piattaforme di terze parti.
+
+FANTASCAM è un prodotto indipendente e non è affiliato, sponsorizzato o approvato da federazioni, leghe o piattaforme fantasy di terze parti. Le valutazioni sono uno strumento di supporto e non costituiscono previsioni certe sui risultati sportivi.
 
 ### Parole chiave (max 100 byte)
-scambi,lega,rosa,calcio,fantasy,trade,valori,analisi,formazione,giocatori
+trade,lega,rosa,asta,crediti,calcio,giocatori,formazione,valutazione,infortuni,squadra,calciomercato
+
+"scambi" e "fantasy" sono già nel sottotitolo: Apple li indicizza da lì, ripeterli spreca byte.
 
 ### Categoria primaria
 Sport
@@ -52,3 +64,27 @@ Sport
 Le leghe importate restano sul dispositivo. La build effettua richieste HTTPS al backend FANTASCAM ospitato su Vercel; il provider può conservare temporaneamente log tecnici, inclusi IP e user agent, per sicurezza/diagnostica. Nessun SDK pubblicitario o tracking comportamentale nella versione iniziale.
 
 Prima dell'invio definitivo ricontrollare App Privacy contro la build firmata e i provider effettivamente attivi.
+
+## Informazioni per la revisione → Note (max 4000)
+Scritte in inglese: è la lingua che il team di review legge sempre.
+
+```
+FANTASCAM is an independent trade analyzer for fantasy football leagues. No account, login or in-app purchase is required: every feature is available immediately after launch.
+
+HOW TO TEST
+1. Open the "Scambio" (Trade) tab.
+2. Tap the search field on each side and pick one or more players (e.g. any two forwards).
+3. Optionally add credits with the − / + stepper.
+4. The floating bar shows the fairness score (0–100%) and the verdict: "SCAMBIO EQUILIBRATO" (fair), "SCAMBIO ACCETTABILE" (acceptable) or "FANTASCAM!!" (unfair). Open the "Analisi" tab for the detailed breakdown and the reasons behind the verdict.
+
+OPTIONAL: LEAGUE IMPORT
+Users can import their own league rosters from an XLSX, XLS or CSV file they already own. Imported leagues are stored only on the device. This feature is optional; the core trade evaluation works without it.
+
+DATA AND NETWORK
+The app downloads public player statistics and injury information from our own backend over HTTPS. If the network is unavailable, it falls back to a bundled player list. No personal data is collected, there are no ads, no analytics and no third-party tracking SDKs.
+
+INDEPENDENCE
+FANTASCAM is not affiliated with, sponsored or endorsed by any federation, league, club or fantasy platform. Ratings are a decision-support tool, not predictions of sporting results. The app contains no gambling or betting features.
+
+Contact: [EMAIL SUPPORTO]
+```

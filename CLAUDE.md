@@ -187,7 +187,20 @@ Wrapper **Capacitor 8.5.1** (`appId com.smdtortora.fantascam`, `webDir: www`, te
 | `injuries.js` | due sole differenze sistematiche |
 | `index.html` | riscritto da zero |
 
-Le differenze in `injuries.js` sono deliberate: (1) tutti i `fetch("/api/...")` diventano assoluti su `https://fantacalcio-trade-calculator.vercel.app/api/...`, (2) ogni occorrenza visibile di "Fantacalcio" è sostituita da "lega fantasy" (de-branding per la review degli store). L'`index.html` mobile ha UI nuova (tema viola, gauge circolare, Scambia lati / Svuota / Copia riepilogo, toast, meta PWA + manifest) ma **conserva lo stesso contratto DOM** (`#sideA`, `#sideB`, `.footballer`, `#score`, `#verdict`, `#valueA/B`, `rowTpl`), perciò `fs_engine.js` e `injuries.js` funzionano senza modifiche. Non c'è più la foto "Here We Go" hotlinkata da `skrill.com`.
+Le differenze in `injuries.js` sono deliberate: (1) tutti i `fetch("/api/...")` diventano assoluti su `https://fantacalcio-trade-calculator.vercel.app/api/...`, (2) ogni occorrenza visibile di "Fantacalcio" è sostituita da "lega fantasy" (de-branding per la review degli store). L'`index.html` mobile **conserva lo stesso contratto DOM** del motore (`#sideA`, `#sideB`, `.footballer`, `.grid`, `.result`, `#score`, `#verdict`, `#detail`, `#valueA/B`, `#fs-trade-receipt` + figli, `rowTpl`), perciò `fs_engine.js` e `injuries.js` funzionano senza modifiche.
+
+### Shell nativa (dal 2026-11-19)
+
+La UI è un'app, non una pagina: `index.html` (markup + stato globale che il motore si aspetta), `app.css` (tema, e rivestimento degli stili iniettati dal motore) e `app-shell.js` (comportamento).
+
+- **Tre tab** (Scambio / Analisi / Info) con tab bar in basso, large title, ogni vista con scroll proprio. Font di sistema (nessun Google Fonts: l'app parte offline).
+- **Nessuna tendina di sistema.** `app-shell.js` aggancia ogni `<select>` (anche quelli che il motore crea dopo, via MutationObserver), lo nasconde e mostra un bottone che apre un bottom sheet con gruppi (optgroup), ricerca oltre 10 voci, swipe-down per chiudere. Il `<select>` vero resta la fonte di verità: `value`/`selectedIndex` sono intercettati sull'istanza perché il motore li assegna senza emettere eventi. Esclusi `.role` e `.footballer`, sempre nascosti (li sostituisce la ricerca globale di `players.js`).
+- **Verdetto**: i popup V9/V10 dell'engine (che si aprivano a ogni modifica) sono nascosti via CSS; il verdetto vive in una barra flottante nella vista Scambio e nella vista Analisi, che legge `FS_LAST_TRADE` dopo `fantascam:trade-updated` / `fantascam:trade-v10`.
+- Crediti con stepper −/+; pannello lega compatto finché non c'è una lega; tastiera aperta = tab bar nascosta; haptics (`@capacitor/haptics`) e tasto indietro Android (`@capacitor/app`: tastiera → foglio → pannelli lega → tab Scambio → esci), installati il 2026-11-20. Il codice li chiama solo se presenti, quindi nel browser sono no-op.
+- **Movimento**: cambiando tab gli elementi della vista entrano a cascata (`reveal()` in `app-shell.js`, classi `.rv`/`.rv-sub` rimosse a fine animazione); il cerchio dell'equità si riempie e `#score` conta fino al valore del motore (se il motore riscrive `#score` a metà, l'animazione si ferma). `--pct`/`--p`/`--gc` sono registrate con `@property` per animare i conic-gradient. Tutto spento con `prefers-reduced-motion`.
+- `capacitor.config.ts` → `ios.contentInset: 'never'`: con `'automatic'` la safe area veniva contata due volte.
+
+Verificato il 2026-11-19 in Chrome a 390×844 (flusso completo con e senza lega) e nel simulatore iPhone 18 Pro Max.
 
 ### Sincronizzazione del motore
 
@@ -221,7 +234,7 @@ Toolchain locale presente: Node 26.6, npm 11.18, Xcode 26.6, CocoaPods 1.15.2 (n
 ## Stato backend in produzione (verificato con curl)
 
 - `GET /api/injuries` → **200**, 77 infortuni (Virgilio 67 + Goal 58, dedotti). Funziona.
-- `GET /api/data` → **404**. Confermato in produzione: l'app mobile nasce senza statistiche live, `matchday` resta 0, il layer forma/presenze è spento. Nell'app si legge "Fantamedia non attiva".
+- `GET /api/data` → ~~404~~ **risponde**: il 2026-11-19 l'app nel simulatore mostra "Dati live", giornata 11 e 112 infortuni.
 - `GET /api/league-sync` → 422 con messaggio corretto quando le rose non sono pubbliche.
 - `/` → serve la vecchia index verde della web app.
 
@@ -230,9 +243,11 @@ Nota: `CapacitorHttp` patcha `fetch` a livello nativo, quindi le chiamate cross-
 ## Bug mobile trovati a runtime
 
 1. ~~Safe area non rispettata~~ — **risolto il 2026-11-18**: `.wrap` e `.toast` in `mobile/www/index.html` ora sommano `env(safe-area-inset-*)` ai padding. Verificato nel simulatore.
-2. **"Infortuni caricati • N" mostra un numero gonfiato.** `FS_INJURIES_META.count` conta le *chiavi* della mappa, e ogni giocatore riconosciuto ne genera due (`id` e `name`). Con 77 infortuni reali l'app scrive 127. Il dato utile — quanti sono stati agganciati al listone — è ~50/77.
+2. ~~Numero infortuni gonfiato~~ — **aggirato nella shell il 2026-11-19**: si mostra `FS_INJURIES_META.total`. Il difetto nel motore resta: `FS_INJURIES_META.count` conta le *chiavi* della mappa, e ogni giocatore riconosciuto ne genera due (`id` e `name`). Con 77 infortuni reali l'app scrive 127. Il dato utile — quanti sono stati agganciati al listone — è ~50/77.
 3. **Il matching lato server è cieco.** `/api/injuries` risponde `"playersLoaded":0, "matchedCount":0`: `loadPlayers()` in `api/injuries.js` non riesce a parsare `players.js` (stessa IIFE che rompe `update_stats.py`). Non è bloccante — il matching vero avviene nel browser — ma la diagnostica server è inutilizzabile.
-4. **Doppio controllo "Le mie leghe"** nel pannello lega: lo strato V10.1 inietta selettore e bottone sopra il pannello V10.0, con due empty state di testo diverso ("Nessuna lega salvata" / "Nessuna lega collegata").
+4. ~~Doppio controllo "Le mie leghe"~~ — **nascosto in `app.css` il 2026-11-19**. In origine lo strato V10.1 inietta selettore e bottone sopra il pannello V10.0, con due empty state di testo diverso ("Nessuna lega salvata" / "Nessuna lega collegata").
+5. **Lo stile della riga "Lega attiva" (V10.1) arriva solo quando si apre il gestore leghe** (`ensureStyles()` è chiamata da `ensureManager()`, non da `refreshSelector()`): `app.css` la stila da sé.
+6. **I fattori V8 (`t.base`, `t.momentum`, `t.slots`, `t.role`) non esistono più nel motore V9**: la vecchia index li mostrava sempre a 0. Rimossi dalla shell.
 
 ## CI
 

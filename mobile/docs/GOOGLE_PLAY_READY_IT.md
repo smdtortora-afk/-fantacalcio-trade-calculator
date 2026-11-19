@@ -13,37 +13,41 @@
 FANTASCAM
 
 ### Descrizione breve (max 80)
-Analizza gli scambi della tua lega: valori, rose reali e impatto contestuale.
+Valuta gli scambi della tua lega fantasy: rose reali, infortuni, verdetto netto.
 
 ### Descrizione completa (max 4000)
-FANTASCAM è uno strumento indipendente per analizzare gli scambi nelle leghe fantasy football.
+Ti hanno proposto uno scambio e non sai se è un affare o una fregatura? FANTASCAM te lo dice in pochi secondi.
 
-Confronta il valore dei giocatori e dei pacchetti, considera crediti, ruoli, profondità della rosa e impatto sulla miglior formazione.
+Scegli i giocatori che cedi e quelli che ricevi, aggiungi eventuali crediti e ottieni un punteggio di equità da 0 a 100% con un verdetto netto: SCAMBIO EQUILIBRATO, SCAMBIO ACCETTABILE oppure FANTASCAM!! — sempre accompagnato dalle motivazioni.
 
-IMPORTA LE TUE LEGHE
-Importa un file XLSX, XLS o CSV con le rose della tua lega. FANTASCAM riconosce i giocatori, salva più leghe sul dispositivo e ricorda automaticamente l’ultima utilizzata.
+UN VALORE PER OGNI GIOCATORE
+Ogni calciatore riceve un punteggio che stima quanto vale davvero in uno scambio: titolarità nel suo club, ruolo, forza della squadra, quotazione di mercato, presenze e forma recente.
 
-SCAMBI BASATI SULLE ROSE REALI
-Seleziona la lega e le due fantasquadre coinvolte. Nei due lati dello scambio compaiono soltanto i giocatori realmente presenti nelle rispettive rose.
+DATI AGGIORNATI
+Statistiche e presenze vengono aggiornate durante la stagione. Dalla sesta giornata entra in gioco anche la forma, pesata in base a quante partite sono state giocate: tre gare storte non bastano a bocciare un top.
 
-ROSTER IMPACT
-Il motore confronta l’equità di mercato con l’effetto concreto dello scambio sulle due rose: miglior formazione, profondità, ruoli e qualità complessiva.
+INFORTUNI INCLUSI
+I giocatori infortunati perdono valore in base alla gravità e ai tempi di recupero. Una contusione non pesa come un crociato.
 
-PORTIERI: COPERTURA REALE
-La coppia primo + secondo portiere può avere un piccolo valore assicurativo quando è realmente utile. Il bonus è dinamico e non sostituisce il valore proprio dei giocatori.
-
-ANTI-PACCHETTO
-Il motore limita gli scambi in cui molti giocatori medi vengono usati per compensare artificialmente un top player.
+PROTEZIONE TOP PLAYER
+La quantità non compra la qualità: un pacchetto di giocatori medi più crediti non basta per prendersi un campione. Il motore riconosce questi casi e li segnala.
 
 CREDITI E PACCHETTI
-Puoi includere crediti e più giocatori per parte, mantenendo una valutazione non lineare che evita di premiare automaticamente la quantità.
+Scambi 1×1, 2×1, 3×1, con o senza crediti. Il valore dei crediti dipende dal budget della tua lega e cala con l'avanzare della stagione.
+
+LE TUE LEGHE, SUL TUO TELEFONO
+Importa le rose da un file XLSX, XLS o CSV, salva più leghe sul dispositivo e passa dall'una all'altra al volo. Scelte le due fantasquadre, vedi soltanto i giocatori che possiedono davvero.
+
+ROSTER IMPACT
+Con una lega collegata, FANTASCAM misura anche come lo scambio cambia la miglior formazione, la profondità della rosa e il blocco difensivo di entrambe le squadre. Il contesto può correggere il verdetto, ma non trasformerà mai una fregatura in un buon affare.
+
+PENSATA PER IL TELEFONO
+Interfaccia nativa a schede, ricerca rapida dei giocatori, nessuna registrazione e nessuna pubblicità.
 
 PRIVACY
-I file di lega importati vengono elaborati sul dispositivo. FANTASCAM non richiede password di piattaforme fantasy di terze parti per l’importazione manuale delle rose.
+Le leghe importate restano sul dispositivo. Non servono account né password di piattaforme di terze parti.
 
-FANTASCAM è un prodotto indipendente e non è affiliato, sponsorizzato o approvato da federazioni, leghe o piattaforme fantasy di terze parti.
-
-Le valutazioni sono strumenti di supporto e non costituiscono previsioni certe sui risultati sportivi.
+FANTASCAM è un prodotto indipendente e non è affiliato, sponsorizzato o approvato da federazioni, leghe o piattaforme fantasy di terze parti. Le valutazioni sono uno strumento di supporto e non costituiscono previsioni certe sui risultati sportivi.
 
 ## Contatti / URL
 - Privacy policy: pubblicare `www/privacy.html` su URL HTTPS prima dell'invio
