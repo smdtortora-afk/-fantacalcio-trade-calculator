@@ -29,7 +29,9 @@ DEST = ROOT / "mobile" / "www"
 # data-client.js resta ESCLUSO di proposito: pilota #quoteStatus, #syncDetail e
 # #refreshDataButton, che nella index mobile non esistono, e la Store Edition ha
 # gia' il suo caricamento dati inline.
-COPIE_ESATTE = ["players.js", "fs_engine.js", "player-utils.js"]
+# privacy.html e support.html vivono alla radice perche' Vercel le pubblica
+# (URL richiesti da App Store e Play): l'app ne porta una copia identica.
+COPIE_ESATTE = ["players.js", "fs_engine.js", "player-utils.js", "privacy.html", "support.html"]
 
 # Ogni voce deve corrispondere esattamente una volta: se il testo sorgente cambia
 # lo script si ferma invece di produrre silenziosamente una Store Edition sbagliata.
