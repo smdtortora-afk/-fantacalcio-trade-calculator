@@ -9,7 +9,7 @@
 
 ## Informazioni versione
 ### Sottotitolo (max 30)
-Scambi fantasy, più equi
+Scambi fantasy: affare o scam?
 
 ### Testo promozionale (max 170)
 Prima di dire sì, chiedi a FANTASCAM: lo scambio valutato sulle rose reali della tua lega, con statistiche aggiornate e infortuni. Un verdetto chiaro in pochi secondi.
