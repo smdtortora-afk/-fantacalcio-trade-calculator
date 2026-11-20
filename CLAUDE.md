@@ -227,7 +227,21 @@ npx cap sync
 
 Toolchain locale presente: Node 26.6, npm 11.18, Xcode 26.6, CocoaPods 1.15.2 (non serve, SPM), Java 21, Android SDK. `ANDROID_HOME` non è esportato nell'ambiente: `export ANDROID_HOME=~/Library/Android/sdk` prima dei comandi gradle. Capacitor 8 richiede compileSdk/targetSdk **36**: Gradle lo scarica da solo al primo sync.
 
-`android/`, `ios/` e `node_modules/` sono gitignorati e vengono rigenerati da `cap add`. Il codice nativo generato è **boilerplate vuoto** — iOS: `SceneDelegate.swift` con la sola riga `window?.rootViewController = CAPBridgeViewController()`; Android: `MainActivity extends BridgeActivity {}`, 5 righe — quindi oggi rigenerare non perde nulla. Diventa un problema appena si tocca il nativo (`versionCode` per una release, chiavi `Info.plist`, un plugin da configurare a mano): a quel punto vanno committati i progetti o scriptate le personalizzazioni. Oggi: unico permesso Android `INTERNET`, `versionCode 1` / `versionName "1.0"` (disallineato da `package.json` 1.0.0).
+`android/`, `ios/` e `node_modules/` sono gitignorati e vengono rigenerati da `cap add`. Il codice nativo generato è **boilerplate vuoto** — iOS: `SceneDelegate.swift` con la sola riga `window?.rootViewController = CAPBridgeViewController()`; Android: `MainActivity extends BridgeActivity {}`, 5 righe — quindi oggi rigenerare non perde nulla. Le personalizzazioni native che servono davvero sono **scriptate**, non fatte a mano in Xcode: le riapplica `scripts/apply_native.py` leggendo da `mobile/release.json`, unica fonte dei numeri di versione. Unico permesso Android: `INTERNET`.
+
+### Numeri di versione e dichiarazione crittografia
+
+```bash
+npm run native:config   # riapplica release.json a ios/ e android/
+npm run native:check    # verifica senza scrivere, esce 1 se divergente
+npm run release:bump    # alza il build number prima di un nuovo upload
+```
+
+Lo script imposta `MARKETING_VERSION`/`CURRENT_PROJECT_VERSION` (iOS), `versionName`/`versionCode` (Android) e `ITSAppUsesNonExemptEncryption = false` in `Info.plist`.
+
+**Va eseguito dopo ogni `cap add`** e prima di ogni archivio: i progetti nativi sono rigenerabili e tornano a `1`, mentre Apple e Google rifiutano un upload con un build number già usato. `release.json` tiene l'elenco delle build già consumate (`usedBuilds.ios`) e `--bump` le salta.
+
+La chiave `ITSAppUsesNonExemptEncryption = false` elimina l'avviso **"Conformità mancante"** su App Store Connect. È corretta perché la app usa solo HTTPS, cioè la crittografia di sistema, che Apple considera esente — **va rivista se un domani la app implementasse cifratura propria**. Non sana le build già caricate: per quelle la domanda si risponde a mano in App Store Connect.
 
 **Su questa macchina `xcode-select` punta a `/Library/Developer/CommandLineTools`**, quindi `xcodebuild` fallisce. Prefissa i comandi con `DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer` (oppure sistema una volta per tutte con `sudo xcode-select -s /Applications/Xcode.app/Contents/Developer`).
 

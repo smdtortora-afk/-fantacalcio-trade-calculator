@@ -6,6 +6,9 @@
   "scripts": {
     "native:init": "npx cap add android && npx cap add ios",
     "native:sync": "npx cap sync",
+    "native:config": "python3 scripts/apply_native.py",
+    "native:check": "python3 scripts/apply_native.py --check",
+    "release:bump": "python3 scripts/apply_native.py --bump",
     "assets": "npx @capacitor/assets generate --iconBackgroundColor '#090511' --iconBackgroundColorDark '#090511' --splashBackgroundColor '#090511' --splashBackgroundColorDark '#090511'",
     "android:open": "npx cap open android",
     "ios:open": "npx cap open ios"

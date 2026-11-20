@@ -1,0 +1,9 @@
+{
+  "comment": "Unica fonte dei numeri di versione e delle impostazioni native. I progetti ios/ e android/ sono rigenerabili e perdono ogni modifica: applica questo file con `npm run native:config`.",
+  "version": "1.0",
+  "build": 3,
+  "usedBuilds": {
+    "comment": "Build gia' consumate su App Store Connect: non riutilizzabili.",
+    "ios": [1, 2]
+  }
+}
