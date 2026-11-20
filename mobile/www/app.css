@@ -95,6 +95,9 @@ body.kb-open .tabbar,body.kb-open .verdictbar{display:none}
 
 /* ---------- lati dello scambio ---------- */
 .grid{display:grid;gap:12px}
+/* con i dati live le chip di .meta diventano larghe: senza min-width:0 la card
+   prenderebbe la loro larghezza e uscirebbe dallo schermo invece di scorrere */
+.grid>*{min-width:0}
 .card{padding:14px;position:relative}
 .card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
 .card-title{margin:0;font:700 20px var(--font-display);display:flex;align-items:center;gap:8px}
@@ -284,9 +287,9 @@ select.cs-native{display:none!important}
 .app-foot{margin:24px 0 8px;text-align:center;color:var(--muted-2);font-size:12px}
 
 /* ---------- toast ---------- */
-.toast{position:fixed;left:50%;top:calc(env(safe-area-inset-top) + 10px);z-index:95000;transform:translate(-50%,-140%);padding:11px 16px;border-radius:14px;
-  background:rgba(36,24,61,.96);border:.5px solid var(--hair-strong);color:#fff;font-weight:600;font-size:14px;box-shadow:0 12px 32px rgba(0,0,0,.45);transition:transform .32s var(--ease);pointer-events:none;max-width:calc(100% - 32px)}
-.toast.show{transform:translate(-50%,0)}
+.toast{position:fixed;left:50%;top:calc(env(safe-area-inset-top) + 10px);z-index:95000;transform:translate(-50%,calc(-100% - env(safe-area-inset-top) - 24px));opacity:0;transition:transform .32s var(--ease),opacity .2s;padding:11px 16px;border-radius:14px;
+  background:rgba(36,24,61,.96);border:.5px solid var(--hair-strong);color:#fff;font-weight:600;font-size:14px;box-shadow:0 12px 32px rgba(0,0,0,.45);pointer-events:none;max-width:calc(100% - 32px)}
+.toast.show{transform:translate(-50%,0);opacity:1}
 
 @media(min-width:780px){
   .grid{grid-template-columns:1fr 1fr}
