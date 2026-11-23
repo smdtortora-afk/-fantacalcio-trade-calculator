@@ -3,7 +3,8 @@
   "version": "1.0",
   "build": 3,
   "usedBuilds": {
-    "comment": "Build gia' consumate su App Store Connect: non riutilizzabili.",
-    "ios": [1, 2]
+    "comment": "Build gia' consumate sugli store: non riutilizzabili.",
+    "ios": [1, 2],
+    "android": []
   }
 }

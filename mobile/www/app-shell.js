@@ -370,6 +370,18 @@
     const isField = el => el && (el.tagName === 'TEXTAREA' || (el.tagName === 'INPUT' && !['button', 'checkbox', 'radio', 'file'].includes(el.type)));
     document.addEventListener('focusin', e => { if (isField(e.target)) document.body.classList.add('kb-open'); });
     document.addEventListener('focusout', () => setTimeout(() => { if (!isField(document.activeElement)) document.body.classList.remove('kb-open'); }, 60));
+    // Su Android il tasto indietro chiude la tastiera lasciando il focus sul
+    // campo: nessun focusout, quindi fa fede l'altezza della finestra. Il focus
+    // non si tocca, altrimenti sparirebbero i risultati della ricerca.
+    if (window.Capacitor?.getPlatform?.() === 'android') {
+      let h = window.innerHeight, w = window.innerWidth;
+      window.addEventListener('resize', () => {
+        const dh = window.innerHeight - h, ruotato = window.innerWidth !== w;
+        h = window.innerHeight; w = window.innerWidth;
+        if (ruotato || Math.abs(dh) < 120) return;
+        document.body.classList.toggle('kb-open', dh < 0 && isField(document.activeElement));
+      });
+    }
   };
 
   /* =====================================================================
@@ -489,7 +501,7 @@
     window.Capacitor?.Plugins?.App?.addListener?.('backButton', () => {
       const ae = document.activeElement;
       const engineModal = $('#fs-v101-manager.show, #fs-v10-league-modal.show');
-      if (ae && /^(INPUT|TEXTAREA)$/.test(ae.tagName) && document.body.classList.contains('kb-open')) ae.blur();
+      if (ae && /^(INPUT|TEXTAREA)$/.test(ae.tagName)) ae.blur();
       else if (sheet.classList.contains('open')) close();
       else if (engineModal) { const x = engineModal.querySelector('[data-close]'); x ? x.click() : engineModal.classList.remove('show'); }
       else if (!$('.view[data-view="trade"]').classList.contains('active')) showView('trade');

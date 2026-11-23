@@ -19,9 +19,10 @@ ridimensionamento, nessuna banda aggiunta.
 
 ## Android — Google Play
 
-`android/` — **1080×2160**, rapporto 1:2 esatto. Le catture iOS sono 1:2,17,
-fuori dall'intervallo accettato da Play: qui il contenuto e' riportato in scala
-e centrato su fondo #090511, senza ritagli.
+`android/` — **1080×2160**, rapporto 1:2 esatto, 24 bit senza alfa. Catture vere
+dall'emulatore (giornata 12), non derivate da iOS: `adb shell wm size 1080x2160`
+e `wm density 420`, status bar pulita con la demo mode di SystemUI. La UI si pilota
+via DevTools della WebView debug, senza iniettare nulla in `www/`.
 
 Play chiede da 2 a 8 screenshot per telefono, Apple fino a 10: la serie e' valida
 per entrambi.
@@ -32,8 +33,8 @@ per entrambi.
 |---|---|---|
 | 1-schermata-iniziale | hero con dati live e giornata corrente | idem, con le due card affiancate |
 | 2-scegli-giocatori | selezione dei due lati | ricerca aperta con i risultati |
-| 3-verdetto-scam | equita' 30%, verdetto FANTASCAM | equita' 69%, Malen contro Orsolini |
-| 4-scambio-equilibrato | equita' 99% | equita' 98%, Mora contro Da Cunha |
+| 3-verdetto-scam | verdetto FANTASCAM (30% iOS, 50% Android) | equita' 69%, Malen contro Orsolini |
+| 4-scambio-equilibrato | equita' 99% iOS, 97% Android | equita' 98%, Mora contro Da Cunha |
 | 5-motivazioni | banner con le ragioni | ragioni + dettaglio per giocatore |
 
 ## Come rifarli

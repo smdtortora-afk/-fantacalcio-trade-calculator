@@ -22,6 +22,12 @@
   --side-b:#7effba;
   --font:-apple-system,BlinkMacSystemFont,system-ui,"SF Pro Text",Roboto,"Segoe UI",sans-serif;
   --font-display:ui-rounded,"SF Pro Rounded",-apple-system,BlinkMacSystemFont,system-ui,Roboto,sans-serif;
+  /* Margini di sistema. Su iOS li da' env(); nella WebView Android env() vale 0
+     e Capacitor (SystemBars) li scrive in --safe-area-inset-*. Vince il maggiore. */
+  --sa-t:max(env(safe-area-inset-top,0px),var(--safe-area-inset-top,0px));
+  --sa-r:max(env(safe-area-inset-right,0px),var(--safe-area-inset-right,0px));
+  --sa-b:max(env(safe-area-inset-bottom,0px),var(--safe-area-inset-bottom,0px));
+  --sa-l:max(env(safe-area-inset-left,0px),var(--safe-area-inset-left,0px));
   --appbar-h:48px;
   --tabbar-h:56px;
   --verdictbar-h:68px;
@@ -44,7 +50,7 @@ button{cursor:pointer;touch-action:manipulation}
   radial-gradient(120% 60% at 10% -10%,rgba(169,111,255,.18),transparent 55%),
   radial-gradient(90% 50% at 100% 0%,rgba(86,180,255,.10),transparent 50%),var(--bg)}
 
-.appbar{flex:0 0 auto;position:relative;z-index:20;padding:env(safe-area-inset-top) calc(16px + env(safe-area-inset-right)) 0 calc(16px + env(safe-area-inset-left));
+.appbar{flex:0 0 auto;position:relative;z-index:20;padding:var(--sa-t) calc(16px + var(--sa-r)) 0 calc(16px + var(--sa-l));
   background:rgba(9,5,17,.72);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-bottom:.5px solid transparent;transition:border-color .2s}
 .appbar.scrolled{border-bottom-color:var(--hair)}
 .appbar-row{height:var(--appbar-h);display:flex;align-items:center;justify-content:space-between;gap:12px}
@@ -59,7 +65,7 @@ button{cursor:pointer;touch-action:manipulation}
 
 .views{flex:1 1 auto;position:relative;overflow:hidden}
 .view{position:absolute;inset:0;overflow-x:hidden;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior-y:contain;
-  padding:4px calc(16px + env(safe-area-inset-right)) 28px calc(16px + env(safe-area-inset-left));
+  padding:4px calc(16px + var(--sa-r)) 28px calc(16px + var(--sa-l));
   opacity:0;visibility:hidden;transform:translateX(12px);transition:opacity .22s var(--ease),transform .22s var(--ease),visibility 0s .22s}
 .view.active{opacity:1;visibility:visible;transform:none;transition:opacity .22s var(--ease),transform .22s var(--ease)}
 .view[data-view="trade"]{padding-bottom:calc(var(--verdictbar-h) + 28px)}
@@ -70,7 +76,7 @@ button{cursor:pointer;touch-action:manipulation}
 .section-label{margin:22px 4px 8px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted-2)}
 
 /* ---------- tab bar ---------- */
-.tabbar{flex:0 0 auto;position:relative;z-index:20;display:flex;padding:0 env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+.tabbar{flex:0 0 auto;position:relative;z-index:20;display:flex;padding:0 var(--sa-r) var(--sa-b) var(--sa-l);
   background:rgba(13,8,22,.82);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-top:.5px solid var(--hair)}
 .tab{flex:1;height:var(--tabbar-h);border:0;background:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--muted-2);font-size:10.5px;font-weight:600;position:relative}
 .tab svg{width:25px;height:25px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
@@ -150,7 +156,7 @@ select.cs-native{display:none!important}
 #csSheet .cs-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.5);opacity:0;transition:opacity .25s}
 #csSheet.show .cs-backdrop{opacity:1}
 #csSheet .cs-panel{position:absolute;left:0;right:0;bottom:0;max-height:78vh;display:flex;flex-direction:column;background:#1a1029;border-radius:22px 22px 0 0;border-top:.5px solid var(--hair-strong);
-  padding-bottom:env(safe-area-inset-bottom);transform:translateY(100%);transition:transform .32s var(--ease);box-shadow:0 -20px 60px rgba(0,0,0,.5)}
+  padding-bottom:var(--sa-b);transform:translateY(100%);transition:transform .32s var(--ease);box-shadow:0 -20px 60px rgba(0,0,0,.5)}
 #csSheet.show .cs-panel{transform:none}
 #csSheet .cs-grab{width:38px;height:5px;border-radius:3px;background:rgba(255,255,255,.22);margin:8px auto 4px}
 #csSheet .cs-head{display:flex;align-items:center;justify-content:space-between;padding:6px 18px 10px}
@@ -207,14 +213,14 @@ select.cs-native{display:none!important}
 /* Modali dell'engine resi bottom sheet in tema. */
 .fsv10-modal,#fs-v101-manager{padding:0!important;align-items:flex-end!important;background:rgba(0,0,0,.5)!important}
 .fsv10-sheet,.fsv101-sheet{width:100%!important;max-width:720px;border-radius:22px 22px 0 0!important;border:0!important;border-top:.5px solid var(--hair-strong)!important;
-  background:#1a1029!important;padding:18px 18px calc(18px + env(safe-area-inset-bottom))!important;max-height:88vh!important;animation:sheetUp .32s var(--ease)}
+  background:#1a1029!important;padding:18px 18px calc(18px + var(--sa-b))!important;max-height:88vh!important;animation:sheetUp .32s var(--ease)}
 @keyframes sheetUp{from{transform:translateY(100%)}to{transform:none}}
 .fsv10-sheet input,.fsv10-sheet textarea,.fsv101-sheet input{font-size:16px!important;border-radius:12px!important;border:0!important;background:rgba(255,255,255,.07)!important;color:var(--text)!important;min-height:44px}
 .fsv10-sheet button,.fsv101-sheet button{min-height:42px;border-radius:12px!important}
 .fsv101-sheet input[type=file]::file-selector-button{border:0;border-radius:10px;background:rgba(169,111,255,.2);color:var(--accent);font-weight:700;padding:8px 12px;margin-right:10px}
 
 /* ---------- barra verdetto (vista Scambio) ---------- */
-.verdictbar{position:absolute;left:calc(12px + env(safe-area-inset-left));right:calc(12px + env(safe-area-inset-right));bottom:10px;z-index:15;height:var(--verdictbar-h);
+.verdictbar{position:absolute;left:calc(12px + var(--sa-l));right:calc(12px + var(--sa-r));bottom:10px;z-index:15;height:var(--verdictbar-h);
   display:flex;align-items:center;gap:12px;padding:0 14px 0 10px;border:.5px solid var(--hair-strong);border-radius:20px;color:var(--text);text-align:left;
   background:rgba(27,17,48,.86);-webkit-backdrop-filter:saturate(180%) blur(22px);backdrop-filter:saturate(180%) blur(22px);box-shadow:0 14px 40px rgba(0,0,0,.45);
   transition:transform .3s var(--ease),opacity .3s}
@@ -287,7 +293,7 @@ select.cs-native{display:none!important}
 .app-foot{margin:24px 0 8px;text-align:center;color:var(--muted-2);font-size:12px}
 
 /* ---------- toast ---------- */
-.toast{position:fixed;left:50%;top:calc(env(safe-area-inset-top) + 10px);z-index:95000;transform:translate(-50%,calc(-100% - env(safe-area-inset-top) - 24px));opacity:0;transition:transform .32s var(--ease),opacity .2s;padding:11px 16px;border-radius:14px;
+.toast{position:fixed;left:50%;top:calc(var(--sa-t) + 10px);z-index:95000;transform:translate(-50%,calc(-100% - var(--sa-t) - 24px));opacity:0;transition:transform .32s var(--ease),opacity .2s;padding:11px 16px;border-radius:14px;
   background:rgba(36,24,61,.96);border:.5px solid var(--hair-strong);color:#fff;font-weight:600;font-size:14px;box-shadow:0 12px 32px rgba(0,0,0,.45);pointer-events:none;max-width:calc(100% - 32px)}
 .toast.show{transform:translate(-50%,0);opacity:1}
 

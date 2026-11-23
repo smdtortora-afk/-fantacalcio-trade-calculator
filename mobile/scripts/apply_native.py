@@ -11,6 +11,16 @@ Cosa applica:
   iOS     ITSAppUsesNonExemptEncryption = false in Info.plist
           MARKETING_VERSION e CURRENT_PROJECT_VERSION in project.pbxproj
   Android versionName e versionCode in app/build.gradle
+          firma di rilascio in app/build.gradle (vedi sotto)
+          tema di avvio scuro in values/styles.xml e icona dello splash
+          icona adattiva con fondo pieno in mipmap-anydpi-v26/
+
+Firma Android: chiave e password NON stanno nel repo. build.gradle le legge da
+`keystore.properties` nella cartella FANTASCAM_Signing, sorella del repo (o in
+quella indicata da FANTASCAM_SIGNING_DIR). Se il file non c'e', come in CI, il
+bundle esce non firmato invece di fallire.
+
+Va eseguito dopo `npm run assets`, che riscrive l'icona adattiva.
 
 Sulla dichiarazione di crittografia: App Store Connect chiede a ogni build se
 la app usa crittografia. FANTASCAM fa solo chiamate HTTPS, cioe' usa la
@@ -36,6 +46,78 @@ RELEASE = ROOT / "release.json"
 INFO_PLIST = ROOT / "ios" / "App" / "App" / "Info.plist"
 PBXPROJ = ROOT / "ios" / "App" / "App.xcodeproj" / "project.pbxproj"
 GRADLE = ROOT / "android" / "app" / "build.gradle"
+RES = ROOT / "android" / "app" / "src" / "main" / "res"
+
+SFONDO = "#090511"
+
+FIRMA_MARCA = "// FANTASCAM: firma di rilascio"
+FIRMA = FIRMA_MARCA + """ (generato da scripts/apply_native.py)
+def fsSigningDir = System.getenv('FANTASCAM_SIGNING_DIR') ?: rootProject.file('../../../FANTASCAM_Signing').path
+def fsSigningFile = new File(fsSigningDir, 'keystore.properties')
+if (fsSigningFile.exists()) {
+    def fsSigning = new Properties()
+    fsSigningFile.withInputStream { fsSigning.load(it) }
+    android {
+        signingConfigs {
+            release {
+                storeFile new File(fsSigningDir, fsSigning['storeFile'])
+                storePassword fsSigning['storePassword']
+                keyAlias fsSigning['keyAlias']
+                keyPassword fsSigning['keyPassword']
+            }
+        }
+        buildTypes.release.signingConfig signingConfigs.release
+    }
+}
+"""
+
+# Senza questi colori lo splash di Android 12+ segue il tema del telefono e in
+# chiaro lampeggia bianco prima dell'intro.
+STYLES = f"""<?xml version="1.0" encoding="utf-8"?>
+<!-- Generato da scripts/apply_native.py -->
+<resources>
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@color/fantascam_background</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/fantascam_background</item>
+    </style>
+
+    <style name="AppTheme.NoActionBarLaunch" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/fantascam_background</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/fantascam_splash_icon</item>
+        <item name="postSplashScreenTheme">@style/AppTheme.NoActionBar</item>
+    </style>
+</resources>
+"""
+COLORI = f"""<?xml version="1.0" encoding="utf-8"?>
+<!-- Generato da scripts/apply_native.py -->
+<resources>
+    <color name="fantascam_background">{SFONDO}</color>
+</resources>
+"""
+# L'icona dello splash occupa 288dp ma il sistema ne mostra solo il cerchio
+# centrale da 192dp. Il margine e' in dp: in percentuale servirebbe API 26.
+SPLASH = """<?xml version="1.0" encoding="utf-8"?>
+<!-- Generato da scripts/apply_native.py -->
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@mipmap/ic_launcher_foreground"
+    android:inset="54dp" />
+"""
+# @capacitor/assets mette un margine anche sul fondo: ai bordi della maschera
+# resta un filo trasparente. Il fondo deve essere pieno.
+ICONA = """<?xml version="1.0" encoding="utf-8"?>
+<!-- Generato da scripts/apply_native.py -->
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+    <background android:drawable="@color/fantascam_background" />
+    <foreground>
+        <inset android:drawable="@mipmap/ic_launcher_foreground" android:inset="16.7%" />
+    </foreground>
+</adaptive-icon>
+"""
 
 esiti: list[tuple[bool, str]] = []
 
@@ -58,7 +140,9 @@ def leggi_release() -> dict:
 
 
 def bump(dati: dict) -> dict:
-    usate = set(dati.get("usedBuilds", {}).get("ios", []))
+    # Il numero e' unico per i due store: si saltano le build usate su entrambi.
+    registro = dati.get("usedBuilds", {})
+    usate = set(registro.get("ios", [])) | set(registro.get("android", []))
     nuovo = dati["build"] + 1
     while nuovo in usate:
         nuovo += 1
@@ -131,6 +215,43 @@ def applica_gradle(dati: dict, check: bool) -> None:
         nota(False, f"Android: portato a {dati['version']} ({dati['build']})")
 
 
+def applica_firma(check: bool) -> None:
+    if not GRADLE.exists():
+        return
+    testo = GRADLE.read_text(encoding="utf-8")
+    base = testo.split(FIRMA_MARCA)[0].rstrip() + "\n"
+    nuovo = base + "\n" + FIRMA
+    if nuovo == testo:
+        nota(True, "Android: firma di rilascio gia' configurata")
+    elif check:
+        nota(False, "Android: firma di rilascio da configurare")
+    else:
+        GRADLE.write_text(nuovo, encoding="utf-8")
+        nota(False, "Android: configurata la firma di rilascio")
+
+
+def applica_risorse(check: bool) -> None:
+    if not RES.exists():
+        return
+    file = {
+        RES / "values" / "styles.xml": STYLES,
+        RES / "values" / "fantascam.xml": COLORI,
+        RES / "drawable" / "fantascam_splash_icon.xml": SPLASH,
+        RES / "mipmap-anydpi-v26" / "ic_launcher.xml": ICONA,
+        RES / "mipmap-anydpi-v26" / "ic_launcher_round.xml": ICONA,
+    }
+    for percorso, atteso in file.items():
+        nome = f"{percorso.parent.name}/{percorso.name}"
+        if percorso.exists() and percorso.read_text(encoding="utf-8") == atteso:
+            nota(True, f"Android: {nome} gia' a posto")
+        elif check:
+            nota(False, f"Android: {nome} da riscrivere")
+        else:
+            percorso.parent.mkdir(parents=True, exist_ok=True)
+            percorso.write_text(atteso, encoding="utf-8")
+            nota(False, f"Android: riscritto {nome}")
+
+
 def main() -> int:
     argv = sys.argv[1:]
     check = "--check" in argv
@@ -145,6 +266,8 @@ def main() -> int:
     applica_plist(dati, check)
     applica_pbxproj(dati, check)
     applica_gradle(dati, check)
+    applica_firma(check)
+    applica_risorse(check)
 
     divergenti = [t for ok, t in esiti if not ok]
     if check and divergenti:

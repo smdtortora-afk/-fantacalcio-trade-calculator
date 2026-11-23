@@ -252,6 +252,11 @@
 </template>
 
 <script>window.FS_STORE_EDITION=true;window.FS_API_BASE="https://fantacalcio-trade-calculator.vercel.app";</script>
+<script>
+// Il gestore leghe del motore legge il budget senza default (num(null,500) da' 0)
+// e propone 1 credito: si salva il valore iniziale prima che lo chieda.
+try{if(!localStorage.getItem('fantascamLeagueBudget'))localStorage.setItem('fantascamLeagueBudget','500')}catch(e){}
+</script>
 <!-- XLSX nel bundle: l'import delle leghe deve funzionare anche senza rete.
      loadXlsx() in injuries.js trova window.XLSX gia' presente e non scarica dal CDN. -->
 <script defer src="vendor/xlsx.full.min.js"></script>
@@ -357,6 +362,9 @@ async function copyText(text){
   catch(e){showToast('Copia non riuscita');}
 }
 async function shareText(text){
+  // La WebView Android non ha navigator.share: li' serve il plugin nativo.
+  const nativo=window.Capacitor?.isNativePlatform?.()&&window.Capacitor.Plugins?.Share;
+  if(nativo){try{await nativo.share({title:'FANTASCAM',text});return}catch(e){if(/cancel/i.test(e?.message||''))return}}
   if(navigator.share){try{await navigator.share({title:'FANTASCAM',text});return}catch(e){if(e&&e.name==='AbortError')return}}
   copyText(text);
 }

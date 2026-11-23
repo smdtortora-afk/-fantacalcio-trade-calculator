@@ -27,6 +27,7 @@ jobs:
       - run: npx cap add android
       - run: npx @capacitor/assets generate --android --iconBackgroundColor '#090511' --iconBackgroundColorDark '#090511' --splashBackgroundColor '#090511' --splashBackgroundColorDark '#090511'
       - run: npx cap sync android
+      - run: npm run native:config
       - name: Build debug APK
         run: cd android && ./gradlew assembleDebug
       - name: Validate release AAB (unsigned)

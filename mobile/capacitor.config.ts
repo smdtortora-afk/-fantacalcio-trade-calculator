@@ -24,6 +24,11 @@ const config: CapacitorConfig = {
     CapacitorHttp: {
       enabled: true
     },
+    // L'app e' sempre scura: icone chiare nella status bar anche quando il
+    // telefono e' in tema chiaro (il default segue il sistema).
+    SystemBars: {
+      style: 'DARK'
+    },
     // Lo splash nativo resta finche' l'intro e' pronta a partire: lo nasconde
     // il codice in www/index.html, non il sistema, cosi' non c'e' stacco
     // fra launch screen e primo fotogramma del video.
